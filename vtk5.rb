@@ -26,6 +26,13 @@ class Vtk5 < Formula
   homepage "http://www.vtk.org"
   head "http://vtk.org/VTK.git", :branch => "release-5.10"
 
+  bottle do
+    root_url "https://s3.amazonaws.com/drake-provisioning/vtk5"
+    sha256 "ec8292979ab4fc87917786bfc4b475ece338c25bb6cec1c71027d9a6a136e2d3" => :el_capitan
+    sha256 "0b114d5ef4e2ff9d5bb741d5e002711bede94088a881f48b175dc03d3bb3d8f8" => :yosemite
+    sha256 "ef4c659ca350f986325fb7138ff91af666033510d2a9a956c1cdc9c2e35a9403" => :mavericks
+  end
+
   stable do
     url "http://www.vtk.org/files/release/5.10/vtk-5.10.1.tar.gz"
     sha256 "f1a240c1f5f0d84e27b57e962f8e4a78b166b25bf4003ae16def9874947ebdbb"
@@ -45,29 +52,22 @@ class Vtk5 < Formula
   option "with-tcl", "Enable Tcl wrapping of VTK classes"
   option "without-legacy", "Disable legacy APIs"
 
-  deprecated_option "examples" => "with-examples"
-  deprecated_option "qt-extern" => "with-qt-extern"
-  deprecated_option "qt" => "with-qt"
-  deprecated_option "python" => "with-python"
-  deprecated_option "tcl" => "with-tcl"
-  deprecated_option "remove-legacy" => "without-legacy"
-
   depends_on "cmake" => :build
-  depends_on :x11 => :optional
-  depends_on "qt" => :optional
+  depends_on "qt" => :recommended
   depends_on :python => :recommended
-
-  # If --with-qt and --with-python, then we automatically use PyQt, too!
-  if build.with?("qt") && build.with?("python")
-    depends_on "sip"
-    depends_on "pyqt"
-  end
-
-  depends_on "boost" => :recommended
   depends_on "hdf5" => :recommended
   depends_on "jpeg" => :recommended
   depends_on "libpng" => :recommended
   depends_on "libtiff" => :recommended
+  depends_on "boost" => :optional
+  depends_on :x11 => :optional
+  depends_on "pyqt" => :optional
+
+  # If --with-pyqt, then we depend on sip, too.
+  if build.with?("pyqt")
+    depends_on "sip"
+  end
+
 
   # Fix bug in Wrapping/Python/setup_install_paths.py: http://vtk.org/Bug/view.php?id=13699
   # and compilation on mavericks backported from head.
@@ -150,11 +150,6 @@ class Vtk5 < Formula
   def caveats
     s = ""
     s += <<-EOS.undent
-        Even without the --with-qt option, you can display native VTK render windows
-        from python. Alternatively, you can integrate the RenderWindowInteractor
-        in PyQt, PySide, Tk or Wx at runtime. Read more:
-            import vtk.qt4; help(vtk.qt4) or import vtk.wx; help(vtk.wx)
-
         VTK 5 is keg only in favor of VTK 7. Add
             #{opt_prefix}/lib/python2.7/site-packages
         to your PYTHONPATH before using the python bindings.
@@ -209,4 +204,5 @@ index 00f48c8..014b906 100755
 
      # check for the prefix and exec_prefix
      try:
+
 
