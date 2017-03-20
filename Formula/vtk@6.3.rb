@@ -72,6 +72,9 @@ class VtkAT63 < Formula
 
   bottle do
     root_url "https://donn8mmazi9jw.cloudfront.net/bottles"
+    sha256 "5268e5e7e8308f6160ee77c5c17bea988c053b072f797e5c7607b01150b40a61" => :sierra
+    sha256 "3b039807fb14e634207dded875ca2713a3e9d9abba14a49800cfab311722000b" => :el_capitan
+    sha256 "8eab7581899950a498f95742a095f2584ad3dab8e7ba28fa638997525577569d" => :yosemite
   end
 
   keg_only :versioned_formula
