@@ -54,9 +54,8 @@ class VtkAT80 < Formula
   head "https://gitlab.kitware.com/vtk/vtk.git"
 
   stable do
-    url "https://donn8mmazi9jw.cloudfront.net/mirror/vtk-8.0.0.rc2.tar.gz"
-    version "8.0.0-rc2"
-    sha256 "816c166aa07fa25bb50a57a66e62ad56f82a4be228b6a5b90d3a72a88fa0a37c"
+    url "https://donn8mmazi9jw.cloudfront.net/mirror/vtk-8.0.0.tar.gz"
+    sha256 "c7e727706fb689fb6fd764d3b47cac8f4dc03204806ff19a10dfd406c6072a27"
 
     patch do
       # Do not link against libpython when possible.
@@ -67,9 +66,6 @@ class VtkAT80 < Formula
 
   bottle do
     root_url "https://donn8mmazi9jw.cloudfront.net/bottles"
-    sha256 "3cbb47a6c56a4f4496d5ad944cf7ad06c57e438efa532a5dda262e170206fa51" => :sierra
-    sha256 "bd7d5591772cc2472b0b4907cd128d7ce82fa7a1e131df27963918a746d31c76" => :el_capitan
-    sha256 "de6a5e2c3a6559c0dc3c24a31be2269e5210b524af4cb287ad72c944147084ef" => :yosemite
   end
 
   keg_only :versioned_formula
