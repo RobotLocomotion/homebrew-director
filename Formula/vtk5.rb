@@ -62,6 +62,12 @@ class Vtk5 < Formula
       url "https://donn8mmazi9jw.cloudfront.net/patches/vtk-5.10.1-cxx11-patch.diff"
       sha256 "b5946abb41c3d6ede33df636fa1621bbb86c4092cdae7032e3fdc63a5478f03d"
     end
+
+    patch do
+      # Do not link against libpython when possible.
+      url "https://donn8mmazi9jw.cloudfront.net/patches/vtk-5.10.1-optional-python-link.patch"
+      sha256 "3e2d0ad1278750808281abc3033536ddc159cfd7e13176c28012337a82a95885"
+    end
   end
 
   bottle do
@@ -74,10 +80,10 @@ class Vtk5 < Formula
   keg_only :versioned_formula
 
   option :cxx11
-  option "with-examples",   "Compile and install various examples"
-  option "with-tcl",        "Enable Tcl wrapping of VTK classes"
-  option "without-legacy",  "Disable legacy APIs"
-  option "without-python",  "Build without python support"
+  option "with-examples", "Compile and install various examples"
+  option "with-tcl", "Enable Tcl wrapping of VTK classes"
+  option "without-legacy", "Disable legacy APIs"
+  option "without-python", "Build without python support"
 
   depends_on "cmake" => :build
 
@@ -87,18 +93,19 @@ class Vtk5 < Formula
   end
 
   depends_on :python => :recommended
-  depends_on "hdf5" => :recommended  # homebrew/science
+  depends_on "hdf5" => :recommended
   depends_on "jpeg" => :recommended
   depends_on "libpng" => :recommended
   depends_on "libtiff" => :recommended
-  depends_on "qt@4" => :recommended  # cartr/qt4
+  depends_on "qt@4" => :recommended # cartr/qt4
+  depends_on "zlib" => :recommended
 
   depends_on "boost" => :optional
   depends_on :x11 => :optional
 
   # If --with-qt and --with-python, then we automatically use PyQt, too!
   if build.with?("qt@4") && build.with?("python")
-    depends_on "cartr/qt4/pyqt@4"
+    depends_on "pyqt@4"
     depends_on "sip"
   end
 
@@ -151,7 +158,7 @@ class Vtk5 < Formula
 
     unless MacOS::CLT.installed?
       # We are facing an Xcode-only installation, and we have to keep
-      # vtk from using its internal Tk headers (that differ from OSX's).
+      # vtk from using its internal Tk headers (that differ from OS X's).
       args << "-DTK_INCLUDE_PATH:PATH=#{MacOS.sdk_path}/System/Library/Frameworks/Tk.framework/Headers"
       args << "-DTK_INTERNAL_PATH:PATH=#{MacOS.sdk_path}/System/Library/Frameworks/Tk.framework/Headers/tk-private"
     end
@@ -167,7 +174,7 @@ class Vtk5 < Formula
 
     mkdir "build" do
       if build.with? "python"
-        python_executable = `which python`.strip
+        python_executable = `which python2`.strip
 
         python_prefix = `#{python_executable} -c 'import sys;print(sys.prefix)'`.chomp
         python_include = `#{python_executable} -c 'from distutils import sysconfig;print(sysconfig.get_python_inc(True))'`.chomp
@@ -188,7 +195,7 @@ class Vtk5 < Formula
         else
           odie "No libpythonX.Y.{#{dylib}|a} file found!"
         end
-        # Set the prefix for the python bindings to the Cellar
+        # Set the prefix for the python bindings to the Cellar.
         args << "-DVTK_PYTHON_SETUP_ARGS:STRING='--prefix=#{prefix} --single-version-externally-managed --record=installed.txt'"
 
         if build.with? "qt@4"
@@ -201,6 +208,15 @@ class Vtk5 < Formula
       system "cmake", *args
       system "make"
       system "make", "install"
+
+      if build.with? "hdf5"
+        inreplace "#{lib}/vtk-5.10/VTKConfig.cmake", "#{HOMEBREW_CELLAR}/hdf5/#{Formula["hdf5"].installed_version}/include", "#{Formula["hdf5"].opt_include}"
+      end
+      if build.with? "python"
+        inreplace "#{lib}/vtk-5.10/VTKConfig.cmake", "#{HOMEBREW_CELLAR}/python/#{Formula["python"].installed_version}/Frameworks", "#{Formula["python"].opt_prefix}/Frameworks"
+      end
+      inreplace "#{lib}/vtk-5.10/VTKConfig.cmake", prefix, opt_prefix
+      inreplace "#{lib}/vtk-5.10/VTKTargets-release.cmake", lib, opt_lib
     end
 
     pkgshare.install "Examples" if build.with? "examples"
