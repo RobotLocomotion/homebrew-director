@@ -74,11 +74,11 @@ class VtkAT80 < Formula
   keg_only :versioned_formula
 
   option :cxx11
-  option "with-examples",   "Compile and install various examples"
-  option "with-tcl",        "Enable Tcl wrapping of VTK classes"
+  option "with-examples", "Compile and install various examples"
+  option "with-tcl", "Enable Tcl wrapping of VTK classes"
   option "with-matplotlib", "Enable matplotlib support"
-  option "without-legacy",  "Disable legacy APIs"
-  option "without-python",  "Build without python2 support"
+  option "without-legacy", "Disable legacy APIs"
+  option "without-python", "Build without python2 support"
 
   depends_on "cmake" => :build
 
@@ -89,31 +89,28 @@ class VtkAT80 < Formula
 
   depends_on :python => :recommended
   depends_on :python3 => :optional
-  depends_on "matplotlib" => :python if build.with?("matplotlib") && build.with?("python")  # homebrew/science
+  depends_on "matplotlib" => :python if build.with?("matplotlib") && build.with?("python") # homebrew/science
 
   depends_on "freetype" => :recommended
   depends_on "glew" => :recommended
-  depends_on "hdf5" => :recommended  # homebrew/science
+  depends_on "hdf5" => :recommended
   depends_on "jpeg" => :recommended
   depends_on "jsoncpp" => :recommended
   depends_on "libpng" => :recommended
   depends_on "libtiff" => :recommended
-  depends_on "netcdf" => :recommended  # homebrew/science
+  depends_on "netcdf" => :recommended # homebrew/science
   depends_on "qt" => :recommended
+  depends_on "zlib" => :recommended
 
   depends_on "boost" => :optional
   depends_on "fontconfig" => :optional
   depends_on :x11 => :optional
 
-  # If --with-qt and --with-python, then we automatically use PyQt, too!
-  if build.with? "qt"
-    if build.with? "python"
-      depends_on "pyqt" => ["with-python", "without-python3"]
-      depends_on "sip"
-    elsif build.with? "python3"
-      depends_on "pyqt"
-      depends_on "sip" => ["with-python3", "without-python"]
-    end
+  # If --with-qt and --with-python or --with-python3, then we automatically use
+  # PyQt, too!
+  if build.with?("qt") && (build.with?("python") || build.with?("python3"))
+    depends_on "pyqt"
+    depends_on "sip"
   end
 
   def install
@@ -172,7 +169,7 @@ class VtkAT80 < Formula
     args << "-DVTK_USE_SYSTEM_NETCDF=ON" if build.with? "netcdf"
     args << "-DVTK_USE_SYSTEM_PNG=ON" if build.with? "libpng"
     args << "-DVTK_USE_SYSTEM_TIFF=ON" if build.with? "libtiff"
-    args << "-DModule_vtkRenderingMatplotlib=ON" if build.with? "matplotlib"
+    args << "-DModule_vtkRenderingMatplotlib=ON" if build.with?("matplotlib") && build.with?("python")
     args << "-DVTK_LEGACY_REMOVE=ON" if build.without? "legacy"
 
     ENV.cxx11 if build.cxx11?
@@ -182,7 +179,7 @@ class VtkAT80 < Formula
         # VTK Does not support building both python 2 and 3 versions
         odie "VTK: Does not support building both python 2 and 3 wrappers"
       elsif build.with?("python") || build.with?("python3")
-        python_executable = `which python`.strip if build.with? "python"
+        python_executable = `which python2`.strip if build.with? "python"
         python_executable = `which python3`.strip if build.with? "python3"
 
         python_prefix = `#{python_executable} -c 'import sys;print(sys.prefix)'`.chomp
@@ -218,6 +215,20 @@ class VtkAT80 < Formula
       system "cmake", *args
       system "make"
       system "make", "install"
+
+      if build.with? "hdf5"
+        inreplace "#{lib}/cmake/vtk-8.0/Modules/vtkhdf5.cmake", "#{HOMEBREW_CELLAR}/hdf5/#{Formula["hdf5"].installed_version}/include", "#{Formula["hdf5"].opt_include}"
+      end
+      if build.with?("python") || build.with?("python3")
+        inreplace "#{lib}/cmake/vtk-8.0/Modules/vtkPython.cmake", lib, opt_lib
+        if build.with?("python")
+          inreplace "#{lib}/cmake/vtk-8.0/Modules/vtkPython.cmake", "#{HOMEBREW_CELLAR}/python/#{Formula["python"].installed_version}/Frameworks", "#{Formula["python"].opt_prefix}/Frameworks"
+        else
+          inreplace "#{lib}/cmake/vtk-8.0/Modules/vtkPython.cmake", "#{HOMEBREW_CELLAR}/python3/#{Formula["python3"].installed_version}/Frameworks", "#{Formula["python3"].opt_prefix}/Frameworks"
+        end
+      end
+      inreplace "#{lib}/cmake/vtk-8.0/VTKConfig.cmake", prefix, opt_prefix
+      inreplace "#{lib}/cmake/vtk-8.0/VTKTargets-release.cmake", lib, opt_lib
     end
 
     pkgshare.install "Examples" if build.with? "examples"
@@ -228,13 +239,13 @@ class VtkAT80 < Formula
         #include <vtkVersion.h>
         #include <assert.h>
         int main() {
-          assert(vtkVersion::GetVTKMajorVersion()==7);
-          assert(vtkVersion::GetVTKMinorVersion()==1);
+          assert(vtkVersion::GetVTKMajorVersion()==8);
+          assert(vtkVersion::GetVTKMinorVersion()==0);
           return 0;
         }
       EOS
 
-    system ENV.cxx, "Version.cpp", "-I#{opt_include}/vtk-7.1"
+    system ENV.cxx, "Version.cpp", "-I#{opt_include}/vtk-8.0"
     system "./a.out"
     system "#{bin}/vtkpython", "-c", "exit()"
   end
