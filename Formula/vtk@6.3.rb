@@ -72,9 +72,10 @@ class VtkAT63 < Formula
 
   bottle do
     root_url "https://donn8mmazi9jw.cloudfront.net/bottles"
-    sha256 "149548918f910370318acbd4d69b83566e51ed0a848dc70bdddf66fe63e540a2" => :sierra
-    sha256 "014dd129dbbc636d10856ddf5d5a99477539dcb44c6c8557647c527c239da862" => :el_capitan
-    sha256 "397f7f5852f74e769f1c6c3a0949b2a5bb826f3b96001489cb81524f94387dfb" => :yosemite
+    rebuild 1
+    sha256 "2a89492ae8b851bb8363c98869c7e938dbbaf48e1ce8130b97e681e72c73e4a1" => :sierra
+    sha256 "e55ba3388644420cb5499c84e3451230d618e5085ef6888d0ccb26137491e0ed" => :el_capitan
+    sha256 "e08867ff5df0ce47c8395667979572f55c7c33a7e12fdecebb78d61008aa4fed" => :yosemite
   end
 
   keg_only :versioned_formula
@@ -103,7 +104,7 @@ class VtkAT63 < Formula
   depends_on "jsoncpp" => :recommended
   depends_on "libpng" => :recommended
   depends_on "libtiff" => :recommended
-  depends_on "netcdf" => :recommended # homebrew/science
+  depends_on "netcdf" => :recommended
   depends_on "qt" => :recommended
   depends_on "zlib" => :recommended
 
