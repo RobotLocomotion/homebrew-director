@@ -3,10 +3,12 @@
 <http://drake.mit.edu/>
 
 ```
-brew tap cartr/qt4
-brew tap homebrew/science
 brew tap robotlocomotion/director
-brew tap-pin cartr/qt4
-brew tap-pin robotlocomotion/director
-brew install <formula>
+brew install vtk@6.3 vtk@7.1 vtk@8.0
+```
+
+```
+brew tap cartr/qt4
+brew tap robotlocomotion/director
+brew install vtk5
 ```
