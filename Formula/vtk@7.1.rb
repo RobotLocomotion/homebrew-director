@@ -75,82 +75,45 @@ class VtkAT71 < Formula
   keg_only :versioned_formula
 
   option :cxx11
-  option "with-examples", "Compile and install various examples"
-  option "with-tcl", "Enable Tcl wrapping of VTK classes"
-  option "with-matplotlib", "Enable matplotlib support"
-  option "without-legacy", "Disable legacy APIs"
-  option "without-python", "Build without python2 support"
-
-  depends_on "cmake" => :build
-
-  unless OS.mac?
-    depends_on "libxml2"
-    depends_on "linuxbrew/xorg/mesa"
-  end
 
   depends_on :python => :recommended
   depends_on :python3 => :optional
-  depends_on "matplotlib" => :python if build.with?("matplotlib") && build.with?("python") # homebrew/science
-
-  depends_on "freetype" => :recommended
-  depends_on "glew" => :recommended
-  depends_on "hdf5" => :recommended
-  depends_on "jpeg" => :recommended
-  depends_on "jsoncpp" => :recommended
-  depends_on "libpng" => :recommended
-  depends_on "libtiff" => :recommended
-  depends_on "netcdf" => :recommended
+  depends_on "cmake" => :build
+  depends_on "freetype"
+  depends_on "hdf5"
+  depends_on "jpeg"
+  depends_on "jsoncpp"
+  depends_on "libogg"
+  depends_on "libpng"
+  depends_on "libtiff"
+  depends_on "netcdf"
   depends_on "qt" => :recommended
-  depends_on "zlib" => :recommended
-
-  depends_on "boost" => :optional
-  depends_on "fontconfig" => :optional
-  depends_on :x11 => :optional
-
-  # If --with-qt and --with-python or --with-python3, then we automatically use
-  # PyQt, too!
-  if build.with?("qt") && (build.with?("python") || build.with?("python3"))
-    depends_on "pyqt"
-    depends_on "sip"
-  end
+  depends_on "theora"
 
   def install
-    dylib = OS.mac? ? "dylib" : "so"
-
     args = std_cmake_args + %W[
-      -DVTK_REQUIRED_OBJCXX_FLAGS=''
       -DBUILD_SHARED_LIBS=ON
-      -DCMAKE_INSTALL_RPATH:STRING=#{lib}
-      -DCMAKE_INSTALL_NAME_DIR:STRING=#{lib}
+      -DBUILD_TESTING=OFF
+      -DCMAKE_INSTALL_NAME_DIR:STRING=#{opt_lib}
+      -DCMAKE_INSTALL_RPATH:STRING=#{opt_lib}
+      -DVTK_REQUIRED_OBJCXX_FLAGS=''
+      -DVTK_USE_COCOA=ON
       -DVTK_USE_SYSTEM_EXPAT=ON
+      -DVTK_USE_SYSTEM_FREETYPE=ON
+      -DVTK_USE_SYSTEM_HDF5=ON
+      -DVTK_USE_SYSTEM_JPEG=ON
+      -DVTK_USE_SYSTEM_JSONCPP=ON
       -DVTK_USE_SYSTEM_LIBXML2=ON
+      -DVTK_USE_SYSTEM_NETCDF=ON
+      -DVTK_USE_SYSTEM_OGGTHEORA=ON
+      -DVTK_USE_SYSTEM_PNG=ON
+      -DVTK_USE_SYSTEM_TIFF=ON
       -DVTK_USE_SYSTEM_ZLIB=ON
     ]
-
-    args << "-DBUILD_EXAMPLES=" + ((build.with? "examples") ? "ON" : "OFF")
-
-    if build.with? "examples"
-      args << "-DBUILD_TESTING=ON"
-    else
-      args << "-DBUILD_TESTING=OFF"
-    end
 
     if build.with? "qt"
       args << "-DVTK_QT_VERSION:STRING=5"
       args << "-DVTK_Group_Qt=ON"
-    end
-
-    args << "-DVTK_WRAP_TCL=ON" if build.with? "tcl"
-
-    # Cocoa for everything except x11
-    if build.with? "x11"
-      args << "-DVTK_USE_COCOA=OFF"
-      args << "-DVTK_USE_X=ON"
-      args << "-DOPENGL_INCLUDE_DIR:PATH=/usr/X11R6/include"
-      args << "-DOPENGL_gl_LIBRARY:STRING=/usr/X11R6/lib/libGL.dylib"
-      args << "-DOPENGL_glu_LIBRARY:STRING=/usr/X11R6/lib/libGLU.dylib"
-    else
-      args << "-DVTK_USE_COCOA=ON"
     end
 
     unless MacOS::CLT.installed?
@@ -159,19 +122,6 @@ class VtkAT71 < Formula
       args << "-DTK_INCLUDE_PATH:PATH=#{MacOS.sdk_path}/System/Library/Frameworks/Tk.framework/Headers"
       args << "-DTK_INTERNAL_PATH:PATH=#{MacOS.sdk_path}/System/Library/Frameworks/Tk.framework/Headers/tk-private"
     end
-
-    args << "-DModule_vtkInfovisBoost=ON" << "-DModule_vtkInfovisBoostGraphAlgorithms=ON" if build.with? "boost"
-    args << "-DModule_vtkRenderingFreeTypeFontConfig=ON" if build.with? "fontconfig"
-    args << "-DVTK_USE_SYSTEM_FREETYPE=ON" if build.with? "freetype"
-    args << "-DVTK_USE_SYSTEM_GLEW=ON" if build.with? "glew"
-    args << "-DVTK_USE_SYSTEM_HDF5=ON" if build.with? "hdf5"
-    args << "-DVTK_USE_SYSTEM_JPEG=ON" if build.with? "jpeg"
-    args << "-DVTK_USE_SYSTEM_JSONCPP=ON" if build.with? "jsoncpp"
-    args << "-DVTK_USE_SYSTEM_NETCDF=ON" if build.with? "netcdf"
-    args << "-DVTK_USE_SYSTEM_PNG=ON" if build.with? "libpng"
-    args << "-DVTK_USE_SYSTEM_TIFF=ON" if build.with? "libtiff"
-    args << "-DModule_vtkRenderingMatplotlib=ON" if build.with?("matplotlib") && build.with?("python")
-    args << "-DVTK_LEGACY_REMOVE=ON" if build.without? "legacy"
 
     ENV.cxx11 if build.cxx11?
 
@@ -196,20 +146,13 @@ class VtkAT71 < Formula
           args << "-DPYTHON_LIBRARY='#{python_prefix}/Python'"
         elsif File.exist? "#{python_prefix}/lib/lib#{python_version}.a"
           args << "-DPYTHON_LIBRARY='#{python_prefix}/lib/lib#{python_version}.a'"
-        elsif File.exist? "#{python_prefix}/lib/lib#{python_version}.#{dylib}"
-          args << "-DPYTHON_LIBRARY='#{python_prefix}/lib/lib#{python_version}.#{dylib}'"
-        elsif File.exist? "#{python_prefix}/lib/x86_64-linux-gnu/lib#{python_version}.so"
-          args << "-DPYTHON_LIBRARY='#{python_prefix}/lib/x86_64-linux-gnu/lib#{python_version}.so'"
+        elsif File.exist? "#{python_prefix}/lib/lib#{python_version}.dylib"
+          args << "-DPYTHON_LIBRARY='#{python_prefix}/lib/lib#{python_version}.dylib'"
         else
-          odie "No libpythonX.Y.{#{dylib}|a} file found!"
+          odie "No libpythonX.Y.{dylib|a} file found!"
         end
         # Set the prefix for the python bindings to the Cellar
         args << "-DVTK_INSTALL_PYTHON_MODULE_DIR='#{py_site_packages}/'"
-
-        if build.with? "qt"
-          args << "-DVTK_WRAP_PYTHON_SIP=ON"
-          args << "-DSIP_PYQT_DIR='#{Formula["pyqt"].opt_share}/sip'"
-        end
       end
 
       args << ".."
@@ -217,19 +160,14 @@ class VtkAT71 < Formula
       system "make"
       system "make", "install"
 
-      if build.with? "hdf5"
-        inreplace "#{lib}/cmake/vtk-7.1/Modules/vtkhdf5.cmake", "#{HOMEBREW_CELLAR}/hdf5/#{Formula["hdf5"].installed_version}/include", "#{Formula["hdf5"].opt_include}"
-      end
+      inreplace "#{lib}/cmake/vtk-7.1/Modules/vtkhdf5.cmake", "#{HOMEBREW_CELLAR}/hdf5/#{Formula["hdf5"].installed_version}/include", "#{Formula["hdf5"].opt_include}"
       if build.with?("python")
         inreplace "#{lib}/cmake/vtk-7.1/Modules/vtkPython.cmake", "#{HOMEBREW_CELLAR}/python/#{Formula["python"].installed_version}/Frameworks", "#{Formula["python"].opt_prefix}/Frameworks"
       else
         inreplace "#{lib}/cmake/vtk-7.1/Modules/vtkPython.cmake", "#{HOMEBREW_CELLAR}/python3/#{Formula["python3"].installed_version}/Frameworks", "#{Formula["python3"].opt_prefix}/Frameworks"
       end
       inreplace "#{lib}/cmake/vtk-7.1/VTKConfig.cmake", prefix, opt_prefix
-      inreplace "#{lib}/cmake/vtk-7.1/VTKTargets-release.cmake", lib, opt_lib
     end
-
-    pkgshare.install "Examples" if build.with? "examples"
   end
 
   test do
