@@ -76,6 +76,13 @@ class VtkAT510 < Formula
     end
   end
 
+  bottle do
+    root_url "https://donn8mmazi9jw.cloudfront.net/bottles"
+    sha256 "18061f6e8703bc166d53f6b47b3581895848dbeaa1895bb948d343b689b017d1" => :sierra
+    sha256 "a2cf31981de7b8b39ecf87c2eedc83ad4af0e5db6fdd665b02c2abcc8c99d5a3" => :el_capitan
+    sha256 "5c491c5f3b2495d49a6abba15522b443d606a9dec0f0d7d1884ee973f9bd3fd6" => :yosemite
+  end
+
   keg_only :versioned_formula
 
   option :cxx11
