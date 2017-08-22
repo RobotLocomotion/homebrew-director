@@ -1,4 +1,4 @@
-# Copyright 2012-2016 Robot Locomotion Group @ CSAIL. All rights reserved.
+# Copyright 2012-2017 Robot Locomotion Group @ CSAIL. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -25,7 +25,7 @@
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# Copyright 2009-2016 Homebrew contributors.
+# Copyright 2009-2017 Homebrew contributors.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -48,7 +48,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-class Vtk5 < Formula
+class VtkAT510 < Formula
   desc "Toolkit for 3D computer graphics, image processing, and visualization."
   homepage "http://www.vtk.org/"
   head "http://vtk.org/VTK.git", :branch => "release-5.10"
@@ -68,108 +68,48 @@ class Vtk5 < Formula
       url "https://donn8mmazi9jw.cloudfront.net/patches/vtk-5.10.1-optional-python-link.patch"
       sha256 "3e2d0ad1278750808281abc3033536ddc159cfd7e13176c28012337a82a95885"
     end
-  end
 
-  bottle do
-    root_url "https://donn8mmazi9jw.cloudfront.net/bottles"
-    rebuild 1
-    sha256 "36a1311d6ac2a71333964faaab66e1ea6d65711308fed5f303813ccad16bf2db" => :sierra
-    sha256 "d65d74ad699c9dd3a7ab900f356c8b5d10344f71a0702df7938bd7e0af106663" => :el_capitan
-    sha256 "effd703274a3bde54462ae51249733c6f1b1a626423c283a6f85984be8b2bf14" => :yosemite
+    patch do
+      # Fix bug in Wrapping/Python/setup_install_paths.py: http://vtk.org/Bug/view.php?id=13699
+      url "https://donn8mmazi9jw.cloudfront.net/patches/vtk-5.10.1-setup-install-paths-patch.diff"
+      sha256 "3b37d95ddbbe8bc393011cbf0731e76572d0020c7f894f005283d31c6b648f8d"
+    end
   end
 
   keg_only :versioned_formula
 
   option :cxx11
-  option "with-examples", "Compile and install various examples"
-  option "with-tcl", "Enable Tcl wrapping of VTK classes"
-  option "without-legacy", "Disable legacy APIs"
-  option "without-python", "Build without python support"
-
-  depends_on "cmake" => :build
-
-  unless OS.mac?
-    depends_on "libxml2"
-    depends_on "linuxbrew/xorg/mesa"
-  end
 
   depends_on :python => :recommended
-  depends_on "hdf5" => :recommended
-  depends_on "jpeg" => :recommended
-  depends_on "libpng" => :recommended
-  depends_on "libtiff" => :recommended
-  depends_on "qt@4" => :recommended # cartr/qt4
-  depends_on "zlib" => :recommended
-
-  depends_on "boost" => :optional
-  depends_on :x11 => :optional
-
-  # If --with-qt and --with-python, then we automatically use PyQt, too!
-  if build.with?("qt@4") && build.with?("python")
-    depends_on "pyqt@4"
-    depends_on "sip"
-  end
-
-  patch do
-    # Fix bug in Wrapping/Python/setup_install_paths.py: http://vtk.org/Bug/view.php?id=13699
-    # and compilation on mavericks backported from head.
-    url "https://donn8mmazi9jw.cloudfront.net/patches/vtk-5.10.1-setup-install-paths-patch.diff"
-    sha256 "3b37d95ddbbe8bc393011cbf0731e76572d0020c7f894f005283d31c6b648f8d"
-  end
+  depends_on "cmake" => :build
+  depends_on "hdf5"
+  depends_on "jpeg"
+  depends_on "libpng"
+  depends_on "libtiff"
+  depends_on "qt@4" => :recommended # brew tap cartr/qt4
 
   def install
-    dylib = OS.mac? ? "dylib" : "so"
-
     args = std_cmake_args + %W[
-      -DVTK_REQUIRED_OBJCXX_FLAGS=''
       -DBUILD_SHARED_LIBS=ON
-      -DCMAKE_INSTALL_RPATH:STRING=#{lib}/vtk-5.10
-      -DCMAKE_INSTALL_NAME_DIR:STRING=#{lib}/vtk-5.10
+      -DBUILD_TESTING=OFF
+      -DCMAKE_INSTALL_NAME_DIR:STRING=#{opt_lib}/vtk-5.10
+      -DCMAKE_INSTALL_RPATH:STRING=#{opt_lib}/vtk-5.10
+      -DVTK_REQUIRED_OBJCXX_FLAGS=''
+      -DVTK_USE_COCOA=ON
       -DVTK_USE_SYSTEM_EXPAT=ON
+      -DVTK_USE_SYSTEM_HDF5=ON
+      -DVTK_USE_SYSTEM_JPEG=ON
       -DVTK_USE_SYSTEM_LIBXML2=ON
+      -DVTK_USE_SYSTEM_PNG=ON
+      -DVTK_USE_SYSTEM_TIFF=ON
       -DVTK_USE_SYSTEM_ZLIB=ON
     ]
-
-    args << "-DBUILD_EXAMPLES=" + ((build.with? "examples") ? "ON" : "OFF")
-
-    if build.with? "examples"
-      args << "-DBUILD_TESTING=ON"
-    else
-      args << "-DBUILD_TESTING=OFF"
-    end
 
     if build.with? "qt@4"
       args << "-DVTK_USE_GUISUPPORT=ON"
       args << "-DVTK_USE_QT=ON"
       args << "-DVTK_USE_QVTK=ON"
     end
-
-    args << "-DVTK_WRAP_TCL=ON" if build.with? "tcl"
-
-    # Cocoa for everything except x11
-    if build.with? "x11"
-      args << "-DVTK_USE_COCOA=OFF"
-      args << "-DVTK_USE_X=ON"
-      args << "-DOPENGL_INCLUDE_DIR:PATH=/usr/X11R6/include"
-      args << "-DOPENGL_gl_LIBRARY:STRING=/usr/X11R6/lib/libGL.dylib"
-      args << "-DOPENGL_glu_LIBRARY:STRING=/usr/X11R6/lib/libGLU.dylib"
-    else
-      args << "-DVTK_USE_COCOA=ON"
-    end
-
-    unless MacOS::CLT.installed?
-      # We are facing an Xcode-only installation, and we have to keep
-      # vtk from using its internal Tk headers (that differ from OS X's).
-      args << "-DTK_INCLUDE_PATH:PATH=#{MacOS.sdk_path}/System/Library/Frameworks/Tk.framework/Headers"
-      args << "-DTK_INTERNAL_PATH:PATH=#{MacOS.sdk_path}/System/Library/Frameworks/Tk.framework/Headers/tk-private"
-    end
-
-    args << "-DVTK_USE_BOOST=ON" if build.with? "boost"
-    args << "-DVTK_USE_SYSTEM_HDF5=ON" if build.with? "hdf5"
-    args << "-DVTK_USE_SYSTEM_JPEG=ON" if build.with? "jpeg"
-    args << "-DVTK_USE_SYSTEM_PNG=ON" if build.with? "libpng"
-    args << "-DVTK_USE_SYSTEM_TIFF=ON" if build.with? "libtiff"
-    args << "-DVTK_LEGACY_REMOVE=ON" if build.without? "legacy"
 
     ENV.cxx11 if build.cxx11?
 
@@ -189,20 +129,13 @@ class Vtk5 < Formula
           args << "-DPYTHON_LIBRARY='#{python_prefix}/Python'"
         elsif File.exist? "#{python_prefix}/lib/lib#{python_version}.a"
           args << "-DPYTHON_LIBRARY='#{python_prefix}/lib/lib#{python_version}.a'"
-        elsif File.exist? "#{python_prefix}/lib/lib#{python_version}.#{dylib}"
-          args << "-DPYTHON_LIBRARY='#{python_prefix}/lib/lib#{python_version}.#{dylib}'"
-        elsif File.exist? "#{python_prefix}/lib/x86_64-linux-gnu/lib#{python_version}.so"
-          args << "-DPYTHON_LIBRARY='#{python_prefix}/lib/x86_64-linux-gnu/lib#{python_version}.so'"
+        elsif File.exist? "#{python_prefix}/lib/lib#{python_version}.dylib"
+          args << "-DPYTHON_LIBRARY='#{python_prefix}/lib/lib#{python_version}.dylib'"
         else
-          odie "No libpythonX.Y.{#{dylib}|a} file found!"
+          odie "No libpythonX.Y.{dylib|a} file found!"
         end
         # Set the prefix for the python bindings to the Cellar.
         args << "-DVTK_PYTHON_SETUP_ARGS:STRING='--prefix=#{prefix} --single-version-externally-managed --record=installed.txt'"
-
-        if build.with? "qt@4"
-          args << "-DVTK_WRAP_PYTHON_SIP=ON"
-          args << "-DSIP_PYQT_DIR='#{Formula["cartr/qt4/pyqt@4"].opt_share}/sip'"
-        end
       end
 
       args << ".."
@@ -210,17 +143,12 @@ class Vtk5 < Formula
       system "make"
       system "make", "install"
 
-      if build.with? "hdf5"
-        inreplace "#{lib}/vtk-5.10/VTKConfig.cmake", "#{HOMEBREW_CELLAR}/hdf5/#{Formula["hdf5"].installed_version}/include", "#{Formula["hdf5"].opt_include}"
-      end
+      inreplace "#{lib}/vtk-5.10/VTKConfig.cmake", "#{HOMEBREW_CELLAR}/hdf5/#{Formula["hdf5"].installed_version}/include", "#{Formula["hdf5"].opt_include}"
       if build.with? "python"
         inreplace "#{lib}/vtk-5.10/VTKConfig.cmake", "#{HOMEBREW_CELLAR}/python/#{Formula["python"].installed_version}/Frameworks", "#{Formula["python"].opt_prefix}/Frameworks"
       end
       inreplace "#{lib}/vtk-5.10/VTKConfig.cmake", prefix, opt_prefix
-      inreplace "#{lib}/vtk-5.10/VTKTargets-release.cmake", lib, opt_lib
     end
-
-    pkgshare.install "Examples" if build.with? "examples"
   end
 
   test do
