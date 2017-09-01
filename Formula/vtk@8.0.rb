@@ -52,15 +52,14 @@ class VtkAT80 < Formula
   desc "Toolkit for 3D computer graphics, image processing, and visualization."
   homepage "http://www.vtk.org/"
   head "https://gitlab.kitware.com/vtk/vtk.git"
-  revision 1
 
   stable do
-    url "https://donn8mmazi9jw.cloudfront.net/mirror/vtk-8.0.0.tar.gz"
-    sha256 "c7e727706fb689fb6fd764d3b47cac8f4dc03204806ff19a10dfd406c6072a27"
+    url "https://donn8mmazi9jw.cloudfront.net/mirror/vtk-8.0.1.tar.gz"
+    sha256 "daca31e2700336791672bf48377789d8c832e98cc5afa8d1f1453c143772c6b0"
 
     patch do
       # Do not link against libpython when possible.
-      url "https://donn8mmazi9jw.cloudfront.net/patches/vtk-8.0.0-optional-python-link.patch"
+      url "https://donn8mmazi9jw.cloudfront.net/patches/vtk-8.0.1-optional-python-link.patch"
       sha256 "dd5d30cd80a9d5cddb6d648ddcea3c8c36d809407084b0ab09848d1981ffb6dc"
     end
   end
