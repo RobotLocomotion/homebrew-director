@@ -67,6 +67,7 @@ class BazelAT052 < Formula
   bottle do
     cellar :any_skip_relocation
     root_url "https://donn8mmazi9jw.cloudfront.net/bottles"
+    sha256 "bdbc023fc2d56408a08f5642ecb531cd4181a2a4c220b0fcaf0b38d6486b892a" => :high_sierra
     sha256 "cb33f3dca6a43d6f7d026f385d55dacd84e1549c129a1dacbc6fca9d04de10af" => :sierra
     sha256 "696490a82fdb633133b7d13fb92075cf2c8c41da41bab75537b48be72ef4a576" => :el_capitan
     sha256 "6f089c22be44ac738dbbd08fc76c1cbe2f9b95157e8dc46cbb10430c2b61e20e" => :yosemite
