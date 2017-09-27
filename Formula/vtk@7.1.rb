@@ -54,18 +54,18 @@ class VtkAT71 < Formula
   head "https://gitlab.kitware.com/vtk/vtk.git"
 
   stable do
-    url "https://donn8mmazi9jw.cloudfront.net/mirror/vtk-7.1.1.tar.gz"
+    url "https://drake-homebrew.csail.mit.edu/mirror/vtk-7.1.1.tar.gz"
     sha256 "2d5cdd048540144d821715c718932591418bb48f5b6bb19becdae62339efa75a"
 
     patch do
       # Do not link against libpython when possible.
-      url "https://donn8mmazi9jw.cloudfront.net/patches/vtk-7.1.1-optional-python-link.patch"
+      url "https://drake-homebrew.csail.mit.edu/patches/vtk-7.1.1-optional-python-link.patch"
       sha256 "735ed5ad66bcad51010a5e922b03fd6ae2064a1074a9a4671f313c3543f9eef6"
     end
   end
 
   bottle do
-    root_url "https://donn8mmazi9jw.cloudfront.net/bottles"
+    root_url "https://drake-homebrew.csail.mit.edu/bottles"
     sha256 "f03e9bdca43d699d783a622e2f5792b3a5047f2950a5c4207f5aac84384f3332" => :high_sierra
     sha256 "34f45a837165040e86890a9456549329bb3dcd7164faa6c633df64c7cc133fc0" => :sierra
     sha256 "2d32436ed693d16d1773278314c4e2dd4e19970aa6a32dde9cf4dfdf6614b852" => :el_capitan

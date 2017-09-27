@@ -54,30 +54,30 @@ class VtkAT510 < Formula
   head "http://vtk.org/VTK.git", :branch => "release-5.10"
 
   stable do
-    url "https://donn8mmazi9jw.cloudfront.net/mirror/vtk-5.10.1.tar.gz"
+    url "https://drake-homebrew.csail.mit.edu/mirror/vtk-5.10.1.tar.gz"
     sha256 "f1a240c1f5f0d84e27b57e962f8e4a78b166b25bf4003ae16def9874947ebdbb"
 
     patch do
       # Apply upstream patches for C++11 mode.
-      url "https://donn8mmazi9jw.cloudfront.net/patches/vtk-5.10.1-cxx11-patch.diff"
+      url "https://drake-homebrew.csail.mit.edu/patches/vtk-5.10.1-cxx11-patch.diff"
       sha256 "b5946abb41c3d6ede33df636fa1621bbb86c4092cdae7032e3fdc63a5478f03d"
     end
 
     patch do
       # Do not link against libpython when possible.
-      url "https://donn8mmazi9jw.cloudfront.net/patches/vtk-5.10.1-optional-python-link.patch"
+      url "https://drake-homebrew.csail.mit.edu/patches/vtk-5.10.1-optional-python-link.patch"
       sha256 "3e2d0ad1278750808281abc3033536ddc159cfd7e13176c28012337a82a95885"
     end
 
     patch do
       # Fix bug in Wrapping/Python/setup_install_paths.py: http://vtk.org/Bug/view.php?id=13699
-      url "https://donn8mmazi9jw.cloudfront.net/patches/vtk-5.10.1-setup-install-paths-patch.diff"
+      url "https://drake-homebrew.csail.mit.edu/patches/vtk-5.10.1-setup-install-paths-patch.diff"
       sha256 "3b37d95ddbbe8bc393011cbf0731e76572d0020c7f894f005283d31c6b648f8d"
     end
   end
 
   bottle do
-    root_url "https://donn8mmazi9jw.cloudfront.net/bottles"
+    root_url "https://drake-homebrew.csail.mit.edu/bottles"
     sha256 "18061f6e8703bc166d53f6b47b3581895848dbeaa1895bb948d343b689b017d1" => :sierra
     sha256 "a2cf31981de7b8b39ecf87c2eedc83ad4af0e5db6fdd665b02c2abcc8c99d5a3" => :el_capitan
     sha256 "5c491c5f3b2495d49a6abba15522b443d606a9dec0f0d7d1884ee973f9bd3fd6" => :yosemite

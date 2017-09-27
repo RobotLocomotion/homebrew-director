@@ -54,24 +54,24 @@ class VtkAT63 < Formula
   head "https://gitlab.kitware.com/vtk/vtk.git", :branch => "release-6.3"
 
   stable do
-    url "https://donn8mmazi9jw.cloudfront.net/mirror/vtk-6.3.0.tar.gz"
+    url "https://drake-homebrew.csail.mit.edu/mirror/vtk-6.3.0.tar.gz"
     sha256 "92a493354c5fa66bea73b5fc014154af5d9f3f6cee8d20a826f4cd5d4b0e8a5e"
 
     patch do
       # Do not require Qt WebKit.
-      url "https://donn8mmazi9jw.cloudfront.net/patches/vtk-6.3.0-optional-qt-webkit.patch"
+      url "https://drake-homebrew.csail.mit.edu/patches/vtk-6.3.0-optional-qt-webkit.patch"
       sha256 "2e0563e178c0a57cc845cf8c20de8fffb27e09c09055be0cb2eb03223ebe5a6c"
     end
 
     patch do
       # Do not link against libpython when possible.
-      url "https://donn8mmazi9jw.cloudfront.net/patches/vtk-6.3.0-optional-python-link.patch"
+      url "https://drake-homebrew.csail.mit.edu/patches/vtk-6.3.0-optional-python-link.patch"
       sha256 "08389ed44c19416c0780d4a898afb0d96c8b38b1089661b5bcef1146ffafa0d3"
     end
   end
 
   bottle do
-    root_url "https://donn8mmazi9jw.cloudfront.net/bottles"
+    root_url "https://drake-homebrew.csail.mit.edu/bottles"
     sha256 "56c52461044dabe0979912c5c909211086b2e056f1bcc05a4a6d39ddb287f3ef" => :high_sierra
     sha256 "33b2f66296fcbb0cd9d4e31de80005b0409a881d26cdc4e1c46cab80568dd232" => :sierra
     sha256 "664abe9c681ba617f52aacd1d41a077e89651ba8b6a95ec8588b5b157c402049" => :el_capitan

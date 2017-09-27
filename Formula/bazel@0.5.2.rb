@@ -54,19 +54,19 @@ class BazelAT052 < Formula
   head "https://github.com/bazelbuild/bazel.git"
 
   stable do
-    url "https://donn8mmazi9jw.cloudfront.net/mirror/bazel-0.5.2.tar.gz"
+    url "https://drake-homebrew.csail.mit.edu/mirror/bazel-0.5.2.tar.gz"
     sha256 "5c707d37b9eae3833a32b30cd2f7e1aaf8ed38e4d0b8417880c33008a191a1ea"
 
     patch do
       # Fix failure on Yosemite related to mktemp.
-      url "https://donn8mmazi9jw.cloudfront.net/patches/bazel-0.5.2-mktemp.patch"
+      url "https://drake-homebrew.csail.mit.edu/patches/bazel-0.5.2-mktemp.patch"
       sha256 "704dff309fa2f6ee5304f72fcbe6d2576326e1bb8e1e41385dc02d773ee35665"
     end
   end
 
   bottle do
     cellar :any_skip_relocation
-    root_url "https://donn8mmazi9jw.cloudfront.net/bottles"
+    root_url "https://drake-homebrew.csail.mit.edu/bottles"
     sha256 "bdbc023fc2d56408a08f5642ecb531cd4181a2a4c220b0fcaf0b38d6486b892a" => :high_sierra
     sha256 "cb33f3dca6a43d6f7d026f385d55dacd84e1549c129a1dacbc6fca9d04de10af" => :sierra
     sha256 "696490a82fdb633133b7d13fb92075cf2c8c41da41bab75537b48be72ef4a576" => :el_capitan
