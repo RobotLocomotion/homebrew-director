@@ -56,7 +56,12 @@ class Ipopt < Formula
   head "https://projects.coin-or.org/svn/Ipopt/trunk", :using => :svn
 
   bottle do
+    cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "7a2053b09d66a3f5c79974947dee4ebc8ca18ec0820839f7d5b652e69c2570e0" => :high_sierra
+    sha256 "c001f28a672b7c145191b65094d4bccfc60b2d0751a3c737dc2e27a4483e913c" => :sierra
+    sha256 "051142d375a22a96c752a5aea878d51b1bec6fcd035313905115322886ed1d7c" => :el_capitan
+    sha256 "c9564e6f419d5bd041b41e34a87329379a78d5012ed6303765ec2e44057718ff" => :yosemite
   end
 
   depends_on "pkg-config" => :build
