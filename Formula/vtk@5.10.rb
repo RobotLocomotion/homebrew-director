@@ -1,4 +1,4 @@
-# Copyright 2012-2017 Robot Locomotion Group @ CSAIL. All rights reserved.
+# Copyright 2012-2018 Robot Locomotion Group @ CSAIL. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -25,7 +25,7 @@
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# Copyright 2009-2017 Homebrew contributors.
+# Copyright 2009-2018 Homebrew contributors.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -80,7 +80,6 @@ class VtkAT510 < Formula
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
     sha256 "18061f6e8703bc166d53f6b47b3581895848dbeaa1895bb948d343b689b017d1" => :sierra
     sha256 "a2cf31981de7b8b39ecf87c2eedc83ad4af0e5db6fdd665b02c2abcc8c99d5a3" => :el_capitan
-    sha256 "5c491c5f3b2495d49a6abba15522b443d606a9dec0f0d7d1884ee973f9bd3fd6" => :yosemite
   end
 
   keg_only :versioned_formula

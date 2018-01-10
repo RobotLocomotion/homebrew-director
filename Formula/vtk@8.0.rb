@@ -1,4 +1,4 @@
-# Copyright 2012-2017 Robot Locomotion Group @ CSAIL. All rights reserved.
+# Copyright 2012-2018 Robot Locomotion Group @ CSAIL. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -25,7 +25,7 @@
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# Copyright 2009-2017 Homebrew contributors.
+# Copyright 2009-2018 Homebrew contributors.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -69,7 +69,6 @@ class VtkAT80 < Formula
     sha256 "01fa8d647f935d719a3a4a45cc079dacff129a2497066b528e81dda4a39e2cf0" => :high_sierra
     sha256 "d3699055616a77fb8f9176a42d5f4d886f61d7df187ee5bc713e03fdad5ceabc" => :sierra
     sha256 "88d184a72077b268d8c495ef9d90839b2f1d906d801e5cfea93110566a35719a" => :el_capitan
-    sha256 "23b1ca1058dcdf3f7124a22c865df74b1069893bf5a73c681ab96994e3d37b92" => :yosemite
   end
 
   keg_only :versioned_formula
