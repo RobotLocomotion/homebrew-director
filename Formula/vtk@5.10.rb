@@ -49,7 +49,7 @@
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 class VtkAT510 < Formula
-  desc "Toolkit for 3D computer graphics, image processing, and visualization."
+  desc "Toolkit for 3D computer graphics, image processing, and visualization"
   homepage "http://www.vtk.org/"
   head "http://vtk.org/VTK.git", :branch => "release-5.10"
 
@@ -86,12 +86,12 @@ class VtkAT510 < Formula
 
   option :cxx11
 
-  depends_on :python => :recommended
   depends_on "cmake" => :build
   depends_on "hdf5"
   depends_on "jpeg"
   depends_on "libpng"
   depends_on "libtiff"
+  depends_on "python" => :recommended
   depends_on "qt@4" => :recommended # brew tap cartr/qt4
 
   def install
@@ -149,9 +149,13 @@ class VtkAT510 < Formula
       system "make"
       system "make", "install"
 
-      inreplace "#{lib}/vtk-5.10/VTKConfig.cmake", "#{HOMEBREW_CELLAR}/hdf5/#{Formula["hdf5"].installed_version}/include", "#{Formula["hdf5"].opt_include}"
+      inreplace "#{lib}/vtk-5.10/VTKConfig.cmake",
+        "#{HOMEBREW_CELLAR}/hdf5/#{Formula["hdf5"].installed_version}/include",
+        Formula["hdf5"].opt_include.to_s
       if build.with? "python"
-        inreplace "#{lib}/vtk-5.10/VTKConfig.cmake", "#{HOMEBREW_CELLAR}/python/#{Formula["python"].installed_version}/Frameworks", "#{Formula["python"].opt_prefix}/Frameworks"
+        inreplace "#{lib}/vtk-5.10/VTKConfig.cmake",
+          "#{HOMEBREW_CELLAR}/python/#{Formula["python"].installed_version}/Frameworks",
+          "#{Formula["python"].opt_prefix}/Frameworks"
       end
       inreplace "#{lib}/vtk-5.10/VTKConfig.cmake", prefix, opt_prefix
     end

@@ -49,7 +49,7 @@
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 class VtkAT71 < Formula
-  desc "Toolkit for 3D computer graphics, image processing, and visualization."
+  desc "Toolkit for 3D computer graphics, image processing, and visualization"
   homepage "http://www.vtk.org/"
   head "https://gitlab.kitware.com/vtk/vtk.git"
 
@@ -75,8 +75,6 @@ class VtkAT71 < Formula
 
   option :cxx11
 
-  depends_on :python => :recommended
-  depends_on :python3 => :optional
   depends_on "cmake" => :build
   depends_on "freetype"
   depends_on "hdf5"
@@ -86,6 +84,8 @@ class VtkAT71 < Formula
   depends_on "libpng"
   depends_on "libtiff"
   depends_on "netcdf"
+  depends_on "python" => :recommended
+  depends_on "python3" => :optional
   depends_on "qt" => :recommended
   depends_on "theora"
 
@@ -159,11 +159,17 @@ class VtkAT71 < Formula
       system "make"
       system "make", "install"
 
-      inreplace "#{lib}/cmake/vtk-7.1/Modules/vtkhdf5.cmake", "#{HOMEBREW_CELLAR}/hdf5/#{Formula["hdf5"].installed_version}/include", "#{Formula["hdf5"].opt_include}"
+      inreplace "#{lib}/cmake/vtk-7.1/Modules/vtkhdf5.cmake",
+        "#{HOMEBREW_CELLAR}/hdf5/#{Formula["hdf5"].installed_version}/include",
+        Formula["hdf5"].opt_include.to_s
       if build.with?("python")
-        inreplace "#{lib}/cmake/vtk-7.1/Modules/vtkPython.cmake", "#{HOMEBREW_CELLAR}/python/#{Formula["python"].installed_version}/Frameworks", "#{Formula["python"].opt_prefix}/Frameworks"
+        inreplace "#{lib}/cmake/vtk-7.1/Modules/vtkPython.cmake",
+          "#{HOMEBREW_CELLAR}/python/#{Formula["python"].installed_version}/Frameworks",
+          "#{Formula["python"].opt_prefix}/Frameworks"
       else
-        inreplace "#{lib}/cmake/vtk-7.1/Modules/vtkPython.cmake", "#{HOMEBREW_CELLAR}/python3/#{Formula["python3"].installed_version}/Frameworks", "#{Formula["python3"].opt_prefix}/Frameworks"
+        inreplace "#{lib}/cmake/vtk-7.1/Modules/vtkPython.cmake",
+          "#{HOMEBREW_CELLAR}/python3/#{Formula["python3"].installed_version}/Frameworks",
+          "#{Formula["python3"].opt_prefix}/Frameworks"
       end
       inreplace "#{lib}/cmake/vtk-7.1/VTKConfig.cmake", prefix, opt_prefix
     end

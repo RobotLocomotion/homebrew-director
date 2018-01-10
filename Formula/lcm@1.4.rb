@@ -26,10 +26,9 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 class LcmAT14 < Formula
-  desc "Lightweight communications and marshalling."
+  desc "Lightweight communications and marshalling"
   homepage "https://lcm-proj.github.io/"
   url "https://drake-homebrew.csail.mit.edu/mirror/lcm-1.3.95.20171103.tar.gz"
-  version "1.3.95.20171103"
   sha256 "fd0afaf29954c26a725626b7bd24e873e303e84bb62dfcc05162be3f5ae30cd1"
   head "https://github.com/lcm-proj/lcm.git"
 
@@ -43,14 +42,14 @@ class LcmAT14 < Formula
 
   keg_only :versioned_formula
 
-  depends_on "cmake" => :build
   depends_on :java
-  depends_on :python => :recommended
-  depends_on :python3 => :optional
+  depends_on "cmake" => :build
   depends_on "glib"
+  depends_on "python" => :recommended
+  depends_on "python3" => :optional
 
   def install
-    args = std_cmake_args + %W[
+    args = std_cmake_args + %w[
       -DLCM_ENABLE_EXAMPLES=OFF
       -DLCM_ENABLE_TESTS=OFF
       -DLCM_INSTALL_M4MACROS=OFF

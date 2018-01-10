@@ -95,7 +95,7 @@ class BazelAT052 < Formula
   test do
     touch testpath/"WORKSPACE"
 
-    (testpath/"ProjectRunner.java").write <<-EOS.undent
+    (testpath/"ProjectRunner.java").write <<~EOS
       public class ProjectRunner {
         public static void main(String args[]) {
           System.out.println("Hi!");
@@ -103,7 +103,7 @@ class BazelAT052 < Formula
       }
     EOS
 
-    (testpath/"BUILD").write <<-EOS.undent
+    (testpath/"BUILD").write <<~EOS
       java_binary(
         name = "bazel-test",
         srcs = glob(["*.java"]),
