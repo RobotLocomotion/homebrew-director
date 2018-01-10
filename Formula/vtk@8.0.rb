@@ -187,7 +187,7 @@ class VtkAT80 < Formula
         }
       EOS
 
-    system ENV.cxx, "Version.cpp", "-I#{opt_include}/vtk-8.0"
+    system ENV.cxx, "-std=c++11", "Version.cpp", "-I#{opt_include}/vtk-8.0"
     system "./a.out"
     system "#{bin}/vtkpython", "-c", "exit()"
   end
