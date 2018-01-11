@@ -50,7 +50,7 @@
 
 class VtkAT63 < Formula
   desc "Toolkit for 3D computer graphics, image processing, and visualization"
-  homepage "http://www.vtk.org/"
+  homepage "https://www.vtk.org/"
   head "https://gitlab.kitware.com/vtk/vtk.git", :branch => "release-6.3"
 
   stable do
@@ -144,7 +144,7 @@ class VtkAT63 < Formula
         else
           odie "No libpythonX.Y.{dylib|a} file found!"
         end
-        # Set the prefix for the python bindings to the Cellar
+        # Set the prefix for the python bindings to the Cellar.
         args << "-DVTK_INSTALL_PYTHON_MODULE_DIR='#{py_site_packages}/'"
       end
 
@@ -166,15 +166,15 @@ class VtkAT63 < Formula
   end
 
   test do
-    (testpath/"Version.cpp").write <<-EOS
-        #include <vtkVersion.h>
-        #include <assert.h>
-        int main() {
-          assert(vtkVersion::GetVTKMajorVersion()==6);
-          assert(vtkVersion::GetVTKMinorVersion()==3);
-          return 0;
-        }
-      EOS
+    (testpath/"Version.cpp").write <<~EOS
+      #include <vtkVersion.h>
+      #include <assert.h>
+      int main() {
+        assert(vtkVersion::GetVTKMajorVersion()==6);
+        assert(vtkVersion::GetVTKMinorVersion()==3);
+        return 0;
+      }
+    EOS
 
     system ENV.cxx, "Version.cpp", "-I#{opt_include}/vtk-6.3"
     system "./a.out"

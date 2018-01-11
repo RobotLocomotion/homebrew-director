@@ -50,7 +50,7 @@
 
 class VtkAT80 < Formula
   desc "Toolkit for 3D computer graphics, image processing, and visualization"
-  homepage "http://www.vtk.org/"
+  homepage "https://www.vtk.org/"
   head "https://gitlab.kitware.com/vtk/vtk.git"
 
   stable do
@@ -124,7 +124,7 @@ class VtkAT80 < Formula
 
     mkdir "build" do
       if build.with?("python3") && build.with?("python")
-        # VTK Does not support building both python 2 and 3 versions
+        # VTK Does not support building both python 2 and 3 versions.
         odie "VTK: Does not support building both python 2 and 3 wrappers"
       elsif build.with?("python") || build.with?("python3")
         python_executable = `which python2`.strip if build.with? "python"
@@ -148,7 +148,7 @@ class VtkAT80 < Formula
         else
           odie "No libpythonX.Y.{dylib|a} file found!"
         end
-        # Set the prefix for the python bindings to the Cellar
+        # Set the prefix for the python bindings to the Cellar.
         args << "-DVTK_INSTALL_PYTHON_MODULE_DIR='#{py_site_packages}/'"
       end
 
@@ -162,7 +162,7 @@ class VtkAT80 < Formula
         Formula["hdf5"].opt_include.to_s
       if build.with?("python") || build.with?("python3")
         inreplace "#{lib}/cmake/vtk-8.0/Modules/vtkPython.cmake", lib, opt_lib
-        if build.with?("python")
+        if build.with? "python"
           inreplace "#{lib}/cmake/vtk-8.0/Modules/vtkPython.cmake",
             "#{HOMEBREW_CELLAR}/python/#{Formula["python"].installed_version}/Frameworks",
             "#{Formula["python"].opt_prefix}/Frameworks"
@@ -177,15 +177,15 @@ class VtkAT80 < Formula
   end
 
   test do
-    (testpath/"Version.cpp").write <<-EOS
-        #include <vtkVersion.h>
-        #include <assert.h>
-        int main() {
-          assert(vtkVersion::GetVTKMajorVersion()==8);
-          assert(vtkVersion::GetVTKMinorVersion()==0);
-          return 0;
-        }
-      EOS
+    (testpath/"Version.cpp").write <<~EOS
+      #include <vtkVersion.h>
+      #include <assert.h>
+      int main() {
+        assert(vtkVersion::GetVTKMajorVersion()==8);
+        assert(vtkVersion::GetVTKMinorVersion()==0);
+        return 0;
+      }
+    EOS
 
     system ENV.cxx, "-std=c++11", "Version.cpp", "-I#{opt_include}/vtk-8.0"
     system "./a.out"

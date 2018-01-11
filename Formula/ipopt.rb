@@ -63,9 +63,9 @@ class Ipopt < Formula
     sha256 "051142d375a22a96c752a5aea878d51b1bec6fcd035313905115322886ed1d7c" => :el_capitan
   end
 
-  depends_on "pkg-config" => :build
   depends_on "gcc"
   depends_on "mumps@5.1"
+  depends_on "pkg-config" => :build
 
   def install
     ENV.delete("MPICC")

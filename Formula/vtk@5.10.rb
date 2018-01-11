@@ -50,8 +50,8 @@
 
 class VtkAT510 < Formula
   desc "Toolkit for 3D computer graphics, image processing, and visualization"
-  homepage "http://www.vtk.org/"
-  head "http://vtk.org/VTK.git", :branch => "release-5.10"
+  homepage "https://www.vtk.org/"
+  head "https://vtk.org/VTK.git", :branch => "release-5.10"
 
   stable do
     url "https://drake-homebrew.csail.mit.edu/mirror/vtk-5.10.1.tar.gz"
@@ -162,15 +162,15 @@ class VtkAT510 < Formula
   end
 
   test do
-    (testpath/"Version.cpp").write <<-EOS
-        #include <vtkVersion.h>
-        #include <assert.h>
-        int main() {
-          assert(vtkVersion::GetVTKMajorVersion()==5);
-          assert(vtkVersion::GetVTKMinorVersion()==10);
-          return 0;
-        }
-      EOS
+    (testpath/"Version.cpp").write <<~EOS
+      #include <vtkVersion.h>
+      #include <assert.h>
+      int main() {
+        assert(vtkVersion::GetVTKMajorVersion()==5);
+        assert(vtkVersion::GetVTKMinorVersion()==10);
+        return 0;
+      }
+    EOS
 
     system ENV.cxx, "Version.cpp", "-I#{opt_include}/vtk-5.10"
     system "./a.out"

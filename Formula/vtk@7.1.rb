@@ -50,7 +50,7 @@
 
 class VtkAT71 < Formula
   desc "Toolkit for 3D computer graphics, image processing, and visualization"
-  homepage "http://www.vtk.org/"
+  homepage "https://www.vtk.org/"
   head "https://gitlab.kitware.com/vtk/vtk.git"
 
   stable do
@@ -115,18 +115,11 @@ class VtkAT71 < Formula
       args << "-DVTK_Group_Qt=ON"
     end
 
-    unless MacOS::CLT.installed?
-      # We are facing an Xcode-only installation, and we have to keep
-      # vtk from using its internal Tk headers (that differ from OSX's).
-      args << "-DTK_INCLUDE_PATH:PATH=#{MacOS.sdk_path}/System/Library/Frameworks/Tk.framework/Headers"
-      args << "-DTK_INTERNAL_PATH:PATH=#{MacOS.sdk_path}/System/Library/Frameworks/Tk.framework/Headers/tk-private"
-    end
-
     ENV.cxx11 if build.cxx11?
 
     mkdir "build" do
       if build.with?("python3") && build.with?("python")
-        # VTK Does not support building both python 2 and 3 versions
+        # VTK Does not support building both python 2 and 3 versions.
         odie "VTK: Does not support building both python 2 and 3 wrappers"
       elsif build.with?("python") || build.with?("python3")
         python_executable = `which python2`.strip if build.with? "python"
@@ -150,7 +143,7 @@ class VtkAT71 < Formula
         else
           odie "No libpythonX.Y.{dylib|a} file found!"
         end
-        # Set the prefix for the python bindings to the Cellar
+        # Set the prefix for the python bindings to the Cellar.
         args << "-DVTK_INSTALL_PYTHON_MODULE_DIR='#{py_site_packages}/'"
       end
 
@@ -162,11 +155,11 @@ class VtkAT71 < Formula
       inreplace "#{lib}/cmake/vtk-7.1/Modules/vtkhdf5.cmake",
         "#{HOMEBREW_CELLAR}/hdf5/#{Formula["hdf5"].installed_version}/include",
         Formula["hdf5"].opt_include.to_s
-      if build.with?("python")
+      if build.with? "python"
         inreplace "#{lib}/cmake/vtk-7.1/Modules/vtkPython.cmake",
           "#{HOMEBREW_CELLAR}/python/#{Formula["python"].installed_version}/Frameworks",
           "#{Formula["python"].opt_prefix}/Frameworks"
-      else
+      elsif build.with? "python3"
         inreplace "#{lib}/cmake/vtk-7.1/Modules/vtkPython.cmake",
           "#{HOMEBREW_CELLAR}/python3/#{Formula["python3"].installed_version}/Frameworks",
           "#{Formula["python3"].opt_prefix}/Frameworks"
@@ -176,15 +169,15 @@ class VtkAT71 < Formula
   end
 
   test do
-    (testpath/"Version.cpp").write <<-EOS
-        #include <vtkVersion.h>
-        #include <assert.h>
-        int main() {
-          assert(vtkVersion::GetVTKMajorVersion()==7);
-          assert(vtkVersion::GetVTKMinorVersion()==1);
-          return 0;
-        }
-      EOS
+    (testpath/"Version.cpp").write <<~EOS
+      #include <vtkVersion.h>
+      #include <assert.h>
+      int main() {
+        assert(vtkVersion::GetVTKMajorVersion()==7);
+        assert(vtkVersion::GetVTKMinorVersion()==1);
+        return 0;
+      }
+    EOS
 
     system ENV.cxx, "Version.cpp", "-I#{opt_include}/vtk-7.1"
     system "./a.out"

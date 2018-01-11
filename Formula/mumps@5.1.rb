@@ -70,16 +70,18 @@ class MumpsAT51 < Formula
   def install
     cp "Make.inc/Makefile.G95.SEQ", "Makefile.inc"
 
-    make_args = ["AR=#{ENV["FC"]} -dynamiclib -Wl,-install_name -Wl,#{lib}/$(notdir $@) -undefined dynamic_lookup -o",
-                 "CC=#{ENV["CC"]} -fPIC",
-                 "CDEFS=-DAdd_",
-                 "FC=#{ENV["FC"]} -fPIC",
-                 "FL=#{ENV["FC"]} -fPIC",
-                 "LIBBLAS=-L#{Formula["veclibfort"].opt_lib} -lvecLibFort",
-                 "LIBEXT=.dylib",
-                 "OPTF=-O",
-                 "ORDERINGSF=-Dpord",
-                 "RANLIB=echo"]
+    make_args = [
+      "AR=#{ENV["FC"]} -dynamiclib -Wl,-install_name -Wl,#{lib}/$(notdir $@) -undefined dynamic_lookup -o",
+      "CC=#{ENV["CC"]} -fPIC",
+      "CDEFS=-DAdd_",
+      "FC=#{ENV["FC"]} -fPIC",
+      "FL=#{ENV["FC"]} -fPIC",
+      "LIBBLAS=-L#{Formula["veclibfort"].opt_lib} -lvecLibFort",
+      "LIBEXT=.dylib",
+      "OPTF=-O",
+      "ORDERINGSF=-Dpord",
+      "RANLIB=echo"
+    ]
 
     ENV.deparallelize
     system "make", "alllib", *make_args
