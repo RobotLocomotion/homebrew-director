@@ -82,4 +82,8 @@ class LcmAT14 < Formula
       system "make", "install"
     end
   end
+
+  test do
+    system "#{bin}/lcm-gen", "--version"
+  end
 end
