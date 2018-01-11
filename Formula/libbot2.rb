@@ -28,18 +28,9 @@
 class Libbot2 < Formula
   desc "Libraries, tools, and algorithms for robotics research"
   homepage "https://github.com/RobotLocomotion/libbot2/"
+  url "https://drake-homebrew.csail.mit.edu/mirror/libbot2-0.0.1.20180111.tar.gz"
+  sha256 "72a2fb7dd59732a249867a3177fa9d75fc7ac14cbf50a1cc4f4eaac00def83b0"
   head "https://github.com/RobotLocomotion/libbot2.git"
-
-  stable do
-    url "https://drake-homebrew.csail.mit.edu/mirror/libbot2-0.0.1.20180108.tar.gz"
-    sha256 "3a054e069554764b21080b4a7e9344975205f1079008e6d7f17407180f29401c"
-
-    patch do
-      # Install python files to site-packages instead of dist-packages.
-      url "https://drake-homebrew.csail.mit.edu/patches/libbot2-0.0.1-python-site-packages.patch"
-      sha256 "26a5f58d07c79f3d187864aaee9b9eca33d66815dcde7fae79baa3622909e272"
-    end
-  end
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
@@ -57,6 +48,8 @@ class Libbot2 < Formula
   depends_on "lcm@1.4"
   depends_on "libpng"
   depends_on "pkg-config" => :build
+  depends_on "pygobject" if build.with? "python"
+  depends_on "pygtk" if build.with? "python"
   depends_on "python" => :recommended
   depends_on "python3" => :optional
 
@@ -82,6 +75,9 @@ class Libbot2 < Formula
       system "make", "install"
     end
 
+    inreplace "#{bin}/bot-log2mat", prefix, opt_prefix
+    inreplace "#{bin}/bot-procman-sheriff", prefix, opt_prefix
+    inreplace "#{bin}/bot-spy", prefix, opt_prefix
     inreplace "#{lib}/cmake/bot2-core/bot2-core-targets-release.cmake", prefix, opt_prefix
     inreplace "#{lib}/cmake/bot2-frames/bot2-frames-targets-release.cmake", prefix, opt_prefix
     inreplace "#{lib}/cmake/bot2-lcmgl/bot2-lcmgl-targets-release.cmake", prefix, opt_prefix
