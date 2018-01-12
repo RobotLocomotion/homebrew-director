@@ -29,7 +29,7 @@ class Libbot2 < Formula
   desc "Libraries, tools, and algorithms for robotics research"
   homepage "https://github.com/RobotLocomotion/libbot2/"
   url "https://drake-homebrew.csail.mit.edu/mirror/libbot2-0.0.1.20180111.tar.gz"
-  sha256 "72a2fb7dd59732a249867a3177fa9d75fc7ac14cbf50a1cc4f4eaac00def83b0"
+  sha256 "6125bccbaca3cea632b3e9bd3bf44da05623aab61e9de7d74bd0153c5f1c210e"
   head "https://github.com/RobotLocomotion/libbot2.git"
 
   bottle do
@@ -48,26 +48,18 @@ class Libbot2 < Formula
   depends_on "lcm@1.4"
   depends_on "libpng"
   depends_on "pkg-config" => :build
-  depends_on "pygobject" if build.with? "python"
-  depends_on "pygtk" if build.with? "python"
-  depends_on "python" => :recommended
-  depends_on "python3" => :optional
+  depends_on "pygobject"
+  depends_on "pygtk"
+  depends_on "python"
 
   def install
-    args = std_cmake_args + %w[
+    python_executable = `which python2`.strip
+
+    args = std_cmake_args + %W[
       -DGLUT_glut_LIBRARY=/System/Library/Frameworks/GLUT.framework
+      -DPYTHON_EXECUTABLE='#{python_executable}'
       -DWITH_BOT_VIS=OFF
     ]
-
-    if build.with?("python") && build.with?("python3")
-      odie "Building with both python and python3 is NOT supported."
-    elsif build.with?("python") || build.with?("python3")
-      python_executable = `which python2`.strip if build.with? "python"
-      python_executable = `which python3`.strip if build.with? "python3"
-      args << "-DPYTHON_EXECUTABLE='#{python_executable}'"
-    else
-      odie "Building without either python or python3 is NOT supported."
-    end
 
     mkdir "build" do
       system "cmake", *args, ".."
@@ -75,13 +67,19 @@ class Libbot2 < Formula
       system "make", "install"
     end
 
+    python_version = "python" + `#{python_executable} -c 'import sys;print(sys.version[:3])'`.chomp
+
     inreplace "#{bin}/bot-log2mat", prefix, opt_prefix
     inreplace "#{bin}/bot-procman-sheriff", prefix, opt_prefix
     inreplace "#{bin}/bot-spy", prefix, opt_prefix
-    inreplace "#{lib}/cmake/bot2-core/bot2-core-targets-release.cmake", prefix, opt_prefix
-    inreplace "#{lib}/cmake/bot2-frames/bot2-frames-targets-release.cmake", prefix, opt_prefix
-    inreplace "#{lib}/cmake/bot2-lcmgl/bot2-lcmgl-targets-release.cmake", prefix, opt_prefix
-    inreplace "#{lib}/cmake/bot2-param/bot2-param-targets-release.cmake", prefix, opt_prefix
+    inreplace "#{lib}/cmake/bot2-core/bot2-core-targets-release.cmake",
+      prefix, opt_prefix
+    inreplace "#{lib}/cmake/bot2-frames/bot2-frames-targets-release.cmake",
+      prefix, opt_prefix
+    inreplace "#{lib}/cmake/bot2-lcmgl/bot2-lcmgl-targets-release.cmake",
+      prefix, opt_prefix
+    inreplace "#{lib}/cmake/bot2-param/bot2-param-targets-release.cmake",
+      prefix, opt_prefix
     inreplace "#{lib}/pkgconfig/bot2-core.pc", prefix, opt_prefix
     inreplace "#{lib}/pkgconfig/bot2-frames.pc", prefix, opt_prefix
     inreplace "#{lib}/pkgconfig/bot2-lcmgl-client.pc", prefix, opt_prefix
@@ -92,5 +90,11 @@ class Libbot2 < Formula
     inreplace "#{lib}/pkgconfig/lcmtypes_bot2-lcmgl.pc", prefix, opt_prefix
     inreplace "#{lib}/pkgconfig/lcmtypes_bot2-param.pc", prefix, opt_prefix
     inreplace "#{lib}/pkgconfig/lcmtypes_bot2-procman.pc", prefix, opt_prefix
+    inreplace "#{lib}/#{python_version}/site-packages/bot_procman/build_prefix.py",
+      prefix, opt_prefix
+  end
+
+  test do
+    system "#{bin}/bot-log2mat", "-h"
   end
 end
