@@ -34,9 +34,9 @@ class Libbot2 < Formula
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "f43f85a8fabe91cc7db37e8a4713366fed86f0652fe272ac260f03460814cb4d" => :high_sierra
-    sha256 "3f089849157b6047bc5f3c7bc0fde70d3053edd0a5ffcbd2593b2b5dd7478123" => :sierra
-    sha256 "e86c91d6897905b10690a970e1501bc773312446647f10c478050ab617d221bf" => :el_capitan
+    sha256 "346453e4046359f5f2faac7c8c46cd2b3205014a38dcba067e4e34aebcbfbf7a" => :high_sierra
+    sha256 "ba2ac6c1f9dcb00166f62a56a676fa95c373046868029f591e25d4da79dfe202" => :sierra
+    sha256 "5e6ab7a4ceadc017aaa62f1b57faf67fc0889b0cdd66e3672de87ca2c7d3fff4" => :el_capitan
   end
 
   depends_on :java
