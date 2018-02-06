@@ -78,9 +78,9 @@ class YamlCppAT06 < Formula
   needs :cxx11
 
   def install
-    args = std_cmake_args + %W[
-       -DBUILD_SHARED_LIBS=ON
-       -DYAML_CPP_BUILD_TESTS=OFF
+    args = std_cmake_args + %w[
+      -DBUILD_SHARED_LIBS=ON
+      -DYAML_CPP_BUILD_TESTS=OFF
     ]
 
     mkdir "build" do
