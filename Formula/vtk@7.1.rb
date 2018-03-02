@@ -51,6 +51,7 @@
 class VtkAT71 < Formula
   desc "Toolkit for 3D computer graphics, image processing, and visualization"
   homepage "https://www.vtk.org/"
+  revision 1
   head "https://gitlab.kitware.com/vtk/vtk.git"
 
   stable do
@@ -84,8 +85,8 @@ class VtkAT71 < Formula
   depends_on "libpng"
   depends_on "libtiff"
   depends_on "netcdf"
-  depends_on "python" => :recommended
-  depends_on "python3" => :optional
+  depends_on "python" => :optional
+  depends_on "python@2" => :recommended
   depends_on "qt" => :recommended
   depends_on "theora"
 
@@ -118,12 +119,11 @@ class VtkAT71 < Formula
     ENV.cxx11 if build.cxx11?
 
     mkdir "build" do
-      if build.with?("python3") && build.with?("python")
-        # VTK Does not support building both python 2 and 3 versions.
-        odie "VTK: Does not support building both python 2 and 3 wrappers"
-      elsif build.with?("python") || build.with?("python3")
-        python_executable = `which python2`.strip if build.with? "python"
-        python_executable = `which python3`.strip if build.with? "python3"
+      if build.with?("python") && build.with?("python@2")
+        odie "Building with both python and python@2 is NOT supported."
+      elsif build.with?("python") || build.with?("python@2")
+        python_executable = `which python2`.strip if build.with? "python@2"
+        python_executable = `which python3`.strip if build.with? "python"
 
         python_prefix = `#{python_executable} -c 'import sys;print(sys.prefix)'`.chomp
         python_include = `#{python_executable} -c 'from distutils import sysconfig;print(sysconfig.get_python_inc(True))'`.chomp

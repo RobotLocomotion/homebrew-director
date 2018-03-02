@@ -30,6 +30,7 @@ class Libbot2 < Formula
   homepage "https://github.com/RobotLocomotion/libbot2/"
   url "https://drake-homebrew.csail.mit.edu/mirror/libbot2-0.0.1.20180111.tar.gz"
   sha256 "6125bccbaca3cea632b3e9bd3bf44da05623aab61e9de7d74bd0153c5f1c210e"
+  revision 1
   head "https://github.com/RobotLocomotion/libbot2.git"
 
   bottle do
@@ -50,7 +51,7 @@ class Libbot2 < Formula
   depends_on "pkg-config" => :build
   depends_on "pygobject"
   depends_on "pygtk"
-  depends_on "python"
+  depends_on "python@2"
 
   def install
     python_executable = `which python2`.strip

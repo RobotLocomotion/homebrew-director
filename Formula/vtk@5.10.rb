@@ -51,6 +51,7 @@
 class VtkAT510 < Formula
   desc "Toolkit for 3D computer graphics, image processing, and visualization"
   homepage "https://www.vtk.org/"
+  revision 1
   head "https://vtk.org/VTK.git", :branch => "release-5.10"
 
   stable do
@@ -91,7 +92,7 @@ class VtkAT510 < Formula
   depends_on "jpeg"
   depends_on "libpng"
   depends_on "libtiff"
-  depends_on "python" => :recommended
+  depends_on "python@2" => :recommended
   depends_on "qt@4" => :recommended # brew tap cartr/qt4
 
   def install
@@ -120,7 +121,7 @@ class VtkAT510 < Formula
     ENV.cxx11 if build.cxx11?
 
     mkdir "build" do
-      if build.with? "python"
+      if build.with? "python@2"
         python_executable = `which python2`.strip
 
         python_prefix = `#{python_executable} -c 'import sys;print(sys.prefix)'`.chomp

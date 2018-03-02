@@ -51,6 +51,7 @@
 class VtkAT63 < Formula
   desc "Toolkit for 3D computer graphics, image processing, and visualization"
   homepage "https://www.vtk.org/"
+  revision 1
   head "https://gitlab.kitware.com/vtk/vtk.git", :branch => "release-6.3"
 
   stable do
@@ -90,7 +91,7 @@ class VtkAT63 < Formula
   depends_on "libpng"
   depends_on "libtiff"
   depends_on "netcdf"
-  depends_on "python" => :recommended
+  depends_on "python@2" => :recommended
   depends_on "qt" => :recommended
   depends_on "theora"
 
@@ -123,7 +124,7 @@ class VtkAT63 < Formula
     ENV.cxx11 if build.cxx11?
 
     mkdir "build" do
-      if build.with? "python"
+      if build.with? "python@2"
         python_executable = `which python2`.strip
 
         python_prefix = `#{python_executable} -c 'import sys;print(sys.prefix)'`.chomp

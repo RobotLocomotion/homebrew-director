@@ -28,6 +28,7 @@
 class LcmAT14 < Formula
   desc "Lightweight communications and marshalling"
   homepage "https://lcm-proj.github.io/"
+  revision 1
   head "https://github.com/lcm-proj/lcm.git"
 
   stable do
@@ -54,8 +55,8 @@ class LcmAT14 < Formula
   depends_on :java
   depends_on "cmake" => :build
   depends_on "glib"
-  depends_on "python" => :recommended
-  depends_on "python3" => :optional
+  depends_on "python" => :optional
+  depends_on "python@2" => :recommended
 
   def install
     args = std_cmake_args + %w[
@@ -65,11 +66,11 @@ class LcmAT14 < Formula
       -DLCM_INSTALL_PKGCONFIG=OFF
     ]
 
-    if build.with?("python") && build.with?("python3")
-      odie "Building with both python and python3 is NOT supported."
-    elsif build.with?("python") || build.with?("python3")
-      python_executable = `which python2`.strip if build.with? "python"
-      python_executable = `which python3`.strip if build.with? "python3"
+    if build.with?("python") && build.with?("python@2")
+      odie "Building with both python and python@2 is NOT supported."
+    elsif build.with?("python") || build.with?("python@2")
+      python_executable = `which python2`.strip if build.with? "python@2"
+      python_executable = `which python3`.strip if build.with? "python"
       args << "-DLCM_ENABLE_PYTHON=ON"
       args << "-DPYTHON_EXECUTABLE='#{python_executable}'"
     else
