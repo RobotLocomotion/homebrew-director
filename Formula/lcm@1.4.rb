@@ -45,9 +45,9 @@ class LcmAT14 < Formula
   bottle do
     cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "bf07bbe5f197a34f46e263f57820f7774e5754bd766f02a5124493fa69b3b32b" => :high_sierra
-    sha256 "f648c3e3de48c6dda837364ec82126c22f393115921255984bbc0b008927b855" => :sierra
-    sha256 "36167d994f5b176aaab3aac62c99aeb73ca01bede0daa31bbbc44128e8465ec8" => :el_capitan
+    sha256 "6548dae4006e5c8223f52bece100c98ee5cf45a061ce49cf98fa3d0955574f21" => :high_sierra
+    sha256 "b7b2efadfead79ffa04b06a7d16e23298c8bcfab10286e8e396e726f89cfafe2" => :sierra
+    sha256 "11862d549a4ada676f102cf44d2811e72a51eb61461a963ae94624d46882af71" => :el_capitan
   end
 
   keg_only :versioned_formula
