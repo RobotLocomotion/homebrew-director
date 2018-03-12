@@ -28,9 +28,8 @@
 class Libbot2 < Formula
   desc "Libraries, tools, and algorithms for robotics research"
   homepage "https://github.com/RobotLocomotion/libbot2/"
-  url "https://drake-homebrew.csail.mit.edu/mirror/libbot2-0.0.1.20180111.tar.gz"
-  sha256 "6125bccbaca3cea632b3e9bd3bf44da05623aab61e9de7d74bd0153c5f1c210e"
-  revision 1
+  url "https://drake-homebrew.csail.mit.edu/mirror/libbot2-0.0.1.20180312.tar.gz"
+  sha256 "5014ce90116d230b6a1357f20e87df9eeba0d20842f7965fb2e980f642444d25"
   head "https://github.com/RobotLocomotion/libbot2.git"
 
   bottle do
@@ -48,10 +47,12 @@ class Libbot2 < Formula
   depends_on "jpeg"
   depends_on "lcm@1.4"
   depends_on "libpng"
+  depends_on "numpy"
   depends_on "pkg-config" => :build
   depends_on "pygobject"
   depends_on "pygtk"
   depends_on "python@2"
+  depends_on "scipy"
 
   def install
     python_executable = `which python2`.strip
@@ -73,14 +74,6 @@ class Libbot2 < Formula
     inreplace "#{bin}/bot-log2mat", prefix, opt_prefix
     inreplace "#{bin}/bot-procman-sheriff", prefix, opt_prefix
     inreplace "#{bin}/bot-spy", prefix, opt_prefix
-    inreplace "#{lib}/cmake/bot2-core/bot2-core-targets-release.cmake",
-      prefix, opt_prefix
-    inreplace "#{lib}/cmake/bot2-frames/bot2-frames-targets-release.cmake",
-      prefix, opt_prefix
-    inreplace "#{lib}/cmake/bot2-lcmgl/bot2-lcmgl-targets-release.cmake",
-      prefix, opt_prefix
-    inreplace "#{lib}/cmake/bot2-param/bot2-param-targets-release.cmake",
-      prefix, opt_prefix
     inreplace "#{lib}/pkgconfig/bot2-core.pc", prefix, opt_prefix
     inreplace "#{lib}/pkgconfig/bot2-frames.pc", prefix, opt_prefix
     inreplace "#{lib}/pkgconfig/bot2-lcmgl-client.pc", prefix, opt_prefix
