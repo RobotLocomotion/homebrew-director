@@ -51,7 +51,7 @@
 class VtkAT71 < Formula
   desc "Toolkit for 3D computer graphics, image processing, and visualization"
   homepage "https://www.vtk.org/"
-  revision 1
+  revision 2
   head "https://gitlab.kitware.com/vtk/vtk.git"
 
   stable do
@@ -159,10 +159,10 @@ class VtkAT71 < Formula
         inreplace "#{lib}/cmake/vtk-7.1/Modules/vtkPython.cmake",
           "#{HOMEBREW_CELLAR}/python/#{Formula["python"].installed_version}/Frameworks",
           "#{Formula["python"].opt_prefix}/Frameworks"
-      elsif build.with? "python3"
+      elsif build.with? "python@2"
         inreplace "#{lib}/cmake/vtk-7.1/Modules/vtkPython.cmake",
-          "#{HOMEBREW_CELLAR}/python3/#{Formula["python3"].installed_version}/Frameworks",
-          "#{Formula["python3"].opt_prefix}/Frameworks"
+          "#{HOMEBREW_CELLAR}/python@2/#{Formula["python@2"].installed_version}/Frameworks",
+          "#{Formula["python@2"].opt_prefix}/Frameworks"
       end
       inreplace "#{lib}/cmake/vtk-7.1/VTKConfig.cmake", prefix, opt_prefix
     end

@@ -51,7 +51,7 @@
 class VtkAT63 < Formula
   desc "Toolkit for 3D computer graphics, image processing, and visualization"
   homepage "https://www.vtk.org/"
-  revision 1
+  revision 2
   head "https://gitlab.kitware.com/vtk/vtk.git", :branch => "release-6.3"
 
   stable do
@@ -157,10 +157,10 @@ class VtkAT63 < Formula
       inreplace "#{lib}/cmake/vtk-6.3/Modules/vtkhdf5.cmake",
         "#{HOMEBREW_CELLAR}/hdf5/#{Formula["hdf5"].installed_version}/include",
         Formula["hdf5"].opt_include.to_s
-      if build.with? "python"
+      if build.with? "python@2"
         inreplace "#{lib}/cmake/vtk-6.3/Modules/vtkPython.cmake",
-          "#{HOMEBREW_CELLAR}/python/#{Formula["python"].installed_version}/Frameworks",
-          "#{Formula["python"].opt_prefix}/Frameworks"
+          "#{HOMEBREW_CELLAR}/python@2/#{Formula["python@2"].installed_version}/Frameworks",
+          "#{Formula["python@2"].opt_prefix}/Frameworks"
       end
       inreplace "#{lib}/cmake/vtk-6.3/VTKConfig.cmake", prefix, opt_prefix
     end

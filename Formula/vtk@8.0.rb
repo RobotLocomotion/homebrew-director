@@ -51,7 +51,7 @@
 class VtkAT80 < Formula
   desc "Toolkit for 3D computer graphics, image processing, and visualization"
   homepage "https://www.vtk.org/"
-  revision 1
+  revision 2
   head "https://gitlab.kitware.com/vtk/vtk.git"
 
   stable do
@@ -160,7 +160,7 @@ class VtkAT80 < Formula
       inreplace "#{lib}/cmake/vtk-8.0/Modules/vtkhdf5.cmake",
         "#{HOMEBREW_CELLAR}/hdf5/#{Formula["hdf5"].installed_version}/include",
         Formula["hdf5"].opt_include.to_s
-      if build.with?("python") || build.with?("python3")
+      if build.with?("python") || build.with?("python@2")
         inreplace "#{lib}/cmake/vtk-8.0/Modules/vtkPython.cmake", lib, opt_lib
         if build.with? "python"
           inreplace "#{lib}/cmake/vtk-8.0/Modules/vtkPython.cmake",
@@ -168,8 +168,8 @@ class VtkAT80 < Formula
             "#{Formula["python"].opt_prefix}/Frameworks"
         else
           inreplace "#{lib}/cmake/vtk-8.0/Modules/vtkPython.cmake",
-            "#{HOMEBREW_CELLAR}/python3/#{Formula["python3"].installed_version}/Frameworks",
-            "#{Formula["python3"].opt_prefix}/Frameworks"
+            "#{HOMEBREW_CELLAR}/python@2/#{Formula["python@2"].installed_version}/Frameworks",
+            "#{Formula["python@2"].opt_prefix}/Frameworks"
         end
       end
       inreplace "#{lib}/cmake/vtk-8.0/VTKConfig.cmake", prefix, opt_prefix
