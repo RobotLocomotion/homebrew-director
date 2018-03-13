@@ -51,14 +51,13 @@
 class BazelAT010 < Formula
   desc "Google's own build tool"
   homepage "https://bazel.build/"
-  url "https://drake-homebrew.csail.mit.edu/mirror/bazel-0.10.0rc2.tar.gz"
-  sha256 "b34736255ec2ff8328a188d1fa0fc7ca7101baf9c88d5eb173e390e0d3881cd3"
+  url "https://drake-homebrew.csail.mit.edu/mirror/bazel-0.10.1.tar.gz"
+  sha256 "45216444fbfac8a753636d5614df0e9bbec2377b4d00c15384f6d9623812eb10"
   head "https://github.com/bazelbuild/bazel.git"
 
   bottle do
     cellar :any_skip_relocation
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "50a2469435721a68c67145b9410bbf5a37779889f58e0b0a0128322089eff98f" => :high_sierra
   end
 
   keg_only :versioned_formula
