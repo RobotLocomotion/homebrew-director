@@ -51,8 +51,8 @@
 class MumpsAT51 < Formula
   desc "Multifrontal massively parallel sparse direct solver"
   homepage "http://www.mumps-solver.org/"
-  url "https://drake-homebrew.csail.mit.edu/mirror/mumps-5.1.1.tar.gz"
-  sha256 "a2a1f89c470f2b66e9982953cbd047d429a002fab9975400cef7190d01084a06"
+  url "https://drake-homebrew.csail.mit.edu/mirror/mumps-5.1.2.tar.gz"
+  sha256 "08a1fc988f5d22f9578ecfd66638b619d8201b118674f041a868d2e5f0d9af99"
 
   bottle do
     cellar :any
@@ -68,14 +68,16 @@ class MumpsAT51 < Formula
   depends_on "veclibfort"
 
   def install
+    ENV.fortran
+
     cp "Make.inc/Makefile.G95.SEQ", "Makefile.inc"
 
     make_args = [
-      "AR=#{ENV["FC"]} -dynamiclib -Wl,-install_name -Wl,#{lib}/$(notdir $@) -undefined dynamic_lookup -o",
-      "CC=#{ENV["CC"]} -fPIC",
+      "AR=#{ENV.fc} -dynamiclib -Wl,-install_name -Wl,#{lib}/$(notdir $@) -undefined dynamic_lookup -o",
+      "CC=#{ENV.cc} -fPIC",
       "CDEFS=-DAdd_",
-      "FC=#{ENV["FC"]} -fPIC",
-      "FL=#{ENV["FC"]} -fPIC",
+      "FC=#{ENV.fc} -fPIC",
+      "FL=#{ENV.fc} -fPIC",
       "LIBBLAS=-L#{Formula["veclibfort"].opt_lib} -lvecLibFort",
       "LIBEXT=.dylib",
       "OPTF=-O",
@@ -99,7 +101,7 @@ class MumpsAT51 < Formula
       #include <string.h>
       #include <dmumps_c.h>
       int main() {
-        assert(strcmp(MUMPS_VERSION, "5.1.1") == 0);
+        assert(strcmp(MUMPS_VERSION, "5.1.2") == 0);
         return 0;
       }
     EOS
