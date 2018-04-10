@@ -84,5 +84,24 @@ class Ipopt < Formula
 
     ENV.deparallelize
     system "make", "install"
+
+    inreplace "#{lib}/pkgconfig/ipopt.pc", prefix, opt_prefix
+    inreplace "#{lib}/pkgconfig/ipopt.pc", "-framework Accelerate -framework Accelerate", "-framework Accelerate"
+  end
+
+  test do
+    (testpath/"Version.cpp").write <<~EOS
+      #include <cassert>
+      #include <IpoptConfig.h>
+      int main() {
+        assert(IPOPT_VERSION_MAJOR == 3);
+        assert(IPOPT_VERSION_MINOR == 12);
+        assert(IPOPT_VERSION_RELEASE == 8);
+        return 0;
+      }
+    EOS
+
+    system ENV.cxx, "Version.cpp", "-I#{opt_include}/coin"
+    system "./a.out"
   end
 end
