@@ -80,7 +80,7 @@ class MumpsAT51 < Formula
       "LIBEXT=.dylib",
       "OPTF=-O",
       "ORDERINGSF=-Dpord",
-      "RANLIB=echo"
+      "RANLIB=echo",
     ]
 
     ENV.deparallelize
@@ -91,5 +91,20 @@ class MumpsAT51 < Formula
 
     lib.install Dir["lib/*"]
     lib.install "libseq/libmpiseq.dylib"
+  end
+
+  test do
+    (testpath/"version.c").write <<~EOS
+      #include <assert.h>
+      #include <string.h>
+      #include <dmumps_c.h>
+      int main() {
+        assert(strcmp(MUMPS_VERSION, "5.1.1") == 0);
+        return 0;
+      }
+    EOS
+
+    system ENV.cc, "version.c", "-I#{opt_include}"
+    system "./a.out"
   end
 end
