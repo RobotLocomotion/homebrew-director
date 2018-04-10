@@ -51,8 +51,8 @@
 class Ipopt < Formula
   desc "Interior point optimizer"
   homepage "https://projects.coin-or.org/Ipopt/"
-  url "https://drake-homebrew.csail.mit.edu/mirror/ipopt-3.12.8.tar.gz"
-  sha256 "62c6de314220851b8f4d6898b9ae8cf0a8f1e96b68429be1161f8550bb7ddb03"
+  url "https://drake-homebrew.csail.mit.edu/mirror/ipopt-3.12.9.tar.gz"
+  sha256 "abd440a8c92df156a62dcb81b2885cdd6acd49a93336c0fd5c9401e0dc64df1a"
   head "https://projects.coin-or.org/svn/Ipopt/trunk", :using => :svn
 
   bottle do
@@ -71,6 +71,7 @@ class Ipopt < Formula
     ENV.delete("MPICC")
     ENV.delete("MPICXX")
     ENV.delete("MPIFC")
+    ENV.fortran
 
     args = ["--disable-debug",
             "--disable-dependency-tracking",
@@ -96,7 +97,7 @@ class Ipopt < Formula
       int main() {
         assert(IPOPT_VERSION_MAJOR == 3);
         assert(IPOPT_VERSION_MINOR == 12);
-        assert(IPOPT_VERSION_RELEASE == 8);
+        assert(IPOPT_VERSION_RELEASE == 9);
         return 0;
       }
     EOS
