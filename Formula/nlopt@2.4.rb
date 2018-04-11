@@ -55,7 +55,11 @@ class NloptAT24 < Formula
   sha256 "8099633de9d71cbc06cd435da993eb424bbcdbded8f803cdaa9fb8c6e09c8e89"
 
   bottle do
+    cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "574a9ee03abf78c7d7d852bc5697ba7c44bcdb8ca550dfc99aad5335407492fb" => :high_sierra
+    sha256 "3970ca08afee51d895e82fc8cc1bab042f4cadd3fcc71405f8f0ab3263937235" => :sierra
+    sha256 "98d7c3ca884e37b3a6f21d796d90c31f1a59081d665f0473b04c8ed4bef91ffa" => :el_capitan
   end
 
   head do
