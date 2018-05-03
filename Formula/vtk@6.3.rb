@@ -72,10 +72,11 @@ class VtkAT63 < Formula
   end
 
   bottle do
+    rebuild 1
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "985e4f4a576be7e1edcfbe6ac3c01620df70db3e6712c759aeee2b772bf4d05f" => :high_sierra
-    sha256 "1c59dc2144193a6ad29a71faa2be0baf088bf0797d039601b41b26e0db43754b" => :sierra
-    sha256 "476ff07b7e68a6023eb516262663e9c231e3c809be8dd0dde4bb61d611730465" => :el_capitan
+    sha256 "743fa3e854952363099c5c7c02ee676b24cbf19da8c9f0adc1716a31ad948f0b" => :high_sierra
+    sha256 "3273734ce04e7615ad68a9336141e6b0a843aff31aaeaa1e4f420d55881286c8" => :sierra
+    sha256 "8731e2bd470be1560c6b6559c230af8ff16a47efa4e64ef9e985e03ef5217f3c" => :el_capitan
   end
 
   keg_only :versioned_formula
