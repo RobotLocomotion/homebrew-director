@@ -56,10 +56,11 @@ class NloptAT24 < Formula
 
   bottle do
     cellar :any
+    rebuild 1
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "574a9ee03abf78c7d7d852bc5697ba7c44bcdb8ca550dfc99aad5335407492fb" => :high_sierra
-    sha256 "3970ca08afee51d895e82fc8cc1bab042f4cadd3fcc71405f8f0ab3263937235" => :sierra
-    sha256 "98d7c3ca884e37b3a6f21d796d90c31f1a59081d665f0473b04c8ed4bef91ffa" => :el_capitan
+    sha256 "5b9712a2a2e4a2f58c06f2da5f35c65615e484be04aba3deae184a602c95b943" => :high_sierra
+    sha256 "7c7d97a1f11a77bbef78cff9a08e4a9d9ee9bd886d7d2bc5237dad791267a674" => :sierra
+    sha256 "ad7f367fad3629546e87991150788d11f35e23bf34db91f6088baddb92ef3b2f" => :el_capitan
   end
 
   head do
