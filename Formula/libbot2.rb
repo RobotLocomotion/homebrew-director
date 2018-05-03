@@ -33,10 +33,11 @@ class Libbot2 < Formula
   head "https://github.com/RobotLocomotion/libbot2.git"
 
   bottle do
+    rebuild 1
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "56d041ebc517630306ad07018d710bc8c99fcc42c9cd64db66a0a9c6cd8dbe40" => :high_sierra
-    sha256 "cfa1e9f92039b7fa5aa5dfcf22870152252d8f685d05acb607b6ec299343699b" => :sierra
-    sha256 "8da0ab61fa468802b417a840abdabc9c67d403a51a3f0c135a2b66ed6b1780eb" => :el_capitan
+    sha256 "1a166e2c41e3fbb9cfd7e93f5fce4f4a3b38d8b8b4422eb47efad76e1935461c" => :high_sierra
+    sha256 "340c84b567c982e4ed20d771696d5892984d1e459382c04b3fc995e6f81959ac" => :sierra
+    sha256 "02c277ee6db24ac5c9a3b0f5d35cabcd3cdd127970fdf72e8806c6fbc2b79dd4" => :el_capitan
   end
 
   depends_on :java
