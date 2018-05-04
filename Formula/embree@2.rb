@@ -33,7 +33,11 @@ class EmbreeAT2 < Formula
   head "https://github.com/embree/embree.git"
 
   bottle do
+    cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "8a008f08bf1264c27a0e4f74bfe893079c55fdc18508b1c06758454258daccda" => :high_sierra
+    sha256 "b26caad21a509abd638253015c9ea9f92acf357280eab3413ef58f3c54dfc090" => :sierra
+    sha256 "40669b134637af139250365b0a1d007970d30baa61b7f7dad674a0b1d0cca52a" => :el_capitan
   end
 
   keg_only :versioned_formula
