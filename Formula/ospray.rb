@@ -33,7 +33,11 @@ class Ospray < Formula
   head "https://github.com/ospray/ospray.git"
 
   bottle do
+    cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "6411593e9afa4502ee6494ad40234dde857335077ddb9074d9b67e18513d6e06" => :high_sierra
+    sha256 "9a0c5e079a95783f683014153c42fbdf37909861fe1253447e0f919811f62dfc" => :sierra
+    sha256 "e5f5aa445db9b4c04c0082a5c2a0dad3327a58203330444142a3d25907254c99" => :el_capitan
   end
 
   needs :cxx11
