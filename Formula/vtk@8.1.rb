@@ -51,7 +51,7 @@
 class VtkAT81 < Formula
   desc "Toolkit for 3D computer graphics, image processing, and visualization"
   homepage "https://www.vtk.org/"
-  revision 2
+  revision 3
   head "https://gitlab.kitware.com/vtk/vtk.git"
 
   stable do
@@ -66,11 +66,7 @@ class VtkAT81 < Formula
   end
 
   bottle do
-    rebuild 1
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "fe0536b7efd291b512fbd0c1bf1aefa5843b1fb53ba0bc5b67284490f70ae81f" => :high_sierra
-    sha256 "00f20ab22aa16e51093ecbd02c63fc464444c29ea6542491dbc55b646ad56a8e" => :sierra
-    sha256 "3ce0fd9ec7553c5571221923e60ce6ea9ac4b4724c865d8c527810d6325fd58a" => :el_capitan
   end
 
   keg_only :versioned_formula
@@ -88,6 +84,7 @@ class VtkAT81 < Formula
   depends_on "libtiff"
   depends_on "lz4"
   depends_on "netcdf"
+  depends_on "ospray"
   depends_on "python" => :optional
   depends_on "python@2" => :recommended
   depends_on "qt" => :recommended
@@ -99,6 +96,8 @@ class VtkAT81 < Formula
       -DBUILD_TESTING=OFF
       -DCMAKE_INSTALL_NAME_DIR:STRING=#{opt_lib}
       -DCMAKE_INSTALL_RPATH:STRING=#{opt_lib}
+      -DModule_vtkRenderingOSPRay=ON
+      -DOSPRAY_INSTALL_DIR=#{Formula["ospray"].opt_prefix}
       -DVTK_REQUIRED_OBJCXX_FLAGS=''
       -DVTK_USE_COCOA=ON
       -DVTK_USE_SYSTEM_EXPAT=ON
