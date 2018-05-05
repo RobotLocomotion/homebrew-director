@@ -50,6 +50,7 @@ class Ospray < Formula
   def install
     args = std_cmake_args + %W[
       -Dembree_DIR=#{Formula["embree@2"].opt_lib}/cmake/embree-2.17.4"
+      -DOSPRAY_ENABLE_APPS=OFF
     ]
 
     mkdir "build" do
