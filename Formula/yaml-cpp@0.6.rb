@@ -51,16 +51,13 @@
 class YamlCppAT06 < Formula
   desc "C++ YAML parser and emitter for YAML 1.2 spec"
   homepage "https://github.com/jbeder/yaml-cpp"
-  url "https://drake-homebrew.csail.mit.edu/mirror/yaml-cpp-0.6.1.tar.gz"
-  sha256 "25ec37e6d82ab8c485926d69a5567741c7263515f8631e5dcb3fb4708e6b0d0d"
+  url "https://drake-homebrew.csail.mit.edu/mirror/yaml-cpp-0.6.2.tar.gz"
+  sha256 "e4d8560e163c3d875fd5d9e5542b5fd5bec810febdcba61481fe5fc4e6b1fd05"
   head "https://github.com/jbeder/yaml-cpp.git"
 
   bottle do
     cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "3eee1c660bb95528427d74917b3effbe74385fa94a27cfa088eb6f9721ecf32e" => :high_sierra
-    sha256 "3cbba64d9d8c6e9bf3fc17ef9b66cd365905f0bfeec72298bbb5da761efe512c" => :sierra
-    sha256 "2bf3c89779ceaa15f5b5f030f17e4aef7b2a32a7728ed3beab6226a6324daea9" => :el_capitan
   end
 
   keg_only :versioned_formula
