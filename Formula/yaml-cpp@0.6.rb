@@ -58,6 +58,9 @@ class YamlCppAT06 < Formula
   bottle do
     cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "3eee1c660bb95528427d74917b3effbe74385fa94a27cfa088eb6f9721ecf32e" => :high_sierra
+    sha256 "3cbba64d9d8c6e9bf3fc17ef9b66cd365905f0bfeec72298bbb5da761efe512c" => :sierra
+    sha256 "2bf3c89779ceaa15f5b5f030f17e4aef7b2a32a7728ed3beab6226a6324daea9" => :el_capitan
   end
 
   keg_only :versioned_formula
