@@ -58,6 +58,9 @@ class BazelAT011 < Formula
   bottle do
     cellar :any_skip_relocation
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "4efd9c9bb23857fcb6c273b7f834805167f5298906aa32516db1b9c13758b730" => :high_sierra
+    sha256 "9b13cc8b9eb1fa7f03b32f8a000b5a591d41759cd2f2781cefc2be06f1bf9475" => :sierra
+    sha256 "7f4917d4ab0c3af37325c77f40d968f3d5ec683b4df53fe236b7fc8ed9fef973" => :el_capitan
   end
 
   keg_only :versioned_formula
