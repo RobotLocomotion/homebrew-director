@@ -51,24 +51,13 @@
 class YamlCppAT06 < Formula
   desc "C++ YAML parser and emitter for YAML 1.2 spec"
   homepage "https://github.com/jbeder/yaml-cpp"
-
-  stable do
-    url "https://drake-homebrew.csail.mit.edu/mirror/yaml-cpp-0.6.0.tar.gz"
-    sha256 "e643119f1d629a77605f02096cc3ac211922d48e3db12249b06a3db810dd8756"
-
-    patch do
-      # Fix paths in pkg-config file.
-      url "https://drake-homebrew.csail.mit.edu/patches/yaml-cpp-0.6.0-pkg-config.patch"
-      sha256 "d20b475016c35559f80935c2c5e109dd6435be7d994a4a826937c10a3fa25050"
-    end
-  end
+  url "https://drake-homebrew.csail.mit.edu/mirror/yaml-cpp-0.6.1.tar.gz"
+  sha256 "25ec37e6d82ab8c485926d69a5567741c7263515f8631e5dcb3fb4708e6b0d0d"
+  head "https://github.com/jbeder/yaml-cpp.git"
 
   bottle do
     cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "5a04b71310b4710271be091b0d10a5725190f37651207c1ef935ba858af4e6d0" => :high_sierra
-    sha256 "18bebb9bf9b88796445fd482157f6e15da3487e998c80ff772de31ed015fbd5f" => :sierra
-    sha256 "438f36aa36952b2956cb0ec94916a93767e1a09f2256d5266011c64557f61c81" => :el_capitan
   end
 
   keg_only :versioned_formula
@@ -84,7 +73,7 @@ class YamlCppAT06 < Formula
     ]
 
     mkdir "build" do
-      system "cmake", "..", *args
+      system "cmake", *args, ".."
       system "make", "install"
     end
 
