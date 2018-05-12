@@ -51,25 +51,21 @@
 class VtkAT81 < Formula
   desc "Toolkit for 3D computer graphics, image processing, and visualization"
   homepage "https://www.vtk.org/"
-  revision 3
   head "https://gitlab.kitware.com/vtk/vtk.git"
 
   stable do
-    url "https://drake-homebrew.csail.mit.edu/mirror/vtk-8.1.0.tar.gz"
-    sha256 "103261a9ed78b0e39cc831a29728fe8deaa25eb649c9e36fff7dc74c9a7cd3de"
+    url "https://drake-homebrew.csail.mit.edu/mirror/vtk-8.1.1.tar.gz"
+    sha256 "4df403c072e90d85c8ce3430aab20746f05c59f759a8dac0835bf13916ae5f48"
 
     patch do
       # Do not link against libpython when possible.
-      url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.1.0-optional-python-link.patch"
+      url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.1.1-optional-python-link.patch"
       sha256 "7be110841dba7033c12578779b5be2d1d45d957be6f5a7c0f889432e34ad0de9"
     end
   end
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "4a826e084f6cbd086f5bed9f729353ed600bffd36e8890891cc27e08981040b1" => :high_sierra
-    sha256 "a668576759e3a30c59ae046831b6fde29d226b23051d473064c350359f4c5365" => :sierra
-    sha256 "e9496fa1723102975cb27f59cd1c44ef2ebb67883565a597039997b87b9ba827" => :el_capitan
   end
 
   keg_only :versioned_formula
