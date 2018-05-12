@@ -31,25 +31,17 @@ class Kcov < Formula
   head "https://github.com/SimonKagstrom/kcov.git"
 
   stable do
-    url "https://drake-homebrew.csail.mit.edu/mirror/kcov-34.tar.gz"
-    sha256 "e566072df3983cb8576c1aeae440f4342b532121399e677d13533119f54c80a2"
+    url "https://drake-homebrew.csail.mit.edu/mirror/kcov-35.tar.gz"
+    sha256 "96e453378ff704422a524941b2cdaae0594d46ba1fb8e8215057f9a9bd6a9bbe"
 
     patch do
-      url "https://drake-homebrew.csail.mit.edu/patches/kcov-34-command-line-tools.patch"
+      url "https://drake-homebrew.csail.mit.edu/patches/kcov-35-command-line-tools.patch"
       sha256 "7e7d2df39973b1d2e98c5ab8ff6071fb0b388168376720ab237b97636ffbcdb5"
-    end
-
-    patch do
-      url "https://drake-homebrew.csail.mit.edu/patches/kcov-34-lldb-engine-getcwd.patch"
-      sha256 "0a4ff5747dc4174c044be99b9f3a969f86e215fa07ed084a03c9ed5ed18e7e6c"
     end
   end
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "bc346da88bda51bd02c6aa5d5fc94bcb2b7ca3adb8c038e9af2dd1582d2b8173" => :high_sierra
-    sha256 "a4ed0d91d1bb80faa93cd24e61fed998c8423665d7ec0b14e7ac2406fcec2b5a" => :sierra
-    sha256 "8f3c1f51bf5ff44b46b8b6767b251385f408be6dcbeabf9d811a3a34e5031e63" => :el_capitan
   end
 
   depends_on "cmake" => :build
