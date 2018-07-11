@@ -55,14 +55,11 @@ class NloptAT24 < Formula
   homepage "https://nlopt.readthedocs.io/"
   url "https://drake-homebrew.csail.mit.edu/mirror/nlopt-2.4.2.tar.gz"
   sha256 "8099633de9d71cbc06cd435da993eb424bbcdbded8f803cdaa9fb8c6e09c8e89"
+  revision 1
 
   bottle do
     cellar :any
-    rebuild 1
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "5b9712a2a2e4a2f58c06f2da5f35c65615e484be04aba3deae184a602c95b943" => :high_sierra
-    sha256 "7c7d97a1f11a77bbef78cff9a08e4a9d9ee9bd886d7d2bc5237dad791267a674" => :sierra
-    sha256 "ad7f367fad3629546e87991150788d11f35e23bf34db91f6088baddb92ef3b2f" => :el_capitan
   end
 
   head do
