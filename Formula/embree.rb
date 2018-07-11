@@ -37,6 +37,9 @@ class Embree < Formula
   bottle do
     cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "366da1ae05eddc37033793ff04dccfd300fc7a81ffc963689f573f33f99d3e85" => :high_sierra
+    sha256 "a2c9180733f3d8f44e1b791ed7b2fa0617a840d6a5760bd1232974453862577b" => :sierra
+    sha256 "333f97d0bf5e70a80d1dd9a2f59327579da171165a862712a8477c67300365dc" => :el_capitan
   end
 
   needs :cxx11
