@@ -30,29 +30,29 @@
 class Ospray < Formula
   desc "Ray-tracing-based rendering engine for high-fidelity visualization"
   homepage "https://www.ospray.org/"
-  url "https://drake-homebrew.csail.mit.edu/mirror/ospray-1.5.0.tar.gz"
-  sha256 "782cc1f2d55f49102b0700cf1ebb469478c342e1c4f925bc516906786dec8b0f"
+  url "https://drake-homebrew.csail.mit.edu/mirror/ospray-1.6.1.tar.gz"
+  sha256 "4ad07f729e2f5628890f7711d5a1647f7acd47793f3dc9e351e9dabe91f2d8b3"
   head "https://github.com/ospray/ospray.git"
 
   bottle do
     cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "17434354a6d211d9fe4ad46da65d0f6dd77a5007aa8a4503a2dcea89dcab1edc" => :high_sierra
-    sha256 "34efa494daea39dd210e2f23bcd926db8ecee2c9cbdc2fe21daf1086f842cc81" => :sierra
-    sha256 "58d274cd68911db9f37ffe519d99c53fbfcf4b34bf0d533174a7e9908a6fda69" => :el_capitan
   end
 
   needs :cxx11
 
   depends_on "cmake" => :build
-  depends_on "embree@2"
+  depends_on "embree"
   depends_on "ispc" => :build
   depends_on "tbb"
 
   def install
+    ENV["HOMEBREW_OPTFLAGS"] = ""
+
     args = std_cmake_args + %W[
-      -Dembree_DIR=#{Formula["embree@2"].opt_lib}/cmake/embree-2.17.4"
+      -Dembree_DIR=#{Formula["embree"].opt_lib}/cmake/embree-3.2.0"
       -DOSPRAY_ENABLE_APPS=OFF
+      -DOSPRAY_ENABLE_TESTING=OFF
     ]
 
     mkdir "build" do
@@ -68,8 +68,8 @@ class Ospray < Formula
       #include <ospray/version.h>
       int main() {
         assert(OSPRAY_VERSION_MAJOR == 1);
-        assert(OSPRAY_VERSION_MINOR == 5);
-        assert(OSPRAY_VERSION_PATCH == 0);
+        assert(OSPRAY_VERSION_MINOR == 6);
+        assert(OSPRAY_VERSION_PATCH == 1);
         return 0;
       }
     EOS
