@@ -53,17 +53,13 @@
 class Ipopt < Formula
   desc "Interior point optimizer"
   homepage "https://projects.coin-or.org/Ipopt/"
-  url "https://drake-homebrew.csail.mit.edu/mirror/ipopt-3.12.9.tar.gz"
-  sha256 "abd440a8c92df156a62dcb81b2885cdd6acd49a93336c0fd5c9401e0dc64df1a"
+  url "https://drake-homebrew.csail.mit.edu/mirror/ipopt-3.12.10.tar.gz"
+  sha256 "4474dea8a69f0c4b4fa146dc256941ee90b56b6acee9a337aebf4518a178b802"
   head "https://projects.coin-or.org/svn/Ipopt/trunk", :using => :svn
 
   bottle do
     cellar :any
-    rebuild 1
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "5d6503ee389ff16e880ab109e71b524ae89c9410570adc8969afea6979f6e575" => :high_sierra
-    sha256 "b6c32b88732cdb09942da52945b5291261607012eac72c93564dc57400357475" => :sierra
-    sha256 "e50ce2524a947a74c5ea7d6e67c6931606d238e014e125d289f57603b5dbbd0b" => :el_capitan
   end
 
   depends_on "gcc"
@@ -100,7 +96,7 @@ class Ipopt < Formula
       int main() {
         assert(IPOPT_VERSION_MAJOR == 3);
         assert(IPOPT_VERSION_MINOR == 12);
-        assert(IPOPT_VERSION_RELEASE == 9);
+        assert(IPOPT_VERSION_RELEASE == 10);
         return 0;
       }
     EOS
