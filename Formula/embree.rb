@@ -30,19 +30,15 @@
 class Embree < Formula
   desc "High-performance ray tracing kernels"
   homepage "https://embree.github.io/"
-  url "https://drake-homebrew.csail.mit.edu/mirror/embree-3.1.0.tar.gz"
-  sha256 "0ed37dc360c3697df57024427b85ff39730b1e1ca7ddc90218ca7a1cce19079d"
+  url "https://drake-homebrew.csail.mit.edu/mirror/embree-3.2.0.tar.gz"
+  sha256 "c36562f480528b4babd2daeeb1fc53c36ac67dc788dea822d43be9abab7c87aa"
   head "https://github.com/embree/embree.git"
 
   bottle do
     cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "9bfb11ce90b69f814f3e1eb2ad7e68a5cbc044ccf8b440b047abfb4642a42b83" => :high_sierra
-    sha256 "9c3923289b695a7a13b3944f2ed36b589bbf61299e0747e14b45edb2a7053c13" => :sierra
-    sha256 "582deffdfee1f9a2a1ff626dc2effef843cb8b7466a6428310d5bd1d62aef671" => :el_capitan
   end
 
-  env :std
   needs :cxx11
 
   depends_on "cmake" => :build
@@ -50,7 +46,11 @@ class Embree < Formula
   depends_on "tbb"
 
   def install
+    ENV["HOMEBREW_OPTFLAGS"] = ""
+
     args = std_cmake_args + %w[
+      -DBUILD_TESTING=OFF
+      -DEMBREE_MAX_ISA=SSE4.2
       -DEMBREE_TUTORIALS=OFF
     ]
 
@@ -68,7 +68,7 @@ class Embree < Formula
       #include <cassert>
       #include <embree3/rtcore.h>
       int main() {
-        assert(RTC_VERSION == 30100);
+        assert(RTC_VERSION == 30200);
         return 0;
       }
     EOS
