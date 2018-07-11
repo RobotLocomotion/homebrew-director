@@ -53,6 +53,7 @@
 class VtkAT81 < Formula
   desc "Toolkit for 3D computer graphics, image processing, and visualization"
   homepage "https://www.vtk.org/"
+  revision 1
   head "https://gitlab.kitware.com/vtk/vtk.git"
 
   stable do
@@ -64,13 +65,16 @@ class VtkAT81 < Formula
       url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.1.1-optional-python-link.patch"
       sha256 "7be110841dba7033c12578779b5be2d1d45d957be6f5a7c0f889432e34ad0de9"
     end
+
+    patch do
+      # Fix memory leaks in vtkRenderingOSPRay.
+      url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.1.1-rendering-ospray.patch"
+      sha256 "aaa5470f27668623eb2036919d2e29591dd3898becd65a0c845cbdf005d2f0c8"
+    end
   end
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "d0bbb88de176ab8a366947416091857acc0807b8b4bf84ae949277fedf0f6af2" => :high_sierra
-    sha256 "164a539b2d49b17076f932913ec0e59a3bac111474c1f9e2d4d6cb7ece1f3063" => :sierra
-    sha256 "8c3117d87f43cdf0c8b105dc2af5357e208bf425c9731cd45028181e75c13734" => :el_capitan
   end
 
   keg_only :versioned_formula
