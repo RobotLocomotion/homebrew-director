@@ -60,6 +60,9 @@ class NloptAT24 < Formula
   bottle do
     cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "1ceab27763cd4737d328dc922737ad7bf1019d90d09effa4c1bbf64945a5b950" => :high_sierra
+    sha256 "5cd5e1f3d756febc90f0a900b20c5802f6865e303a402a2c76bb2e9e0e283a04" => :sierra
+    sha256 "20fd374c199dcccd12a26c697749d35cce82ae4759397cd052b387138dd6d280" => :el_capitan
   end
 
   head do
