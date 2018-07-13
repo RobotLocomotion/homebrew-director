@@ -39,7 +39,11 @@ class F2c < Formula
   end
 
   bottle do
+    cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "c5ac6512824adaa0f947e899bed7aabe38f7652dd186a3ab2dd6feabf060765e" => :high_sierra
+    sha256 "dc5814cbab50818627466c06cf06ff90475d476685d86e82bae5d24c426f73ab" => :sierra
+    sha256 "5c4ca764a2db4a1b138465e560e9714d85612b9e7e9de0f1fab18d4d1b10fc34" => :el_capitan
   end
 
   resource "libf2c" do
