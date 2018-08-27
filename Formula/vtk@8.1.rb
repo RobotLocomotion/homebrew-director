@@ -53,7 +53,7 @@
 class VtkAT81 < Formula
   desc "Toolkit for 3D computer graphics, image processing, and visualization"
   homepage "https://www.vtk.org/"
-  revision 2
+  revision 3
   head "https://gitlab.kitware.com/vtk/vtk.git"
 
   stable do
@@ -75,9 +75,6 @@ class VtkAT81 < Formula
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "981597764cd0b979008656d5d2284637327a552e5b9208da5e2aefcb07b78f96" => :high_sierra
-    sha256 "9d9ce365ab3e1dbb00b00f5be1210cc01822f0751ea8de816d32421e6621c108" => :sierra
-    sha256 "656ba918b25f24d03d52a0b881fdcbad1a54c8d198028afbfd139b6e7def4683" => :el_capitan
   end
 
   keg_only :versioned_formula
