@@ -30,25 +30,13 @@
 class LcmAT14 < Formula
   desc "Lightweight communications and marshalling"
   homepage "https://lcm-proj.github.io/"
-  revision 1
+  url "https://drake-homebrew.csail.mit.edu/mirror/lcm-1.4.0.tar.gz"
+  sha256 "149d7076369d261e6adbb25d713dc9e30aeba415f4fc62bb41e748b2eb229b46"
   head "https://github.com/lcm-proj/lcm.git"
-
-  stable do
-    url "https://drake-homebrew.csail.mit.edu/mirror/lcm-1.3.95.20171103.tar.gz"
-    sha256 "fd0afaf29954c26a725626b7bd24e873e303e84bb62dfcc05162be3f5ae30cd1"
-
-    patch do
-      # Use -undefined dynamic_lookup instead of linking directly to libpython.
-      url "https://drake-homebrew.csail.mit.edu/patches/lcm-1.3.95-python-undefined-dynamic-lookup.patch"
-      sha256 "9634fa3070732af69e03dd3a880079338d2be9071aea0ea8e13fb0c2b45a6b6f"
-    end
-  end
 
   bottle do
     cellar :any
-    rebuild 1
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "d9ca2e0163ffe66cce34a76b82c447a2ad801869002abfae6250aecdc93ecde1" => :high_sierra
   end
 
   keg_only :versioned_formula
