@@ -64,12 +64,6 @@ class NloptAT24 < Formula
     sha256 "1ceab27763cd4737d328dc922737ad7bf1019d90d09effa4c1bbf64945a5b950" => :high_sierra
   end
 
-  head do
-    url "https://github.com/stevengj/nlopt.git"
-    option :cxx11
-    depends_on "cmake" => :build
-  end
-
   keg_only :versioned_formula
 
   def install

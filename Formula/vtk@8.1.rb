@@ -53,30 +53,26 @@
 class VtkAT81 < Formula
   desc "Toolkit for 3D computer graphics, image processing, and visualization"
   homepage "https://www.vtk.org/"
+  url "https://drake-homebrew.csail.mit.edu/mirror/vtk-8.1.1.tar.gz"
+  sha256 "4df403c072e90d85c8ce3430aab20746f05c59f759a8dac0835bf13916ae5f48"
   revision 4
-  head "https://gitlab.kitware.com/vtk/vtk.git"
 
-  stable do
-    url "https://drake-homebrew.csail.mit.edu/mirror/vtk-8.1.1.tar.gz"
-    sha256 "4df403c072e90d85c8ce3430aab20746f05c59f759a8dac0835bf13916ae5f48"
+  patch do
+    # Do not link against libpython when possible.
+    url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.1.1-optional-python-link.patch"
+    sha256 "7be110841dba7033c12578779b5be2d1d45d957be6f5a7c0f889432e34ad0de9"
+  end
 
-    patch do
-      # Do not link against libpython when possible.
-      url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.1.1-optional-python-link.patch"
-      sha256 "7be110841dba7033c12578779b5be2d1d45d957be6f5a7c0f889432e34ad0de9"
-    end
+  patch do
+    # Fix various issues with vtkRenderingOSPRay.
+    url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.1.1_2-rendering-ospray.patch"
+    sha256 "00ae8e5acfe620094c43c863cf54133426ffb2ca0b4564ff1029868821ef77af"
+  end
 
-    patch do
-      # Fix various issues with vtkRenderingOSPRay.
-      url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.1.1_2-rendering-ospray.patch"
-      sha256 "00ae8e5acfe620094c43c863cf54133426ffb2ca0b4564ff1029868821ef77af"
-    end
-
-    patch do
-      # Fix issue with vtkOpenGLRenderWindow.
-      url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.1.1-opengl-render-window.patch"
-      sha256 "7b4e471c8e103a789175d937f1ef016d17434eed46dcefde07925ed0239a939d"
-    end
+  patch do
+    # Fix issue with vtkOpenGLRenderWindow.
+    url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.1.1-opengl-render-window.patch"
+    sha256 "7b4e471c8e103a789175d937f1ef016d17434eed46dcefde07925ed0239a939d"
   end
 
   bottle do
@@ -101,10 +97,10 @@ class VtkAT81 < Formula
   depends_on "lz4"
   depends_on "netcdf"
   depends_on "ospray"
-  depends_on "python" => :optional
+  depends_on "theora"
   depends_on "python@2" => :recommended
   depends_on "qt" => :recommended
-  depends_on "theora"
+  depends_on "python" => :optional
 
   def install
     args = std_cmake_args + %W[

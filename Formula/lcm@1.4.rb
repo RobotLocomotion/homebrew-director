@@ -32,7 +32,6 @@ class LcmAT14 < Formula
   homepage "https://lcm-proj.github.io/"
   url "https://drake-homebrew.csail.mit.edu/mirror/lcm-1.4.0.tar.gz"
   sha256 "149d7076369d261e6adbb25d713dc9e30aeba415f4fc62bb41e748b2eb229b46"
-  head "https://github.com/lcm-proj/lcm.git"
 
   bottle do
     cellar :any
@@ -43,11 +42,11 @@ class LcmAT14 < Formula
 
   keg_only :versioned_formula
 
-  depends_on :java
   depends_on "cmake" => :build
   depends_on "glib"
-  depends_on "python" => :optional
+  depends_on :java
   depends_on "python@2" => :recommended
+  depends_on "python" => :optional
 
   def install
     args = std_cmake_args + %w[

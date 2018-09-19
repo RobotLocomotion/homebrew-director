@@ -40,20 +40,20 @@ class Libbot2 < Formula
     sha256 "0040d03f1e1b3c18ca967fffe156a3691c3b1afe2d67eccc6008c62aa3ef6404" => :high_sierra
   end
 
-  depends_on :java
-  depends_on :x11
   depends_on "cmake" => :build
+  depends_on "pkg-config" => :build
   depends_on "glib"
   depends_on "gtk+"
+  depends_on :java
   depends_on "jpeg"
   depends_on "lcm@1.4"
   depends_on "libpng"
   depends_on "numpy"
-  depends_on "pkg-config" => :build
   depends_on "pygobject"
   depends_on "pygtk"
   depends_on "python@2"
   depends_on "scipy"
+  depends_on :x11
 
   def install
     python_executable = `which python2`.strip
