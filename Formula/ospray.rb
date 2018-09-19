@@ -38,8 +38,6 @@ class Ospray < Formula
     cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
     sha256 "101d7cabeeb28f2731127ed244904542b068b3ed14c7e20d92bb452f3a2db166" => :high_sierra
-    sha256 "a7e5a0705c63af31fabd7ec043f84d4be55923b12ed55d63d9d4d1104dc53623" => :sierra
-    sha256 "7d360cfbbba0a73dae1d453fe8a07bee3c5dba61c03921bdf992dd837b3e9851" => :el_capitan
   end
 
   needs :cxx11

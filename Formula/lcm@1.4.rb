@@ -49,8 +49,6 @@ class LcmAT14 < Formula
     rebuild 1
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
     sha256 "d9ca2e0163ffe66cce34a76b82c447a2ad801869002abfae6250aecdc93ecde1" => :high_sierra
-    sha256 "f1ab7f84c38278acfae2366686cc1b82a5a3413cca34566e51e55c937fd5e021" => :sierra
-    sha256 "198cae51b35645ef47eb42c29af5ec74266f0298f4b31bf952377eb0535e6854" => :el_capitan
   end
 
   keg_only :versioned_formula

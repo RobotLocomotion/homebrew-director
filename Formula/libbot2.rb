@@ -38,8 +38,6 @@ class Libbot2 < Formula
     rebuild 1
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
     sha256 "1a166e2c41e3fbb9cfd7e93f5fce4f4a3b38d8b8b4422eb47efad76e1935461c" => :high_sierra
-    sha256 "340c84b567c982e4ed20d771696d5892984d1e459382c04b3fc995e6f81959ac" => :sierra
-    sha256 "02c277ee6db24ac5c9a3b0f5d35cabcd3cdd127970fdf72e8806c6fbc2b79dd4" => :el_capitan
   end
 
   depends_on :java

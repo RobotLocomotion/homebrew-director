@@ -45,8 +45,6 @@ class Kcov < Formula
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
     sha256 "3b749f669f63034691b2980ebfec1842690dad3a8cfdf62330c059c8ee494d45" => :high_sierra
-    sha256 "f83da379d93f75c20803f34babc0a3da8265ccc9ba2669a80e2fbda97e55b6b8" => :sierra
-    sha256 "664b3d7121d215e9672f42db8ecc562ee506fd1ba907640e10d712ffc667d9ee" => :el_capitan
   end
 
   depends_on "cmake" => :build
