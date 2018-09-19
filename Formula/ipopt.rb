@@ -60,6 +60,7 @@ class Ipopt < Formula
   bottle do
     cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "f5d426504121d62ff7b499c693729b085ab2669eccc3df8a44ddd988e8719497" => :mojave
     sha256 "bf2c9599cfa124313fc69308208dc3cfa2751df0909fd6681c7cd8bc12d72667" => :high_sierra
   end
 

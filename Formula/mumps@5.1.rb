@@ -60,6 +60,7 @@ class MumpsAT51 < Formula
   bottle do
     cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "0777ad0400506364862d9877f9580071c575a525f7bdabee726ba45901d06bee" => :mojave
     sha256 "be6ede970fe089471afba73a9cafd42f8ae8ddadfae22edcf4bbe0007d9e85e4" => :high_sierra
   end
 
