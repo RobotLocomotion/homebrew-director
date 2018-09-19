@@ -30,14 +30,12 @@
 class Libbot2 < Formula
   desc "Libraries, tools, and algorithms for robotics research"
   homepage "https://github.com/RobotLocomotion/libbot2/"
-  url "https://drake-homebrew.csail.mit.edu/mirror/libbot2-0.0.1.20180312.tar.gz"
-  sha256 "5014ce90116d230b6a1357f20e87df9eeba0d20842f7965fb2e980f642444d25"
+  url "https://drake-homebrew.csail.mit.edu/mirror/libbot2-0.0.1.20180625.tar.gz"
+  sha256 "a709df9116389e182386630c367b292dbebba75278e1b230623d2a58a7685081"
   head "https://github.com/RobotLocomotion/libbot2.git"
 
   bottle do
-    rebuild 1
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "1a166e2c41e3fbb9cfd7e93f5fce4f4a3b38d8b8b4422eb47efad76e1935461c" => :high_sierra
   end
 
   depends_on :java
