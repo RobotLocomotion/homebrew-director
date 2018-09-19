@@ -53,7 +53,7 @@
 class VtkAT81 < Formula
   desc "Toolkit for 3D computer graphics, image processing, and visualization"
   homepage "https://www.vtk.org/"
-  revision 3
+  revision 4
   head "https://gitlab.kitware.com/vtk/vtk.git"
 
   stable do
@@ -71,11 +71,16 @@ class VtkAT81 < Formula
       url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.1.1_2-rendering-ospray.patch"
       sha256 "00ae8e5acfe620094c43c863cf54133426ffb2ca0b4564ff1029868821ef77af"
     end
+
+    patch do
+      # Fix issue with vtkOpenGLRenderWindow.
+      url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.1.1-opengl-render-window.patch"
+      sha256 "7b4e471c8e103a789175d937f1ef016d17434eed46dcefde07925ed0239a939d"
+    end
   end
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "5cf2ab26c044332524eb6226580096d50e67ade26ab1531679ec3c5f9f938323" => :high_sierra
   end
 
   keg_only :versioned_formula
