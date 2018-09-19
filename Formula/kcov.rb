@@ -30,21 +30,12 @@
 class Kcov < Formula
   desc "Code coverage tester for compiled programs, Python, and shell scripts"
   homepage "https://simonkagstrom.github.io/kcov/"
+  url "https://drake-homebrew.csail.mit.edu/mirror/kcov-36.tar.gz"
+  sha256 "29ccdde3bd44f14e0d7c88d709e1e5ff9b448e735538ae45ee08b73c19a2ea0b"
   head "https://github.com/SimonKagstrom/kcov.git"
-
-  stable do
-    url "https://drake-homebrew.csail.mit.edu/mirror/kcov-35.tar.gz"
-    sha256 "96e453378ff704422a524941b2cdaae0594d46ba1fb8e8215057f9a9bd6a9bbe"
-
-    patch do
-      url "https://drake-homebrew.csail.mit.edu/patches/kcov-35-command-line-tools.patch"
-      sha256 "7e7d2df39973b1d2e98c5ab8ff6071fb0b388168376720ab237b97636ffbcdb5"
-    end
-  end
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "3b749f669f63034691b2980ebfec1842690dad3a8cfdf62330c059c8ee494d45" => :high_sierra
   end
 
   depends_on "cmake" => :build
@@ -56,12 +47,6 @@ class Kcov < Formula
       system "make"
       system "make", "install"
     end
-
-    MachO::Tools.change_install_name(
-      "#{bin}/kcov",
-      "@rpath/LLDB.framework/LLDB",
-      "/Library/Developer/CommandLineTools/Library/PrivateFrameworks/LLDB.framework/LLDB",
-    )
   end
 
   test do
