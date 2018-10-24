@@ -32,12 +32,11 @@ class LcmAT14 < Formula
   homepage "https://lcm-proj.github.io/"
   url "https://drake-homebrew.csail.mit.edu/mirror/lcm-1.4.0.tar.gz"
   sha256 "149d7076369d261e6adbb25d713dc9e30aeba415f4fc62bb41e748b2eb229b46"
+  revision 1
 
   bottle do
     cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "4f283d27154d559a980288c7e350d8964b3d976efa953d4f4e9c16cc8e094878" => :mojave
-    sha256 "856dfced45c420bea9fe4846e98679c5865c28d6e017926b0f43132e013b0bf1" => :high_sierra
   end
 
   keg_only :versioned_formula
@@ -45,32 +44,27 @@ class LcmAT14 < Formula
   depends_on "cmake" => :build
   depends_on "glib"
   depends_on :java
-  depends_on "python@2" => :recommended
-  depends_on "python" => :optional
+  depends_on "python@2"
+  depends_on "python"
 
   def install
-    args = std_cmake_args + %w[
-      -DLCM_ENABLE_EXAMPLES=OFF
-      -DLCM_ENABLE_TESTS=OFF
-      -DLCM_INSTALL_M4MACROS=OFF
-      -DLCM_INSTALL_PKGCONFIG=OFF
-    ]
+    for python in ["python2", "python3"] do
+      python_executable = `which #{python}`.strip
 
-    if build.with?("python") && build.with?("python@2")
-      odie "Building with both python and python@2 is NOT supported."
-    elsif build.with?("python") || build.with?("python@2")
-      python_executable = `which python2`.strip if build.with? "python@2"
-      python_executable = `which python3`.strip if build.with? "python"
-      args << "-DLCM_ENABLE_PYTHON=ON"
-      args << "-DPYTHON_EXECUTABLE='#{python_executable}'"
-    else
-      args << "-DLCM_ENABLE_PYTHON=OFF"
-    end
+      args = std_cmake_args + %W[
+        -DLCM_ENABLE_EXAMPLES=OFF
+        -DLCM_ENABLE_PYTHON=ON
+        -DLCM_ENABLE_TESTS=OFF
+        -DLCM_INSTALL_M4MACROS=OFF
+        -DLCM_INSTALL_PKGCONFIG=OFF
+        -DPYTHON_EXECUTABLE='#{python_executable}'
+      ]
 
-    mkdir "build" do
-      system "cmake", *args, ".."
-      system "make"
-      system "make", "install"
+      mkdir "build-#{python}" do
+        system "cmake", *args, ".."
+        system "make"
+        system "make", "install"
+      end
     end
   end
 
