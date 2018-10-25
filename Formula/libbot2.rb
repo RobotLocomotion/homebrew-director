@@ -30,14 +30,12 @@
 class Libbot2 < Formula
   desc "Libraries, tools, and algorithms for robotics research"
   homepage "https://github.com/RobotLocomotion/libbot2/"
-  url "https://drake-homebrew.csail.mit.edu/mirror/libbot2-0.0.1.20180625.tar.gz"
-  sha256 "a709df9116389e182386630c367b292dbebba75278e1b230623d2a58a7685081"
+  url "https://drake-homebrew.csail.mit.edu/mirror/libbot2-0.0.1.20181025.tar.gz"
+  sha256 "212fdd854c4f6ce986dcc908b276d2d30ad29a4da9f67be813d231e946a15ee2"
   head "https://github.com/RobotLocomotion/libbot2.git"
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "45c8da381839d01744e12561d9801201862f4d5aa6925b6f12b33707bd2fb11c" => :mojave
-    sha256 "0040d03f1e1b3c18ca967fffe156a3691c3b1afe2d67eccc6008c62aa3ef6404" => :high_sierra
   end
 
   depends_on "cmake" => :build
@@ -51,42 +49,49 @@ class Libbot2 < Formula
   depends_on "numpy"
   depends_on "pygobject"
   depends_on "pygtk"
+  depends_on "python"
   depends_on "python@2"
   depends_on "scipy"
   depends_on :x11
 
   def install
-    python_executable = `which python2`.strip
+    # bot-log2mat and bot-procman-sheriff will use python2.
+    for python in ["python3", "python2"] do
+      python_executable = `which #{python}`.strip
 
-    args = std_cmake_args + %W[
-      -DGLUT_glut_LIBRARY=/System/Library/Frameworks/GLUT.framework
-      -DPYTHON_EXECUTABLE='#{python_executable}'
-      -DWITH_BOT_VIS=OFF
-    ]
+      args = std_cmake_args + %W[
+        -DGLUT_glut_LIBRARY=/System/Library/Frameworks/GLUT.framework
+        -DPYTHON_EXECUTABLE='#{python_executable}'
+        -DWITH_BOT_VIS=OFF
+      ]
 
-    mkdir "build" do
-      system "cmake", *args, ".."
-      system "make"
-      system "make", "install"
+      mkdir "build-#{python}" do
+        system "cmake", *args, ".."
+        system "make"
+        system "make", "install"
+      end
+
+      inreplace "#{bin}/bot-spy", prefix, opt_prefix
+      inreplace "#{lib}/pkgconfig/bot2-core.pc", prefix, opt_prefix
+      inreplace "#{lib}/pkgconfig/bot2-frames.pc", prefix, opt_prefix
+      inreplace "#{lib}/pkgconfig/bot2-lcmgl-client.pc", prefix, opt_prefix
+      inreplace "#{lib}/pkgconfig/bot2-lcmgl-renderer.pc", prefix, opt_prefix
+      inreplace "#{lib}/pkgconfig/bot2-param-client.pc", prefix, opt_prefix
+      inreplace "#{lib}/pkgconfig/lcmtypes_bot2-core.pc", prefix, opt_prefix
+      inreplace "#{lib}/pkgconfig/lcmtypes_bot2-frames.pc", prefix, opt_prefix
+      inreplace "#{lib}/pkgconfig/lcmtypes_bot2-lcmgl.pc", prefix, opt_prefix
+      inreplace "#{lib}/pkgconfig/lcmtypes_bot2-param.pc", prefix, opt_prefix
+      inreplace "#{lib}/pkgconfig/lcmtypes_bot2-procman.pc", prefix, opt_prefix
+
+      if python == "python2"
+        inreplace "#{bin}/bot-log2mat", prefix, opt_prefix
+        inreplace "#{bin}/bot-procman-sheriff", prefix, opt_prefix
+
+        python_version = "python" + `#{python_executable} -c 'import sys;print(sys.version[:3])'`.chomp
+        inreplace "#{lib}/#{python_version}/site-packages/bot_procman/build_prefix.py",
+          prefix, opt_prefix
+      end
     end
-
-    python_version = "python" + `#{python_executable} -c 'import sys;print(sys.version[:3])'`.chomp
-
-    inreplace "#{bin}/bot-log2mat", prefix, opt_prefix
-    inreplace "#{bin}/bot-procman-sheriff", prefix, opt_prefix
-    inreplace "#{bin}/bot-spy", prefix, opt_prefix
-    inreplace "#{lib}/pkgconfig/bot2-core.pc", prefix, opt_prefix
-    inreplace "#{lib}/pkgconfig/bot2-frames.pc", prefix, opt_prefix
-    inreplace "#{lib}/pkgconfig/bot2-lcmgl-client.pc", prefix, opt_prefix
-    inreplace "#{lib}/pkgconfig/bot2-lcmgl-renderer.pc", prefix, opt_prefix
-    inreplace "#{lib}/pkgconfig/bot2-param-client.pc", prefix, opt_prefix
-    inreplace "#{lib}/pkgconfig/lcmtypes_bot2-core.pc", prefix, opt_prefix
-    inreplace "#{lib}/pkgconfig/lcmtypes_bot2-frames.pc", prefix, opt_prefix
-    inreplace "#{lib}/pkgconfig/lcmtypes_bot2-lcmgl.pc", prefix, opt_prefix
-    inreplace "#{lib}/pkgconfig/lcmtypes_bot2-param.pc", prefix, opt_prefix
-    inreplace "#{lib}/pkgconfig/lcmtypes_bot2-procman.pc", prefix, opt_prefix
-    inreplace "#{lib}/#{python_version}/site-packages/bot_procman/build_prefix.py",
-      prefix, opt_prefix
   end
 
   test do
