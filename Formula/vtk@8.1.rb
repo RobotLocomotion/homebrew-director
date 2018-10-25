@@ -55,7 +55,7 @@ class VtkAT81 < Formula
   homepage "https://www.vtk.org/"
   url "https://drake-homebrew.csail.mit.edu/mirror/vtk-8.1.1.tar.gz"
   sha256 "4df403c072e90d85c8ce3430aab20746f05c59f759a8dac0835bf13916ae5f48"
-  revision 4
+  revision 5
 
   patch do
     # Do not link against libpython when possible.
@@ -75,10 +75,14 @@ class VtkAT81 < Formula
     sha256 "7b4e471c8e103a789175d937f1ef016d17434eed46dcefde07925ed0239a939d"
   end
 
+  patch do
+    # Fix compilation against Python 3.7.
+    url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.1.1-python-3.7.patch"
+    sha256 "8625d46b74b429a4aa8425ecbbd2ea2ca670f4fdb364a14de3b2ca338d5545bb"
+  end
+
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "dfa0c5b8258ca12d81e2f5904bfb622279b52c3eb8310a1aa701be727d38c59a" => :mojave
-    sha256 "e656c2c33e45f4961aaf000a3aae8bde7abb535446531b7764527399d3144803" => :high_sierra
   end
 
   keg_only :versioned_formula
@@ -97,91 +101,83 @@ class VtkAT81 < Formula
   depends_on "lz4"
   depends_on "netcdf"
   depends_on "ospray"
+  depends_on "python"
+  depends_on "python@2"
+  depends_on "qt"
   depends_on "theora"
-  depends_on "python@2" => :recommended
-  depends_on "qt" => :recommended
-  depends_on "python" => :optional
 
   def install
-    args = std_cmake_args + %W[
-      -DBUILD_SHARED_LIBS=ON
-      -DBUILD_TESTING=OFF
-      -DCMAKE_INSTALL_NAME_DIR:STRING=#{opt_lib}
-      -DCMAKE_INSTALL_RPATH:STRING=#{opt_lib}
-      -DModule_vtkRenderingOSPRay=ON
-      -DOSPRAY_INSTALL_DIR=#{Formula["ospray"].opt_prefix}
-      -DVTK_REQUIRED_OBJCXX_FLAGS=''
-      -DVTK_USE_COCOA=ON
-      -DVTK_USE_SYSTEM_EXPAT=ON
-      -DVTK_USE_SYSTEM_FREETYPE=ON
-      -DVTK_USE_SYSTEM_GLEW=ON
-      -DVTK_USE_SYSTEM_HDF5=ON
-      -DVTK_USE_SYSTEM_JPEG=ON
-      -DVTK_USE_SYSTEM_JSONCPP=ON
-      -DVTK_USE_SYSTEM_LIBXML2=ON
-      -DVTK_USE_SYSTEM_LZ4=ON
-      -DVTK_USE_SYSTEM_NETCDF=ON
-      -DVTK_USE_SYSTEM_NETCDFCPP=ON
-      -DVTK_USE_SYSTEM_OGGTHEORA=ON
-      -DVTK_USE_SYSTEM_PNG=ON
-      -DVTK_USE_SYSTEM_TIFF=ON
-      -DVTK_USE_SYSTEM_ZLIB=ON
-    ]
-
-    if build.with? "qt"
-      args << "-DVTK_QT_VERSION:STRING=5"
-      args << "-DVTK_Group_Qt=ON"
-    end
-
-    mkdir "build" do
-      if build.with?("python") && build.with?("python@2")
-        odie "Building with both python and python@2 is NOT supported."
-      elsif build.with?("python") || build.with?("python@2")
-        python_executable = `which python2`.strip if build.with? "python@2"
-        python_executable = `which python3`.strip if build.with? "python"
-
-        python_prefix = `#{python_executable} -c 'import sys;print(sys.prefix)'`.chomp
-        python_include = `#{python_executable} -c 'from distutils import sysconfig;print(sysconfig.get_python_inc(True))'`.chomp
-        python_version = "python" + `#{python_executable} -c 'import sys;print(sys.version[:3])'`.chomp
-        py_site_packages = "#{lib}/#{python_version}/site-packages"
-
-        args << "-DVTK_WRAP_PYTHON=ON"
-        args << "-DPYTHON_EXECUTABLE='#{python_executable}'"
-        args << "-DPYTHON_INCLUDE_DIR='#{python_include}'"
-        # CMake picks up the system's python dylib, even if we have a brewed one.
-        if File.exist? "#{python_prefix}/Python"
-          args << "-DPYTHON_LIBRARY='#{python_prefix}/Python'"
-        elsif File.exist? "#{python_prefix}/lib/lib#{python_version}.a"
-          args << "-DPYTHON_LIBRARY='#{python_prefix}/lib/lib#{python_version}.a'"
-        elsif File.exist? "#{python_prefix}/lib/lib#{python_version}.dylib"
-          args << "-DPYTHON_LIBRARY='#{python_prefix}/lib/lib#{python_version}.dylib'"
-        else
-          odie "No libpythonX.Y.{dylib|a} file found!"
-        end
-        # Set the prefix for the python bindings to the Cellar.
-        args << "-DVTK_INSTALL_PYTHON_MODULE_DIR='#{py_site_packages}/'"
+    # vtkPython.cmake will reference python@2.
+    for python in ["python", "python@2"] do
+      if python == "python"
+        python_executable = `which python3`.strip
+      else
+        python_executable = `which python2`.strip
       end
 
-      args << ".."
-      system "cmake", *args
-      system "make"
-      system "make", "install"
+      python_include_dir = `#{python_executable} -c 'from distutils import sysconfig;print(sysconfig.get_python_inc(True))'`.chomp
+      python_version = "python" + `#{python_executable} -c 'import sys;print(sys.version[:3])'`.chomp
+      python_prefix = `#{python_executable} -c 'import sys;print(sys.prefix)'`.chomp
+
+      if File.exist? "#{python_prefix}/Python"
+        python_library = "#{python_prefix}/Python"
+      elsif File.exist? "#{python_prefix}/lib/lib#{python_version}.a"
+        python_library = "#{python_prefix}/lib/lib#{python_version}.a"
+      elsif File.exist? "#{python_prefix}/lib/lib#{python_version}.dylib"
+        python_library = "#{python_prefix}/lib/lib#{python_version}.dylib"
+      else
+        odie "No libpythonX.Y.{dylib|a} file found!"
+      end
+
+      python_module_dir = "#{lib}/#{python_version}/site-packages/"
+
+      args = std_cmake_args + %W[
+        -DBUILD_SHARED_LIBS=ON
+        -DBUILD_TESTING=OFF
+        -DCMAKE_INSTALL_NAME_DIR:STRING=#{opt_lib}
+        -DCMAKE_INSTALL_RPATH:STRING=#{opt_lib}
+        -DModule_vtkRenderingOSPRay=ON
+        -DOSPRAY_INSTALL_DIR=#{Formula["ospray"].opt_prefix}
+        -DPYTHON_EXECUTABLE='#{python_executable}'
+        -DPYTHON_INCLUDE_DIR='#{python_include_dir}'
+        -DPYTHON_LIBRARY='#{python_library}'
+        -DVTK_ENABLE_VTKPYTHON=OFF
+        -DVTK_Group_Qt=ON
+        -DVTK_INSTALL_PYTHON_MODULE_DIR='#{python_module_dir}'
+        -DVTK_LEGACY_REMOVE=ON
+        -DVTK_QT_VERSION:STRING=5
+        -DVTK_REQUIRED_OBJCXX_FLAGS=''
+        -DVTK_USE_COCOA=ON
+        -DVTK_USE_SYSTEM_EXPAT=ON
+        -DVTK_USE_SYSTEM_FREETYPE=ON
+        -DVTK_USE_SYSTEM_GLEW=ON
+        -DVTK_USE_SYSTEM_HDF5=ON
+        -DVTK_USE_SYSTEM_JPEG=ON
+        -DVTK_USE_SYSTEM_JSONCPP=ON
+        -DVTK_USE_SYSTEM_LIBXML2=ON
+        -DVTK_USE_SYSTEM_LZ4=ON
+        -DVTK_USE_SYSTEM_NETCDF=ON
+        -DVTK_USE_SYSTEM_NETCDFCPP=ON
+        -DVTK_USE_SYSTEM_OGGTHEORA=ON
+        -DVTK_USE_SYSTEM_PNG=ON
+        -DVTK_USE_SYSTEM_TIFF=ON
+        -DVTK_USE_SYSTEM_ZLIB=ON
+        -DVTK_WRAP_PYTHON=ON
+      ]
+
+      mkdir "build-#{python}" do
+        system "cmake", *args, ".."
+        system "make"
+        system "make", "install"
+      end
 
       inreplace "#{lib}/cmake/vtk-8.1/Modules/vtkhdf5.cmake",
         "#{HOMEBREW_CELLAR}/hdf5/#{Formula["hdf5"].installed_version}/include",
         Formula["hdf5"].opt_include.to_s
-      if build.with?("python") || build.with?("python@2")
-        inreplace "#{lib}/cmake/vtk-8.1/Modules/vtkPython.cmake", lib, opt_lib
-        if build.with? "python"
-          inreplace "#{lib}/cmake/vtk-8.1/Modules/vtkPython.cmake",
-            "#{HOMEBREW_CELLAR}/python/#{Formula["python"].installed_version}/Frameworks",
-            "#{Formula["python"].opt_prefix}/Frameworks"
-        else
-          inreplace "#{lib}/cmake/vtk-8.1/Modules/vtkPython.cmake",
-            "#{HOMEBREW_CELLAR}/python@2/#{Formula["python@2"].installed_version}/Frameworks",
-            "#{Formula["python@2"].opt_prefix}/Frameworks"
-        end
-      end
+      inreplace "#{lib}/cmake/vtk-8.1/Modules/vtkPython.cmake", lib, opt_lib
+      inreplace "#{lib}/cmake/vtk-8.1/Modules/vtkPython.cmake",
+        "#{HOMEBREW_CELLAR}/#{python}/#{Formula[python].installed_version}/Frameworks",
+        "#{Formula[python].opt_prefix}/Frameworks"
       inreplace "#{lib}/cmake/vtk-8.1/VTKConfig.cmake", prefix, opt_prefix
     end
   end
@@ -199,6 +195,5 @@ class VtkAT81 < Formula
 
     system ENV.cxx, "-std=c++11", "Version.cpp", "-I#{opt_include}/vtk-8.1"
     system "./a.out"
-    system "#{bin}/vtkpython", "-c", "exit()"
   end
 end
