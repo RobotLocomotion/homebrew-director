@@ -64,6 +64,9 @@ class Tinyxml2AT70 < Formula
 
   bottle do
     cellar :any
+    root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "5d819cda02ed7eff1aa1580f34378ba44f247babfce034d84fa7677cc3a94fab" => :mojave
+    sha256 "eb990c45d9e219bed9b15c821a366ab9255c6dfda20b60b83411b10855e05394" => :high_sierra
   end
 
   keg_only :versioned_formula
