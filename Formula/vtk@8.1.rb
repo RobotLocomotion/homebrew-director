@@ -89,8 +89,6 @@ class VtkAT81 < Formula
 
   keg_only :versioned_formula
 
-  needs :cxx11
-
   depends_on "cmake" => :build
   depends_on "freetype"
   depends_on "glew"

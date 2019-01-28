@@ -41,8 +41,6 @@ class Embree < Formula
     sha256 "366da1ae05eddc37033793ff04dccfd300fc7a81ffc963689f573f33f99d3e85" => :high_sierra
   end
 
-  needs :cxx11
-
   depends_on "cmake" => :build
   depends_on "ispc" => :build
   depends_on "tbb"
