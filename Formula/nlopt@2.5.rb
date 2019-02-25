@@ -58,6 +58,8 @@ class NloptAT25 < Formula
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "656c26032a50fd99d2cc1b5825b9fe79b04caa14e7f30bdffe393b1c0a400772" => :mojave
+    sha256 "34a50214d3c40a7f780646ba9c0b8c5532e92baec8424d693019aceb638136fc" => :high_sierra
   end
 
   keg_only :versioned_formula
