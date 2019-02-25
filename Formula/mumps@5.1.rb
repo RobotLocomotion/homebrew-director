@@ -55,13 +55,11 @@ class MumpsAT51 < Formula
   homepage "http://www.mumps-solver.org/"
   url "https://drake-homebrew.csail.mit.edu/mirror/mumps-5.1.2.tar.gz"
   sha256 "08a1fc988f5d22f9578ecfd66638b619d8201b118674f041a868d2e5f0d9af99"
-  revision 1
+  revision 2
 
   bottle do
     cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "0777ad0400506364862d9877f9580071c575a525f7bdabee726ba45901d06bee" => :mojave
-    sha256 "be6ede970fe089471afba73a9cafd42f8ae8ddadfae22edcf4bbe0007d9e85e4" => :high_sierra
   end
 
   keg_only :versioned_formula
