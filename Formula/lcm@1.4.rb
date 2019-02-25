@@ -32,13 +32,11 @@ class LcmAT14 < Formula
   homepage "https://lcm-proj.github.io/"
   url "https://drake-homebrew.csail.mit.edu/mirror/lcm-1.4.0.tar.gz"
   sha256 "149d7076369d261e6adbb25d713dc9e30aeba415f4fc62bb41e748b2eb229b46"
-  revision 1
+  revision 2
 
   bottle do
     cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "77854791d7970dc3f73a3a405d2e7125ed43a234af3bcab6c188bc0bef8b506c" => :mojave
-    sha256 "4c56bef719ad256859acbdb4f068c928f37b869fb2aeb54f1feaa6542f60aa7f" => :high_sierra
   end
 
   keg_only :versioned_formula
