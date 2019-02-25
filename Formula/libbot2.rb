@@ -33,11 +33,10 @@ class Libbot2 < Formula
   url "https://drake-homebrew.csail.mit.edu/mirror/libbot2-0.0.1.20181025.tar.gz"
   sha256 "212fdd854c4f6ce986dcc908b276d2d30ad29a4da9f67be813d231e946a15ee2"
   head "https://github.com/RobotLocomotion/libbot2.git"
+  revision 1
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "ff6bfc04bf723922b5f0cf5e549745945330790009257e7d5e2880ecbaeecd8a" => :mojave
-    sha256 "3c1a250dfbc09901b863cde7fa54f688ae261413978c25a5546675eb517bfa06" => :high_sierra
   end
 
   depends_on "cmake" => :build
