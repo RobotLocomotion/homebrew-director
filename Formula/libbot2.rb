@@ -32,8 +32,8 @@ class Libbot2 < Formula
   homepage "https://github.com/RobotLocomotion/libbot2/"
   url "https://drake-homebrew.csail.mit.edu/mirror/libbot2-0.0.1.20181025.tar.gz"
   sha256 "212fdd854c4f6ce986dcc908b276d2d30ad29a4da9f67be813d231e946a15ee2"
-  head "https://github.com/RobotLocomotion/libbot2.git"
   revision 1
+  head "https://github.com/RobotLocomotion/libbot2.git"
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
@@ -59,7 +59,7 @@ class Libbot2 < Formula
 
   def install
     # bot-log2mat and bot-procman-sheriff will use python2.
-    for python in ["python3", "python2"] do
+    ["python3", "python2"].each do |python|
       python_executable = `which #{python}`.strip
 
       args = std_cmake_args + %W[
@@ -86,14 +86,14 @@ class Libbot2 < Formula
       inreplace "#{lib}/pkgconfig/lcmtypes_bot2-param.pc", prefix, opt_prefix
       inreplace "#{lib}/pkgconfig/lcmtypes_bot2-procman.pc", prefix, opt_prefix
 
-      if python == "python2"
-        inreplace "#{bin}/bot-log2mat", prefix, opt_prefix
-        inreplace "#{bin}/bot-procman-sheriff", prefix, opt_prefix
+      next unless python == "python2"
 
-        python_version = "python" + `#{python_executable} -c 'import sys;print(sys.version[:3])'`.chomp
-        inreplace "#{lib}/#{python_version}/site-packages/bot_procman/build_prefix.py",
-          prefix, opt_prefix
-      end
+      inreplace "#{bin}/bot-log2mat", prefix, opt_prefix
+      inreplace "#{bin}/bot-procman-sheriff", prefix, opt_prefix
+
+      python_version = "python" + `#{python_executable} -c 'import sys;print(sys.version[:3])'`.chomp
+      inreplace "#{lib}/#{python_version}/site-packages/bot_procman/build_prefix.py",
+        prefix, opt_prefix
     end
   end
 

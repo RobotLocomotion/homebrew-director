@@ -46,11 +46,11 @@ class LcmAT14 < Formula
   depends_on "cmake" => :build
   depends_on "glib"
   depends_on :java
-  depends_on "python@2"
   depends_on "python"
+  depends_on "python@2"
 
   def install
-    for python in ["python2", "python3"] do
+    ["python2", "python3"].each do |python|
       python_executable = `which #{python}`.strip
 
       args = std_cmake_args + %W[

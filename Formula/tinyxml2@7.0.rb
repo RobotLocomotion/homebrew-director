@@ -56,12 +56,6 @@ class Tinyxml2AT70 < Formula
   url "https://drake-homebrew.csail.mit.edu/mirror/tinyxml2-7.0.0.tar.gz"
   sha256 "8c6f744f4a10e5dc5fbfc5da2e932c597b53e13ee0db788e99a6508b6e2ab4c5"
 
-  patch do
-    # Fix includedir and libdir paths in tinyxml2.pc.
-    url "https://drake-homebrew.csail.mit.edu/patches/tinyxml2-7.0.0-pkg-config.patch"
-    sha256 "a859d3b55e2d1c1c5a6d8576ee2a33cc031c6e3fc1088ac428052ecf476288f4"
-  end
-
   bottle do
     cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
@@ -73,14 +67,20 @@ class Tinyxml2AT70 < Formula
 
   depends_on "cmake" => :build
 
-  def install
-      mkdir "build" do
-        system "cmake", *std_cmake_args, ".."
-        system "make"
-        system "make", "install"
-      end
+  patch do
+    # Fix includedir and libdir paths in tinyxml2.pc.
+    url "https://drake-homebrew.csail.mit.edu/patches/tinyxml2-7.0.0-pkg-config.patch"
+    sha256 "a859d3b55e2d1c1c5a6d8576ee2a33cc031c6e3fc1088ac428052ecf476288f4"
+  end
 
-      inreplace "#{lib}/pkgconfig/tinyxml2.pc", prefix, opt_prefix
+  def install
+    mkdir "build" do
+      system "cmake", *std_cmake_args, ".."
+      system "make"
+      system "make", "install"
+    end
+
+    inreplace "#{lib}/pkgconfig/tinyxml2.pc", prefix, opt_prefix
   end
 
   test do

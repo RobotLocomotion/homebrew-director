@@ -57,30 +57,6 @@ class VtkAT81 < Formula
   sha256 "4df403c072e90d85c8ce3430aab20746f05c59f759a8dac0835bf13916ae5f48"
   revision 5
 
-  patch do
-    # Do not link against libpython when possible.
-    url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.1.1-optional-python-link.patch"
-    sha256 "7be110841dba7033c12578779b5be2d1d45d957be6f5a7c0f889432e34ad0de9"
-  end
-
-  patch do
-    # Fix various issues with vtkRenderingOSPRay.
-    url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.1.1_2-rendering-ospray.patch"
-    sha256 "00ae8e5acfe620094c43c863cf54133426ffb2ca0b4564ff1029868821ef77af"
-  end
-
-  patch do
-    # Fix issue with vtkOpenGLRenderWindow.
-    url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.1.1-opengl-render-window.patch"
-    sha256 "7b4e471c8e103a789175d937f1ef016d17434eed46dcefde07925ed0239a939d"
-  end
-
-  patch do
-    # Fix compilation against Python 3.7.
-    url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.1.1-python-3.7.patch"
-    sha256 "8625d46b74b429a4aa8425ecbbd2ea2ca670f4fdb364a14de3b2ca338d5545bb"
-  end
-
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
     sha256 "ee27d0588e310f6331f55915ef36c2596ba0146e449c44fc14fe9fe1cc4c2317" => :mojave
@@ -106,9 +82,33 @@ class VtkAT81 < Formula
   depends_on "qt"
   depends_on "theora"
 
+  patch do
+    # Do not link against libpython when possible.
+    url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.1.1-optional-python-link.patch"
+    sha256 "7be110841dba7033c12578779b5be2d1d45d957be6f5a7c0f889432e34ad0de9"
+  end
+
+  patch do
+    # Fix various issues with vtkRenderingOSPRay.
+    url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.1.1_2-rendering-ospray.patch"
+    sha256 "00ae8e5acfe620094c43c863cf54133426ffb2ca0b4564ff1029868821ef77af"
+  end
+
+  patch do
+    # Fix issue with vtkOpenGLRenderWindow.
+    url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.1.1-opengl-render-window.patch"
+    sha256 "7b4e471c8e103a789175d937f1ef016d17434eed46dcefde07925ed0239a939d"
+  end
+
+  patch do
+    # Fix compilation against Python 3.7.
+    url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.1.1-python-3.7.patch"
+    sha256 "8625d46b74b429a4aa8425ecbbd2ea2ca670f4fdb364a14de3b2ca338d5545bb"
+  end
+
   def install
     # vtkPython.cmake will reference python@2.
-    for python in ["python", "python@2"] do
+    ["python", "python@2"].each do |python|
       if python == "python"
         python_executable = `which python3`.strip
       else

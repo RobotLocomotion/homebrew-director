@@ -54,17 +54,7 @@ class VtkAT82 < Formula
   desc "Toolkit for 3D computer graphics, image processing, and visualization"
   homepage "https://www.vtk.org/"
   url "https://drake-homebrew.csail.mit.edu/mirror/vtk-8.2.0.tar.gz"
-  sha256 "e83394561e6425a0b51eaaa355a5309e603a325e62ee5c9425ae7b7e22ab0d79"#
-
-  patch do
-    url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.2.0-io-movie-ogg.patch"
-    sha256 "541dc51bb04beaeb7db1fe0c0a9f94684d450b4e0262af6039419ffbb1ea1d67"
-  end
-
-  patch do
-    url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.2.0-optional-python-link.patch"
-    sha256 "14a8814b9ed14bf0956351c0f5dfeddf3e4d74baf26dc85397085a97e1a64b2a"
-  end
+  sha256 "e83394561e6425a0b51eaaa355a5309e603a325e62ee5c9425ae7b7e22ab0d79"
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
@@ -91,9 +81,19 @@ class VtkAT82 < Formula
   depends_on "qt"
   depends_on "theora"
 
+  patch do
+    url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.2.0-io-movie-ogg.patch"
+    sha256 "541dc51bb04beaeb7db1fe0c0a9f94684d450b4e0262af6039419ffbb1ea1d67"
+  end
+
+  patch do
+    url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.2.0-optional-python-link.patch"
+    sha256 "14a8814b9ed14bf0956351c0f5dfeddf3e4d74baf26dc85397085a97e1a64b2a"
+  end
+
   def install
     # vtkPython.cmake will reference python@2.
-    for python in ["python", "python@2"] do
+    ["python", "python@2"].each do |python|
       if python == "python"
         python_executable = `which python3`.strip
       else
