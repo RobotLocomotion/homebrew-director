@@ -1,5 +1,5 @@
-# Copyright (c) 2018, Massachusetts Institute of Technology.
-# Copyright (c) 2018, Toyota Research Institute.
+# Copyright (c) 2019, Massachusetts Institute of Technology.
+# Copyright (c) 2019, Toyota Research Institute.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -27,7 +27,7 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# Copyright (c) 2009-2018, Homebrew contributors.
+# Copyright (c) 2009-2019, Homebrew contributors.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -50,61 +50,42 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-class NloptAT24 < Formula
+class NloptAT25 < Formula
   desc "Nonlinear optimization library"
   homepage "https://nlopt.readthedocs.io/"
-  url "https://drake-homebrew.csail.mit.edu/mirror/nlopt-2.4.2.tar.gz"
-  sha256 "8099633de9d71cbc06cd435da993eb424bbcdbded8f803cdaa9fb8c6e09c8e89"
-  revision 1
+  url "https://drake-homebrew.csail.mit.edu/mirror/nlopt-2.5.0.tar.gz"
+  sha256 "583a980d267d28289440a21f7ed141ddd51fa8b9802fa84234532852a4514aa6"
 
   bottle do
-    cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "bc29cb16ef4bd66b612f808150267f707c62805a16cd5db5af57e097348a1ff1" => :mojave
-    sha256 "1ceab27763cd4737d328dc922737ad7bf1019d90d09effa4c1bbf64945a5b950" => :high_sierra
   end
 
   keg_only :versioned_formula
 
+  depends_on "cmake" => :build
+
   def install
-    if build.head?
-      args = std_cmake_args + %w[
-        -DBUILD_SHARED_LIBS=ON
-        -DNLOPT_CXX=ON"
-        -DNLOPT_MATLAB=OFF"
-        -DNLOPT_OCTAVE=OFF"
-        -DNLOPT_PYTHON=OFF"
-        -DNLOPT_SWIG=OFF"
-      ]
+    args = std_cmake_args + %w[
+      -DBUILD_SHARED_LIBS=ON
+      -DNLOPT_CXX=ON
+      -DNLOPT_GUILE=OFF
+      -DNLOPT_MATLAB=OFF
+      -DNLOPT_OCTAVE=OFF
+      -DNLOPT_PYTHON=OFF
+      -DNLOPT_SWIG=OFF
+    ]
 
-      mkdir "build" do
-        system "cmake", *args, ".."
-        system "make"
-        system "make", "install"
-      end
-
-      rm_rf "#{lib}/matlab"
-
-      %w[0.dylib dylib].each do |suffix|
-        lib.install_symlink "#{lib}/libnlopt_cxx.#{suffix}" => "#{lib}/libnlopt.#{suffix}"
-      end
-    else
-      args = %W[
-        --enable-shared
-        --prefix=#{prefix}
-        --with-cxx
-        --without-guile
-        --without-octave
-        --without-python
-      ]
-
-      system "./configure", *args
+    mkdir "build" do
+      system "cmake", *args, ".."
       system "make"
       system "make", "install"
+    end
 
-      %w[a 0.dylib dylib].each do |suffix|
-        lib.install_symlink "#{lib}/libnlopt_cxx.#{suffix}" => "#{lib}/libnlopt.#{suffix}"
-      end
+    rm_f "#{include}/nlopt.f"
+    rm_rf "#{lib}/matlab"
+
+    %w[0.dylib dylib].each do |suffix|
+      lib.install_symlink "#{lib}/libnlopt_cxx.#{suffix}" => "#{lib}/libnlopt.#{suffix}"
     end
 
     inreplace "#{lib}/pkgconfig/nlopt.pc", prefix, opt_prefix
@@ -118,8 +99,8 @@ class NloptAT24 < Formula
         int major, minor, bugfix;
         nlopt_version(&major, &minor, &bugfix);
         assert(major == 2);
-        assert(minor == 4);
-        assert(bugfix == 2);
+        assert(minor == 5);
+        assert(bugfix == 0);
         return 0;
       }
     EOS
@@ -131,8 +112,8 @@ class NloptAT24 < Formula
       #include <nlopt.hpp>
       int main() {
         assert(nlopt::version_major() == 2);
-        assert(nlopt::version_minor() == 4);
-        assert(nlopt::version_bugfix() == 2);
+        assert(nlopt::version_minor() == 5);
+        assert(nlopt::version_bugfix() == 0);
         return 0;
       }
     EOS
