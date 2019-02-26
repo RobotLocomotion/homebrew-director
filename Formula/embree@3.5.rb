@@ -37,8 +37,6 @@ class EmbreeAT35 < Formula
   bottle do
     cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "778aedd5e906bcfa680b53b1faea485d212f6c5c41b0f57f77a2855d3147d4d2" => :mojave
-    sha256 "f3d15c809158ed53050cfa548060f03d8ba90b05a327e5e2ee1e3a2c2d173322" => :high_sierra
   end
 
   keg_only :versioned_formula
@@ -52,6 +50,8 @@ class EmbreeAT35 < Formula
 
     args = std_cmake_args + %w[
       -DBUILD_TESTING=OFF
+      -DCMAKE_INSTALL_NAME_DIR=#{opt_lib}
+      -DCMAKE_INSTALL_RPATH=#{opt_lib}
       -DEMBREE_MAX_ISA=SSE4.2
       -DEMBREE_TUTORIALS=OFF
     ]

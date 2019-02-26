@@ -37,8 +37,6 @@ class OsprayAT18 < Formula
   bottle do
     cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "8f98ff4adb4229dd0433034f9151556b081dfd6e0426abd7b04c2e57e164390a" => :mojave
-    sha256 "94790af26b8f3d3cafe59f34c3d750b4081b16a53591b82329ae890aef7fe590" => :high_sierra
   end
 
   keg_only :versioned_formula
@@ -53,6 +51,8 @@ class OsprayAT18 < Formula
 
     args = std_cmake_args + %W[
       -Dembree_DIR=#{Formula["embree@3.5"].opt_lib}/cmake/embree-3.5.0"
+      -DCMAKE_INSTALL_NAME_DIR=#{opt_lib}
+      -DCMAKE_INSTALL_RPATH=#{opt_lib}
       -DOSPRAY_ENABLE_APPS=OFF
       -DOSPRAY_ENABLE_TESTING=OFF
       -DOSPRAY_ENABLE_TUTORIALS=OFF
