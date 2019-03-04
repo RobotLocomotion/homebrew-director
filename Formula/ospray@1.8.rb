@@ -30,8 +30,8 @@
 class OsprayAT18 < Formula
   desc "Ray-tracing-based rendering engine for high-fidelity visualization"
   homepage "https://www.ospray.org/"
-  url "https://drake-homebrew.csail.mit.edu/mirror/ospray-1.8.0.tar.gz"
-  sha256 "45b094c8ff8be42ab694d65e9a2f6c102c9228e67cf33109ed73a8f1621256b8"
+  url "https://drake-homebrew.csail.mit.edu/mirror/ospray-1.8.2.tar.gz"
+  sha256 "9501cc7736ca9510e5d630edc73b2e40d1732ef9ec0e141534de3bd3551feea2"
   head "https://github.com/ospray/ospray.git"
 
   bottle do
