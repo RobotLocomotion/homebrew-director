@@ -58,6 +58,8 @@ class VtkAT82 < Formula
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "6d6882ca2f20c1d2d9526725151f1c1d675c27f557b664eb23345b06b4cbaffa" => :mojave
+    sha256 "54a3a63e9476e81477ce009cd3fe4e7003cc82f8c0cb2b5f6726d1c20893e2db" => :high_sierra
   end
 
   keg_only :versioned_formula
@@ -133,8 +135,7 @@ class VtkAT82 < Formula
         -DVTK_Group_Qt=ON
         -DVTK_INSTALL_PYTHON_MODULE_DIR='#{python_module_dir}'
         -DVTK_LEGACY_REMOVE=ON
-        -DVTK_QT_VERSION:STRING=5
-        -DVTK_REQUIRED_OBJCXX_FLAGS=''
+        -DVTK_QT_VERSION=5
         -DVTK_USE_COCOA=ON
         -DVTK_USE_SYSTEM_EXPAT=ON
         -DVTK_USE_SYSTEM_FREETYPE=ON
