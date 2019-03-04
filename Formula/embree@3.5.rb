@@ -30,8 +30,8 @@
 class EmbreeAT35 < Formula
   desc "High-performance ray tracing kernels"
   homepage "https://embree.github.io/"
-  url "https://drake-homebrew.csail.mit.edu/mirror/embree-3.5.0.tar.gz"
-  sha256 "aba44078ce995f932e38ee37e55860af202d21c8b7e9246b89cfd168373af4a7"
+  url "https://drake-homebrew.csail.mit.edu/mirror/embree-3.5.1.tar.gz"
+  sha256 "3e3eefcdefd305ca97f9fda227b73365f12c8086912e78b28e638652b9b84f6d"
   head "https://github.com/embree/embree.git"
 
   bottle do
