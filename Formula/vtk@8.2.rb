@@ -58,8 +58,6 @@ class VtkAT82 < Formula
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "d8e17f17175810ca7d24c95960de1017836621860b81fcea2a1d258205aa90b6" => :mojave
-    sha256 "44a5655636c9e22308a35197aa742b6e7acce2486e734109e3d44e556d3f0558" => :high_sierra
   end
 
   keg_only :versioned_formula
@@ -89,6 +87,11 @@ class VtkAT82 < Formula
   patch do
     url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.2.0-optional-python-link.patch"
     sha256 "14a8814b9ed14bf0956351c0f5dfeddf3e4d74baf26dc85397085a97e1a64b2a"
+  end
+
+  patch do
+    url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.2.0-rendering-ospray.patch"
+    sha256 "94fee7b90617f6b64c20e090a963023a91407db6e41d3cea4d861001b4bd2317"
   end
 
   def install
