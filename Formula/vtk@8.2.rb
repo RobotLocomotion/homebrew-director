@@ -58,8 +58,6 @@ class VtkAT82 < Formula
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "6d6882ca2f20c1d2d9526725151f1c1d675c27f557b664eb23345b06b4cbaffa" => :mojave
-    sha256 "54a3a63e9476e81477ce009cd3fe4e7003cc82f8c0cb2b5f6726d1c20893e2db" => :high_sierra
   end
 
   keg_only :versioned_formula
@@ -93,7 +91,7 @@ class VtkAT82 < Formula
 
   patch do
     url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.2.0-rendering-ospray.patch"
-    sha256 "94fee7b90617f6b64c20e090a963023a91407db6e41d3cea4d861001b4bd2317"
+    sha256 "fe59899fdeaccb64abfa1c526cb6e8ebd3928dab012de5022e116700211442f0"
   end
 
   def install
@@ -119,8 +117,6 @@ class VtkAT82 < Formula
         odie "No libpythonX.Y.{dylib|a} file found!"
       end
 
-      python_module_dir = "#{lib}/#{python_version}/site-packages/"
-
       args = std_cmake_args + %W[
         -DBUILD_SHARED_LIBS=ON
         -DBUILD_TESTING=OFF
@@ -133,7 +129,6 @@ class VtkAT82 < Formula
         -DPYTHON_LIBRARY='#{python_library}'
         -DVTK_ENABLE_VTKPYTHON=OFF
         -DVTK_Group_Qt=ON
-        -DVTK_INSTALL_PYTHON_MODULE_DIR='#{python_module_dir}'
         -DVTK_LEGACY_REMOVE=ON
         -DVTK_QT_VERSION=5
         -DVTK_USE_COCOA=ON
