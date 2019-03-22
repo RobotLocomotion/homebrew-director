@@ -49,10 +49,7 @@ class OsprayAT18 < Formula
   depends_on "tbb"
 
   def install
-    ENV["HOMEBREW_OPTFLAGS"] = ""
-
     args = std_cmake_args + %W[
-      -Dembree_DIR=#{Formula["embree@3.5"].opt_lib}/cmake/embree-3.5.0"
       -DCMAKE_INSTALL_NAME_DIR=#{opt_lib}
       -DCMAKE_INSTALL_RPATH=#{opt_lib}
       -DOSPRAY_ENABLE_APPS=OFF
@@ -68,18 +65,18 @@ class OsprayAT18 < Formula
   end
 
   test do
-    (testpath/"version.cpp").write <<~EOS
-      #include <cassert>
-      #include <ospray/version.h>
-      int main() {
-        assert(OSPRAY_VERSION_MAJOR == 1);
-        assert(OSPRAY_VERSION_MINOR == 8);
-        assert(OSPRAY_VERSION_PATCH == 0);
+    (testpath/"test.c").write <<~EOS
+      #include <assert.h>
+      #include <ospray/ospray.h>
+      int main(int argc, const char **argv) {
+        OSPError error = ospInit(&argc, argv);
+        assert(error == OSP_NO_ERROR);
+        ospShutdown();
         return 0;
       }
     EOS
 
-    system ENV.cxx, "-std=c++11", "version.cpp", "-I#{opt_include}"
+    system ENV.cc, "test.c", "-I#{include}", "-L#{lib}", "-lospray"
     system "./a.out"
   end
 end
