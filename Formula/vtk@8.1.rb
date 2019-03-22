@@ -55,12 +55,10 @@ class VtkAT81 < Formula
   homepage "https://www.vtk.org/"
   url "https://drake-homebrew.csail.mit.edu/mirror/vtk-8.1.1.tar.gz"
   sha256 "4df403c072e90d85c8ce3430aab20746f05c59f759a8dac0835bf13916ae5f48"
-  revision 5
+  revision 6
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "ee27d0588e310f6331f55915ef36c2596ba0146e449c44fc14fe9fe1cc4c2317" => :mojave
-    sha256 "35e08435e313d3876ab50667eb5dcc49ee5fb77c36a5e35f25ce7fec35a69285" => :high_sierra
   end
 
   keg_only :versioned_formula
@@ -76,7 +74,7 @@ class VtkAT81 < Formula
   depends_on "libtiff"
   depends_on "lz4"
   depends_on "netcdf"
-  depends_on "ospray"
+  depends_on "ospray@1.6"
   depends_on "python"
   depends_on "python@2"
   depends_on "qt"
@@ -134,19 +132,17 @@ class VtkAT81 < Formula
       args = std_cmake_args + %W[
         -DBUILD_SHARED_LIBS=ON
         -DBUILD_TESTING=OFF
-        -DCMAKE_INSTALL_NAME_DIR:STRING=#{opt_lib}
-        -DCMAKE_INSTALL_RPATH:STRING=#{opt_lib}
+        -DCMAKE_INSTALL_NAME_DIR=#{opt_lib}
+        -DCMAKE_INSTALL_RPATH=#{opt_lib}
         -DModule_vtkRenderingOSPRay=ON
-        -DOSPRAY_INSTALL_DIR=#{Formula["ospray"].opt_prefix}
+        -DOSPRAY_INSTALL_DIR=#{Formula["ospray@1.6"].opt_prefix}
         -DPYTHON_EXECUTABLE='#{python_executable}'
         -DPYTHON_INCLUDE_DIR='#{python_include_dir}'
         -DPYTHON_LIBRARY='#{python_library}'
         -DVTK_ENABLE_VTKPYTHON=OFF
         -DVTK_Group_Qt=ON
-        -DVTK_INSTALL_PYTHON_MODULE_DIR='#{python_module_dir}'
         -DVTK_LEGACY_REMOVE=ON
-        -DVTK_QT_VERSION:STRING=5
-        -DVTK_REQUIRED_OBJCXX_FLAGS=''
+        -DVTK_QT_VERSION=5
         -DVTK_USE_COCOA=ON
         -DVTK_USE_SYSTEM_EXPAT=ON
         -DVTK_USE_SYSTEM_FREETYPE=ON
