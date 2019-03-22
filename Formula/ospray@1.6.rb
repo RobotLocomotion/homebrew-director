@@ -37,6 +37,8 @@ class OsprayAT16 < Formula
   bottle do
     cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "a4625276258658d7c9b6110a300ac2238ae0da67c35662d2950c357c4fba8c64" => :mojave
+    sha256 "88f07ca356cc0e4569482404ba533f7568f2da25e3618861d6cdc0e3b80ab986" => :high_sierra
   end
 
   keg_only :versioned_formula
