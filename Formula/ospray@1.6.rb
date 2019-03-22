@@ -27,7 +27,7 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-class Ospray < Formula
+class OsprayAT16 < Formula
   desc "Ray-tracing-based rendering engine for high-fidelity visualization"
   homepage "https://www.ospray.org/"
   url "https://drake-homebrew.csail.mit.edu/mirror/ospray-1.6.1.tar.gz"
@@ -37,22 +37,22 @@ class Ospray < Formula
   bottle do
     cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "2ccf63698622dcd6c91e9e750c41a56aaa74b47a8a445374bbf65df6e6d7285e" => :mojave
-    sha256 "101d7cabeeb28f2731127ed244904542b068b3ed14c7e20d92bb452f3a2db166" => :high_sierra
   end
+
+  keg_only :versioned_formula
 
   depends_on "cmake" => :build
   depends_on "ispc" => :build
-  depends_on "embree"
+  depends_on "embree@3.2"
   depends_on "tbb"
 
   def install
-    ENV["HOMEBREW_OPTFLAGS"] = ""
-
     args = std_cmake_args + %W[
-      -Dembree_DIR=#{Formula["embree"].opt_lib}/cmake/embree-3.2.0"
+      -DCMAKE_INSTALL_NAME_DIR=#{opt_lib}
+      -DCMAKE_INSTALL_RPATH=#{opt_lib}
       -DOSPRAY_ENABLE_APPS=OFF
       -DOSPRAY_ENABLE_TESTING=OFF
+      -DOSPRAY_ENABLE_TUTORIALS=OFF
     ]
 
     mkdir "build" do
@@ -63,18 +63,18 @@ class Ospray < Formula
   end
 
   test do
-    (testpath/"version.cpp").write <<~EOS
-      #include <cassert>
-      #include <ospray/version.h>
-      int main() {
-        assert(OSPRAY_VERSION_MAJOR == 1);
-        assert(OSPRAY_VERSION_MINOR == 6);
-        assert(OSPRAY_VERSION_PATCH == 1);
+    (testpath/"test.c").write <<~EOS
+      #include <assert.h>
+      #include <ospray/ospray.h>
+      int main(int argc, const char **argv) {
+        OSPError error = ospInit(&argc, argv);
+        assert(error == OSP_NO_ERROR);
+        ospShutdown();
         return 0;
       }
     EOS
 
-    system ENV.cxx, "-std=c++11", "version.cpp", "-I#{opt_include}"
+    system ENV.cc, "test.c", "-I#{include}", "-L#{lib}", "-lospray"
     system "./a.out"
   end
 end

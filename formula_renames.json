@@ -1,3 +1,4 @@
 {
-  "embree": "embree@3.2"
+  "embree": "embree@3.2",
+  "ospray": "ospray@1.6"
 }
