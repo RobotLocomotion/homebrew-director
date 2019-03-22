@@ -48,12 +48,11 @@ class EmbreeAT35 < Formula
   depends_on "tbb"
 
   def install
-    ENV["HOMEBREW_OPTFLAGS"] = ""
-
     args = std_cmake_args + %w[
       -DBUILD_TESTING=OFF
       -DCMAKE_INSTALL_NAME_DIR=#{opt_lib}
       -DCMAKE_INSTALL_RPATH=#{opt_lib}
+      -DEMBREE_IGNORE_CMAKE_CXX_FLAGS=OFF
       -DEMBREE_MAX_ISA=SSE4.2
       -DEMBREE_TUTORIALS=OFF
     ]
@@ -64,20 +63,30 @@ class EmbreeAT35 < Formula
       system "make", "install"
     end
 
-    rm_rf "#{bin}/models"
+    rm_rf bin
   end
 
   test do
-    (testpath/"version.cpp").write <<~EOS
-      #include <cassert>
+    (testpath/"test.c").write <<~EOS
+      #include <assert.h>
+      #include <xmmintrin.h>
       #include <embree3/rtcore.h>
+      #ifndef _MM_SET_DENORMALS_ZERO_MODE
+      #define _MM_DENORMALS_ZERO_ON (0x0040)
+      #define _MM_DENORMALS_ZERO_MASK (0x0040)
+      #define _MM_SET_DENORMALS_ZERO_MODE(x) (_mm_setcsr((_mm_getcsr() & ~_MM_DENORMALS_ZERO_MASK) | (x)))
+      #endif
       int main() {
-        assert(RTC_VERSION == 30500);
+        _MM_SET_FLUSH_ZERO_MODE(_MM_FLUSH_ZERO_ON);
+        _MM_SET_DENORMALS_ZERO_MODE(_MM_DENORMALS_ZERO_ON);
+        RTCDevice device = rtcNewDevice("verbose=1");
+        assert(device != 0);
+        rtcReleaseDevice(device);
         return 0;
       }
     EOS
 
-    system ENV.cxx, "-std=c++11", "version.cpp", "-I#{opt_include}"
+    system ENV.cc, "test.c", "-I#{include}", "-L#{lib}", "-lembree3"
     system "./a.out"
   end
 end
