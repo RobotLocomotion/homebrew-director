@@ -129,8 +129,6 @@ class VtkAT81 < Formula
         odie "No libpythonX.Y.{dylib|a} file found!"
       end
 
-      python_module_dir = "#{lib}/#{python_version}/site-packages/"
-
       args = std_cmake_args + %W[
         -DBUILD_SHARED_LIBS=ON
         -DBUILD_TESTING=OFF
@@ -181,17 +179,39 @@ class VtkAT81 < Formula
   end
 
   test do
-    (testpath/"Version.cpp").write <<~EOS
-      #include <vtkVersion.h>
+    (testpath/"CMakeLists.txt").write <<~EOS
+      cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
+      project(Distance2BetweenPoints LANGUAGES CXX)
+      find_package(VTK 8.1 REQUIRED COMPONENTS vtkCommonCore CONFIG)
+      include(${VTK_USE_FILE})
+      add_executable(Distance2BetweenPoints Distance2BetweenPoints.cxx)
+      target_link_libraries(Distance2BetweenPoints PRIVATE ${VTK_LIBRARIES})
+    EOS
+
+    (testpath/"Distance2BetweenPoints.cxx").write <<~EOS
+      #include <vtkMath.h>
       #include <assert.h>
       int main() {
-        assert(vtkVersion::GetVTKMajorVersion()==8);
-        assert(vtkVersion::GetVTKMinorVersion()==1);
+        double p0[3] = {0.0, 0.0, 0.0};
+        double p1[3] = {1.0, 1.0, 1.0};
+        assert(vtkMath::Distance2BetweenPoints(p0, p1) == 3.0);
         return 0;
       }
     EOS
 
-    system ENV.cxx, "-std=c++11", "Version.cpp", "-I#{opt_include}/vtk-8.1"
-    system "./a.out"
+    system "cmake", "-DCMAKE_BUILD_TYPE=Debug", "-DCMAKE_VERBOSE_MAKEFILE=ON",
+      "-DVTK_DIR=#{opt_lib}/cmake/vtk-8.1", "."
+    system "make"
+    system "./Distance2BetweenPoints"
+
+    (testpath/"Distance2BetweenPoints.py").write <<~EOS
+      import vtk
+      p0 = (0, 0, 0)
+      p1 = (1, 1, 1)
+      assert vtk.vtkMath.Distance2BetweenPoints(p0, p1) == 3
+    EOS
+
+    ENV["PYTHONPATH"] = opt_lib/"python2.7/site-packages"
+    system "python2.7", "Distance2BetweenPoints.py"
   end
 end
