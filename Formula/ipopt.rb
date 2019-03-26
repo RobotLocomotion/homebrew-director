@@ -64,7 +64,6 @@ class Ipopt < Formula
     sha256 "ee5903893338cb7eb9adb4537966d1cf468229287a9bc931882bc0d19fb163c7" => :high_sierra
   end
 
-  depends_on "pkg-config" => :build
   depends_on "gcc"
   depends_on "mumps@5.1"
 
@@ -72,19 +71,19 @@ class Ipopt < Formula
     ENV.delete("MPICC")
     ENV.delete("MPICXX")
     ENV.delete("MPIFC")
-    ENV.fortran
 
-    args = ["--disable-debug",
-            "--disable-dependency-tracking",
-            "--enable-shared",
-            "--prefix=#{prefix}",
-            "--with-mumps-incdir=#{Formula["mumps@5.1"].include}",
-            "--with-mumps-lib=-L#{Formula["mumps@5.1"].lib} -ldmumps -lmpiseq -lmumps_common -lpord"]
+    args = [
+      "--disable-debug",
+      "--disable-dependency-tracking",
+      "--disable-silent-rules",
+      "--enable-shared",
+      "--prefix=#{prefix}",
+      "--with-mumps-incdir=#{Formula["mumps@5.1"].include}",
+      "--with-mumps-lib=-L#{Formula["mumps@5.1"].lib} -ldmumps -lmpiseq -lmumps_common -lpord",
+    ]
 
     system "./configure", *args
     system "make"
-
-    ENV.deparallelize
     system "make", "install"
 
     inreplace "#{lib}/pkgconfig/ipopt.pc", prefix, opt_prefix
@@ -92,18 +91,20 @@ class Ipopt < Formula
   end
 
   test do
-    (testpath/"Version.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~EOS
       #include <cassert>
-      #include <IpoptConfig.h>
+      #include <IpIpoptApplication.hpp>
+      #include <IpReturnCodes.hpp>
+      #include <IpSmartPtr.hpp>
       int main() {
-        assert(IPOPT_VERSION_MAJOR == 3);
-        assert(IPOPT_VERSION_MINOR == 12);
-        assert(IPOPT_VERSION_RELEASE == 12);
+        Ipopt::SmartPtr<Ipopt::IpoptApplication> app = IpoptApplicationFactory();
+        Ipopt::ApplicationReturnStatus status = app->Initialize();
+        assert(status == Ipopt::Solve_Succeeded);
         return 0;
       }
     EOS
 
-    system ENV.cxx, "Version.cpp", "-I#{opt_include}/coin"
+    system ENV.cxx, "test.cpp", "-I#{include}/coin", "-L#{lib}", "-lipopt"
     system "./a.out"
   end
 end
