@@ -70,11 +70,9 @@ class MumpsAT51 < Formula
   depends_on "veclibfort"
 
   def install
-    ENV.fortran
-
     cp "Make.inc/Makefile.G95.SEQ", "Makefile.inc"
 
-    make_args = [
+    args = [
       "AR=#{ENV.fc} -dynamiclib -Wl,-install_name -Wl,#{lib}/$(notdir $@) -undefined dynamic_lookup -o",
       "CC=#{ENV.cc} -fPIC",
       "CDEFS=-DAdd_",
@@ -88,7 +86,7 @@ class MumpsAT51 < Formula
     ]
 
     ENV.deparallelize
-    system "make", "alllib", *make_args
+    system "make", "alllib", *args
 
     include.install Dir["include/*.h"]
     include.install Dir["libseq/*.h"]
