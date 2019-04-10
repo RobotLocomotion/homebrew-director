@@ -7,11 +7,13 @@ cask 'gurobi' do
   name 'Gurobi Optimizer'
   homepage 'https://www.gurobi.com/products/gurobi-optimizer'
 
+  conflicts_with cask: 'gurobi80'
+
   pkg "gurobi#{version}_mac64.pkg"
 
   uninstall pkgutil: "com.gurobi.gurobiOptimizer#{version.no_dots}.gurobimac.pkg",
             delete:  [
-                       "/Applications/Gurobi #{version}",
+                       "/Applications/Gurobi #{version}.app",
                        "/Library/gurobi#{version.no_dots}",
                        '/Library/Java/Extensions/gurobi.jar',
                        "/Library/Java/Extensions/libGurobiJni#{version.major_minor.no_dots}.jnilib",
