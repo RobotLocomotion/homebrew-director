@@ -64,7 +64,7 @@ class VtkAT82 < Formula
 
   keg_only :versioned_formula
 
-  depends_on "cmake" => :build
+  depends_on "cmake" => [:build, :test]
   depends_on "freetype"
   depends_on "glew"
   depends_on "hdf5"
