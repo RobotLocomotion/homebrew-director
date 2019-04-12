@@ -17,6 +17,9 @@ cask 'gurobi' do
                        "/Library/gurobi#{version.no_dots}",
                        '/Library/Java/Extensions/gurobi.jar',
                        "/Library/Java/Extensions/libGurobiJni#{version.major_minor.no_dots}.jnilib",
+                       '/usr/local/bin/gurobi_cl',
+                       '/usr/local/bin/gurobi.env',
+                       '/usr/local/bin/gurobi.sh',
                        '/usr/local/lib/gurobi.py',
                        "/usr/local/lib/libgurobi#{version.major_minor.no_dots}.dylib",
                        '/Library/Python/2.7/site-packages/gurobipy',
@@ -26,6 +29,5 @@ cask 'gurobi' do
   caveats do
     files_in_usr_local
     license 'https://www.gurobi.com/pdfs/eula/eula-gurobi.pdf'
-    path_environment_variable "/Library/gurobi#{version.no_dots}/mac64/bin"
   end
 end
