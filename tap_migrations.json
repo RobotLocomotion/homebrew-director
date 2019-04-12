@@ -1,4 +1,5 @@
 {
   "embree": "homebrew/core",
-  "kcov": "homebrew/core"
+  "kcov": "homebrew/core",
+  "ospray": "homebrew/core"
 }
