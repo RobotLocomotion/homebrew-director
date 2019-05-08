@@ -59,6 +59,8 @@ class Mumps < Formula
   bottle do
     cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "fcadc30ac8150c484c74736b4384ac16b487c74c413ffa5b4e30670c73240c3d" => :mojave
+    sha256 "8dcac833510c99c6f3f0287e93d860b9ba19f721c312b7066194c7132cfc47a9" => :high_sierra
   end
 
   keg_only "this formula conflicts with the mpich and open-mpi formulae"
