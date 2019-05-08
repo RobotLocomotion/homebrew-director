@@ -52,20 +52,17 @@
 
 class Ipopt < Formula
   desc "Interior point optimizer"
-  homepage "https://projects.coin-or.org/Ipopt/"
-  url "https://drake-homebrew.csail.mit.edu/mirror/ipopt-3.12.12.tar.gz"
-  sha256 "32a268ff7e500d159dee5a1a309f2bb18f53ee9789f2d6d7040733523ef3ecc1"
-  head "https://projects.coin-or.org/svn/Ipopt/trunk", :using => :svn
+  homepage "https://coin-or.github.io/Ipopt/"
+  url "https://drake-homebrew.csail.mit.edu/mirror/ipopt-3.12.13.tar.gz"
+  sha256 "1ef1d43f3a6eafdb404d7630b644626d142798b296df3fddbce4898a4dcdae4f"
+  head "https://github.com/coin-or/Ipopt.git"
 
   bottle do
     cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "ec739faba1987baed8ad28d46a0ea6e94bd1afb1f29950e76222badbed2aff16" => :mojave
-    sha256 "ee5903893338cb7eb9adb4537966d1cf468229287a9bc931882bc0d19fb163c7" => :high_sierra
   end
 
-  depends_on "gcc"
-  depends_on "mumps@5.1"
+  depends_on "mumps"
 
   def install
     ENV.delete("MPICC")
@@ -78,16 +75,18 @@ class Ipopt < Formula
       "--disable-silent-rules",
       "--enable-shared",
       "--prefix=#{prefix}",
-      "--with-mumps-incdir=#{Formula["mumps@5.1"].include}",
-      "--with-mumps-lib=-L#{Formula["mumps@5.1"].lib} -ldmumps -lmpiseq -lmumps_common -lpord",
+      "--with-mumps-incdir=#{Formula["mumps"].include}",
+      "--with-mumps-lib=-L#{Formula["mumps"].lib} -ldmumps -lmpiseq -lmumps_common -lpord",
     ]
 
     system "./configure", *args
     system "make"
+
+    ENV.deparallelize
     system "make", "install"
 
     inreplace "#{lib}/pkgconfig/ipopt.pc", prefix, opt_prefix
-    inreplace "#{lib}/pkgconfig/ipopt.pc", "-framework Accelerate -framework Accelerate", "-framework Accelerate"
+    inreplace "#{lib}/pkgconfig/ipopt.pc", "-lipopt -L#{Formula["mumps"].lib} -ldmumps -lmpiseq -lmumps_common -lpord -framework Accelerate -framework Accelerate -lm  -ldl", "-lipopt"
   end
 
   test do
