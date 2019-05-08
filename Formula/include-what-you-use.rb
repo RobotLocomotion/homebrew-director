@@ -33,6 +33,12 @@ class IncludeWhatYouUse < Formula
   url "https://drake-homebrew.csail.mit.edu/mirror/include-what-you-use-0.12.tar.gz"
   sha256 "11d99f705c06ec257cf9f223812b7dd860622087e7a6e6729b0591f5c52efaae"
 
+  bottle do
+    root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "908070d2300dbaf38c8fa8cc1becaca355706c69f1c1efa1f115c52c1915cbcc" => :mojave
+    sha256 "a9058a47931639090a0c42ff1923dc37511d4b3f8b9e2156efedc485af7a362a" => :high_sierra
+  end
+
   depends_on "cmake" => :build
   depends_on "llvm" => :build
 
