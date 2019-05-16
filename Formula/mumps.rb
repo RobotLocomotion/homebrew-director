@@ -55,22 +55,16 @@ class Mumps < Formula
   homepage "http://www.mumps-solver.org/"
   url "https://drake-homebrew.csail.mit.edu/mirror/mumps-5.2.0.tar.gz"
   sha256 "90899679bfb83cedd9e4a01c85e4e66162c86dda3774dbd2ab4add8521a8c255"
-
-  bottle do
-    cellar :any
-    root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "fcadc30ac8150c484c74736b4384ac16b487c74c413ffa5b4e30670c73240c3d" => :mojave
-    sha256 "8dcac833510c99c6f3f0287e93d860b9ba19f721c312b7066194c7132cfc47a9" => :high_sierra
-  end
+  revision 1
 
   keg_only "this formula conflicts with the mpich and open-mpi formulae"
 
   depends_on "gcc"
-  depends_on "veclibfort"
+  depends_on "openblas"
 
   patch do
-    url "https://drake-homebrew.csail.mit.edu/patches/mumps-5.2.0-makefile-inc-generic-seq.patch"
-    sha256 "d345a6fc2337b02980d261a4273164cce38e4b6091e9c7af5c5d4fd4b6f47d66"
+    url "https://drake-homebrew.csail.mit.edu/patches/mumps-5.2.0-makefile.patch"
+    sha256 "0c4e25ac35f35a9fd2da58c1bca3387b7283b799c129aa8bfbd6696eb626b7ae"
   end
 
   def install
@@ -128,7 +122,7 @@ class Mumps < Formula
       }
     EOS
 
-    system ENV.cc, "test.c", "-I#{opt_include}", "-L#{opt_lib}", "-ldmumps", "-lmpiseq", "-lmumps_common", "-llapack"
+    system ENV.cc, "test.c", "-I#{opt_include}", "-L#{opt_lib}", "-ldmumps", "-lmpiseq"
     system "./a.out"
   end
 end
