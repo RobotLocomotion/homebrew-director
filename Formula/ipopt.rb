@@ -55,16 +55,10 @@ class Ipopt < Formula
   homepage "https://coin-or.github.io/Ipopt/"
   url "https://drake-homebrew.csail.mit.edu/mirror/ipopt-3.12.13.tar.gz"
   sha256 "1ef1d43f3a6eafdb404d7630b644626d142798b296df3fddbce4898a4dcdae4f"
-  head "https://github.com/coin-or/Ipopt.git"
-
-  bottle do
-    cellar :any
-    root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "e5d25b755651a22b309222086e2eee9eb2b76229c8748e62bac7455925602387" => :mojave
-    sha256 "2b7c3b918a0dda7adb76c34c257606c7dd82b44c44f8b1a634e5537ffb6c0a45" => :high_sierra
-  end
+  revision 1
 
   depends_on "mumps"
+  depends_on "openblas"
 
   def install
     ENV.delete("MPICC")
@@ -77,8 +71,9 @@ class Ipopt < Formula
       "--disable-silent-rules",
       "--enable-shared",
       "--prefix=#{prefix}",
+      "--with-blas=-L#{Formula["openblas"].opt_lib} -lopenblas",
       "--with-mumps-incdir=#{Formula["mumps"].include}",
-      "--with-mumps-lib=-L#{Formula["mumps"].lib} -ldmumps -lmpiseq -lmumps_common -lpord",
+      "--with-mumps-lib=-L#{Formula["mumps"].opt_lib} -ldmumps",
     ]
 
     system "./configure", *args
@@ -88,7 +83,7 @@ class Ipopt < Formula
     system "make", "install"
 
     inreplace "#{lib}/pkgconfig/ipopt.pc", prefix, opt_prefix
-    inreplace "#{lib}/pkgconfig/ipopt.pc", "-lipopt -L#{Formula["mumps"].lib} -ldmumps -lmpiseq -lmumps_common -lpord -framework Accelerate -framework Accelerate -lm  -ldl", "-lipopt"
+    inreplace "#{lib}/pkgconfig/ipopt.pc", /-lipopt.*/, "-lipopt"
   end
 
   test do
