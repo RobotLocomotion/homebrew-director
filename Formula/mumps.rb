@@ -59,6 +59,13 @@ class Mumps < Formula
 
   keg_only "this formula conflicts with the mpich and open-mpi formulae"
 
+  bottle do
+    cellar :any
+    root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "27c20863fb44b1675932a63adfe3f0c03e6c4efbea3bf51f4eee065bd2cb7bf8" => :mojave
+    sha256 "b5eebb4c38dabbe682572fc2c465612addcd47a2188b1239e249b43bd345289f" => :high_sierra
+  end
+
   depends_on "gcc"
   depends_on "openblas"
 
