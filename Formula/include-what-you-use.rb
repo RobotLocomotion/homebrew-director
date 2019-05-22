@@ -40,10 +40,10 @@ class IncludeWhatYouUse < Formula
   end
 
   depends_on "cmake" => :build
-  depends_on "llvm" => :build
+  depends_on "llvm"
 
   def install
-    args = *std_cmake_args + %W[
+    args = std_cmake_args + %W[
       -DCMAKE_INSTALL_PREFIX=#{libexec}
       -DCMAKE_PREFIX_PATH=#{Formula["llvm"].opt_lib}
     ]
@@ -56,9 +56,9 @@ class IncludeWhatYouUse < Formula
 
     bin.write_exec_script Dir["#{libexec}/bin/*"]
 
-    mkdir_p libexec/"lib/clang/8.0.0/include"
-    cp_r Dir["#{Formula["llvm"].opt_lib}/clang/8.0.0/include/*"],
-      libexec/"lib/clang/8.0.0/include"
+    mkdir_p libexec/"lib/clang/#{Formula["llvm"].version}/include"
+    cp_r Dir["#{Formula["llvm"].opt_lib}/clang/#{Formula["llvm"].version}/include/*"],
+      libexec/"lib/clang/#{Formula["llvm"].version}/include"
   end
 
   test do
