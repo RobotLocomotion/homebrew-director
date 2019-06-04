@@ -56,6 +56,13 @@ class IpoptAT312 < Formula
   url "https://drake-homebrew.csail.mit.edu/mirror/ipopt-3.12.13.tar.gz"
   sha256 "1ef1d43f3a6eafdb404d7630b644626d142798b296df3fddbce4898a4dcdae4f"
 
+  bottle do
+    cellar :any
+    root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "2cd867a7b71f6038763ad3afb6ce75ca42ccda2635ea135287a8a575e4ae928a" => :mojave
+    sha256 "1d4cdb2f7eee34f1a5b569f77b2e0e54e92ff1c1dc6a6fa10a2b2e405fd1c97b" => :high_sierra
+  end
+
   keg_only :versioned_formula
 
   depends_on "mumps"
