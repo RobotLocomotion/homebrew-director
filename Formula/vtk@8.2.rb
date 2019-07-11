@@ -55,12 +55,10 @@ class VtkAT82 < Formula
   homepage "https://www.vtk.org/"
   url "https://drake-homebrew.csail.mit.edu/mirror/vtk-8.2.0.tar.gz"
   sha256 "e83394561e6425a0b51eaaa355a5309e603a325e62ee5c9425ae7b7e22ab0d79"
+  revision 1
 
   bottle do
-    rebuild 1
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "b14ae28bd27daa56cb6013f9b70c8314ea6942875a042ac9acca0fce6922884c" => :mojave
-    sha256 "b230b0257f3a3acdd290bd0dc89e809a326e2540dbc6948bb53a6960fc4b5356" => :high_sierra
   end
 
   keg_only :versioned_formula
