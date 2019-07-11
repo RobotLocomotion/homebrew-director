@@ -59,6 +59,8 @@ class VtkAT82 < Formula
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "797d3f87aac80c328af5a88b2a5da28bee0ecc4125a6e28ac8fe0fca4f0aa8f1" => :mojave
+    sha256 "50698fbfd8e5ca051e545a1d1036a4d3a2b0435ce121ed0fe1f4ad0bfddb249b" => :high_sierra
   end
 
   keg_only :versioned_formula
