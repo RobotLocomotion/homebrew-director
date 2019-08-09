@@ -31,3 +31,72 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
+pipeline {
+    agent none
+    environment {
+        HOMEBREW_COLOR = 1
+        HOMEBREW_DEVELOPER = 1
+        HOMEBREW_NO_ANALYTICS = 1
+        HOMEBREW_NO_AUTO_UPDATE = 1
+        HOMEBREW_NO_EMOJI = 1
+        HOMEBREW_VERBOSE = 1
+    }
+    options {
+        ansiColor('xterm')
+        timeout(time: 3, unit: 'HOURS')
+        timestamps()
+    }
+    stages {
+        stage('brew test-bot') {
+            parallel {
+                stage('high sierra') {
+                    agent {
+                       label 'mac-high-sierra-unprovisioned'
+                    }
+                    environment {
+                       PATH = "/usr/local/bin:/usr/local/sbin:${env.PATH}"
+                    }
+                    steps {
+                        sh 'brew update-reset'
+                        dir('/usr/local/Homebrew/Library/Taps/robotlocomotion/homebrew-director') {
+                            checkout scm
+                        }
+                        sh 'brew test-bot'
+                    }
+                    post {
+                        always {
+                            junit 'brew-test-bot.xml'
+                            dir('/usr/local/Homebrew/Library/Taps/robotlocomotion/homebrew-director') {
+                                deleteDir()
+                            }
+                        }
+                    }
+                }
+                stage('mojave') {
+                    agent {
+                       label 'mac-mojave-unprovisioned'
+                    }
+                    environment {
+                       PATH = "/usr/local/bin:/usr/local/sbin:${env.PATH}"
+                    }
+                    steps {
+                        sh 'brew update-reset'
+                        dir('/usr/local/Homebrew/Library/Taps/robotlocomotion/homebrew-director') {
+                            checkout scm
+                        }
+                        sh 'brew test-bot'
+                    }
+                    post {
+                        always {
+                            junit 'brew-test-bot.xml'
+                            dir('/usr/local/Homebrew/Library/Taps/robotlocomotion/homebrew-director') {
+                                deleteDir()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
