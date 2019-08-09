@@ -1,6 +1,7 @@
 {
   "embree": "homebrew/core",
   "include-what-you-use": "homebrew/core",
+  "ipopt": "homebrew/core",
   "kcov": "homebrew/core",
   "ospray": "homebrew/core"
 }
