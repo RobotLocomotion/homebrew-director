@@ -44,6 +44,7 @@ pipeline {
     }
     options {
         ansiColor('xterm')
+        skipDefaultCheckout()
         timeout(time: 3, unit: 'HOURS')
         timestamps()
     }
@@ -58,7 +59,9 @@ pipeline {
                        PATH = "/usr/local/bin:/usr/local/sbin:${env.PATH}"
                     }
                     steps {
-                        sh 'brew update-reset'
+                        sh 'brew uninstall $(brew list) || true'
+                        sh 'brew untap $(brew tap) || true'
+                        sh 'brew update'
                         dir('/usr/local/Homebrew/Library/Taps/robotlocomotion/homebrew-director') {
                             checkout scm
                         }
@@ -81,7 +84,9 @@ pipeline {
                        PATH = "/usr/local/bin:/usr/local/sbin:${env.PATH}"
                     }
                     steps {
-                        sh 'brew update-reset'
+                        sh 'brew uninstall $(brew list) || true'
+                        sh 'brew untap $(brew tap) || true'
+                        sh 'brew update'
                         dir('/usr/local/Homebrew/Library/Taps/robotlocomotion/homebrew-director') {
                             checkout scm
                         }
