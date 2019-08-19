@@ -35,16 +35,17 @@
 pipeline {
     agent none
     environment {
+        CLICOLOR_FORCE = 1
         HOMEBREW_COLOR = 1
-        HOMEBREW_DEVELOPER = 1
+        HOMEBREW_GIT_EMAIL = 'drake-jenkins-bot@users.noreply.github.com'
+        HOMEBREW_GIT_NAME = 'drake-jenkins-bot'
+        HOMEBREW_GITHUB_API_TOKEN = credentials('d7b9b34c-01c9-48fa-ad91-e0516cf6e817')
         HOMEBREW_NO_ANALYTICS = 1
         HOMEBREW_NO_AUTO_UPDATE = 1
         HOMEBREW_NO_EMOJI = 1
-        HOMEBREW_VERBOSE = 1
     }
     options {
         ansiColor('xterm')
-        skipDefaultCheckout()
         timeout(time: 3, unit: 'HOURS')
         timestamps()
     }
@@ -59,18 +60,51 @@ pipeline {
                        PATH = "/usr/local/bin:/usr/local/sbin:${env.PATH}"
                     }
                     steps {
-                        sh 'brew uninstall $(brew list) || true'
-                        sh 'brew untap $(brew tap) || true'
-                        sh 'brew update'
-                        dir('/usr/local/Homebrew/Library/Taps/robotlocomotion/homebrew-director') {
-                            checkout scm
-                        }
-                        sh 'brew test-bot'
+                        sh 'brew update-reset'
+                        sh 'brew cask install adoptopenjdk xquartz'
+                        sh 'brew cleanup'
+                        sh 'brew tap homebrew/test-bot'
+                        sh "brew test-bot --git-email=${env.HOMEBREW_GIT_EMAIL} --git-name=${env.HOMEBREW_GIT_NAME} --root-url=https://drake-homebrew.csail.mit.edu/bottles"
                     }
                     post {
                         always {
-                            junit 'brew-test-bot.xml'
-                            dir('/usr/local/Homebrew/Library/Taps/robotlocomotion/homebrew-director') {
+                            junit(
+                                allowEmptyResults: true,
+                                testResults: 'brew-test-bot.xml'
+                            )
+                            s3Upload(
+                                consoleLogLevel: 'INFO',
+                                dontWaitForConcurrentBuildCompletion: true,
+                                entries: [
+                                    [
+                                        bucket: 'drake-jenkins-artifacts',
+                                        managedArtifacts: true,
+                                        selectedRegion: 'us-east-1',
+                                        sourceFile: '*.bottle.*',
+                                        uploadFromSlave: true
+                                    ]
+                                ],
+                                pluginFailureResultConstraint: 'FAILURE',
+                                profileName: 'jenkins',
+                                userMetadata: [
+                                    [key: 'build-number', value: env.BUILD_NUMBER],
+                                    [key: 'build-tag', value: env.BUILD_TAG],
+                                    [key: 'build-url', value: env.BUILD_URL],
+                                    [key: 'git-author-email', value: env.GIT_AUTHOR_EMAIL],
+                                    [key: 'git-author-name', value: env.GIT_AUTHOR_NAME],
+                                    [key: 'git-branch', value: env.GIT_BRANCH],
+                                    [key: 'git-commit', value: env.GIT_COMMIT],
+                                    [key: 'git-committer-email', value: env.GIT_COMMITTER_EMAIL],
+                                    [key: 'git-committer-name', value: env.GIT_COMMITTER_NAME],
+                                    [key: 'git-previous-commit', value: env.GIT_PREVIOUS_COMMIT],
+                                    [key: 'git-previous-successful-commit', value: env.GIT_PREVIOUS_SUCCESSFUL_COMMIT],
+                                    [key: 'git-url', value: env.GIT_URL],
+                                    [key: 'job-name', value: env.JOB_NAME],
+                                    [key: 'job-url', value: env.JOB_URL]
+                                ]
+                            )
+                            deleteDir()
+                            dir("${env.WORKSPACE}@tmp") {
                                 deleteDir()
                             }
                         }
@@ -84,18 +118,51 @@ pipeline {
                        PATH = "/usr/local/bin:/usr/local/sbin:${env.PATH}"
                     }
                     steps {
-                        sh 'brew uninstall $(brew list) || true'
-                        sh 'brew untap $(brew tap) || true'
-                        sh 'brew update'
-                        dir('/usr/local/Homebrew/Library/Taps/robotlocomotion/homebrew-director') {
-                            checkout scm
-                        }
-                        sh 'brew test-bot'
+                        sh 'brew update-reset'
+                        sh 'brew cask install adoptopenjdk xquartz'
+                        sh 'brew cleanup'
+                        sh 'brew tap homebrew/test-bot'
+                        sh "brew test-bot --git-email=${env.HOMEBREW_GIT_EMAIL} --git-name=${env.HOMEBREW_GIT_NAME} --root-url=https://drake-homebrew.csail.mit.edu/bottles"
                     }
                     post {
                         always {
-                            junit 'brew-test-bot.xml'
-                            dir('/usr/local/Homebrew/Library/Taps/robotlocomotion/homebrew-director') {
+                            junit(
+                                allowEmptyResults: true,
+                                testResults: 'brew-test-bot.xml'
+                            )
+                            s3Upload(
+                                consoleLogLevel: 'INFO',
+                                dontWaitForConcurrentBuildCompletion: true,
+                                entries: [
+                                    [
+                                        bucket: 'drake-jenkins-artifacts',
+                                        managedArtifacts: true,
+                                        selectedRegion: 'us-east-1',
+                                        sourceFile: '*.bottle.*',
+                                        uploadFromSlave: true
+                                    ]
+                                ],
+                                pluginFailureResultConstraint: 'FAILURE',
+                                profileName: 'jenkins',
+                                userMetadata: [
+                                    [key: 'build-number', value: env.BUILD_NUMBER],
+                                    [key: 'build-tag', value: env.BUILD_TAG],
+                                    [key: 'build-url', value: env.BUILD_URL],
+                                    [key: 'git-author-email', value: env.GIT_AUTHOR_EMAIL],
+                                    [key: 'git-author-name', value: env.GIT_AUTHOR_NAME],
+                                    [key: 'git-branch', value: env.GIT_BRANCH],
+                                    [key: 'git-commit', value: env.GIT_COMMIT],
+                                    [key: 'git-committer-email', value: env.GIT_COMMITTER_EMAIL],
+                                    [key: 'git-committer-name', value: env.GIT_COMMITTER_NAME],
+                                    [key: 'git-previous-commit', value: env.GIT_PREVIOUS_COMMIT],
+                                    [key: 'git-previous-successful-commit', value: env.GIT_PREVIOUS_SUCCESSFUL_COMMIT],
+                                    [key: 'git-url', value: env.GIT_URL],
+                                    [key: 'job-name', value: env.JOB_NAME],
+                                    [key: 'job-url', value: env.JOB_URL]
+                                ]
+                            )
+                            deleteDir()
+                            dir("${env.WORKSPACE}@tmp") {
                                 deleteDir()
                             }
                         }
