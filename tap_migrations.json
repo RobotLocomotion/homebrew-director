@@ -3,5 +3,6 @@
   "include-what-you-use": "homebrew/core",
   "ipopt": "homebrew/core",
   "kcov": "homebrew/core",
+  "lcm@1.4": "homebrew/core/lcm",
   "ospray": "homebrew/core"
 }
