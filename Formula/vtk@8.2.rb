@@ -55,14 +55,7 @@ class VtkAT82 < Formula
   homepage "https://www.vtk.org/"
   url "https://drake-homebrew.csail.mit.edu/mirror/vtk-8.2.0.tar.gz"
   sha256 "e83394561e6425a0b51eaaa355a5309e603a325e62ee5c9425ae7b7e22ab0d79"
-  revision 1
-
-  bottle do
-    root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "6999160ef124d3965d9e13cace8f818c0f563f9f069fb6514dd68238b47bcc2b" => :catalina
-    sha256 "797d3f87aac80c328af5a88b2a5da28bee0ecc4125a6e28ac8fe0fca4f0aa8f1" => :mojave
-    sha256 "50698fbfd8e5ca051e545a1d1036a4d3a2b0435ce121ed0fe1f4ad0bfddb249b" => :high_sierra
-  end
+  revision 2
 
   keg_only :versioned_formula
 
@@ -79,7 +72,6 @@ class VtkAT82 < Formula
   depends_on "netcdf"
   depends_on "ospray@1.8"
   depends_on "python"
-  depends_on "python@2"
   depends_on "qt"
   depends_on "theora"
 
@@ -99,82 +91,60 @@ class VtkAT82 < Formula
   end
 
   def install
-    # vtkPython.cmake will reference python@2.
-    ["python", "python@2"].each do |python|
-      if python == "python"
-        python_executable = `which python3`.strip
-      else
-        python_executable = `which python2`.strip
-      end
+    py_version = Language::Python.major_minor_version "python3"
+    py_prefix = Formula["python"].opt_frameworks/"Python.framework/Versions/#{py_version}"
+    args = std_cmake_args + %W[
+      -DBUILD_SHARED_LIBS=ON
+      -DBUILD_TESTING=OFF
+      -DCMAKE_INSTALL_NAME_DIR=#{opt_lib}
+      -DCMAKE_INSTALL_RPATH=#{opt_lib}
+      -DModule_vtkRenderingOSPRay=ON
+      -DOSPRAY_INSTALL_DIR=#{Formula["ospray@1.8"].opt_prefix}
+      -DPYTHON_EXECUTABLE=#{Formula["python"].opt_bin}/python3
+      -DPYTHON_INCLUDE_DIR=#{py_prefix}/include/python#{py_version}m
+      -DPYTHON_LIBRARY=#{py_prefix}/lib/libpython#{py_version}.dylib
+      -DVTK_ENABLE_VTKPYTHON=OFF
+      -DVTK_Group_Qt=ON
+      -DVTK_INSTALL_PYTHON_MODULE_DIR=#{lib}/python#{py_version}/site-packages
+      -DVTK_LEGACY_REMOVE=ON
+      -DVTK_QT_VERSION=5
+      -DVTK_USE_COCOA=ON
+      -DVTK_USE_SYSTEM_EXPAT=ON
+      -DVTK_USE_SYSTEM_FREETYPE=ON
+      -DVTK_USE_SYSTEM_GLEW=ON
+      -DVTK_USE_SYSTEM_HDF5=ON
+      -DVTK_USE_SYSTEM_JPEG=ON
+      -DVTK_USE_SYSTEM_JSONCPP=ON
+      -DVTK_USE_SYSTEM_LIBXML2=ON
+      -DVTK_USE_SYSTEM_LZ4=ON
+      -DVTK_USE_SYSTEM_NETCDF=ON
+      -DVTK_USE_SYSTEM_OGG=ON
+      -DVTK_USE_SYSTEM_PNG=ON
+      -DVTK_USE_SYSTEM_THEORA=ON
+      -DVTK_USE_SYSTEM_TIFF=ON
+      -DVTK_USE_SYSTEM_ZLIB=ON
+      -DVTK_WRAP_PYTHON=ON
+    ]
 
-      python_include_dir = `#{python_executable} -c 'from distutils import sysconfig;print(sysconfig.get_python_inc(True))'`.chomp
-      python_version = "python" + `#{python_executable} -c 'import sys;print(sys.version[:3])'`.chomp
-      python_prefix = `#{python_executable} -c 'import sys;print(sys.prefix)'`.chomp
-
-      if File.exist? "#{python_prefix}/Python"
-        python_library = "#{python_prefix}/Python"
-      elsif File.exist? "#{python_prefix}/lib/lib#{python_version}.a"
-        python_library = "#{python_prefix}/lib/lib#{python_version}.a"
-      elsif File.exist? "#{python_prefix}/lib/lib#{python_version}.dylib"
-        python_library = "#{python_prefix}/lib/lib#{python_version}.dylib"
-      else
-        odie "No libpythonX.Y.{dylib|a} file found!"
-      end
-
-      args = std_cmake_args + %W[
-        -DBUILD_SHARED_LIBS=ON
-        -DBUILD_TESTING=OFF
-        -DCMAKE_INSTALL_NAME_DIR=#{opt_lib}
-        -DCMAKE_INSTALL_RPATH=#{opt_lib}
-        -DModule_vtkRenderingOSPRay=ON
-        -DOSPRAY_INSTALL_DIR=#{Formula["ospray@1.8"].opt_prefix}
-        -DPYTHON_EXECUTABLE='#{python_executable}'
-        -DPYTHON_INCLUDE_DIR='#{python_include_dir}'
-        -DPYTHON_LIBRARY='#{python_library}'
-        -DVTK_ENABLE_VTKPYTHON=OFF
-        -DVTK_Group_Qt=ON
-        -DVTK_LEGACY_REMOVE=ON
-        -DVTK_QT_VERSION=5
-        -DVTK_USE_COCOA=ON
-        -DVTK_USE_SYSTEM_EXPAT=ON
-        -DVTK_USE_SYSTEM_FREETYPE=ON
-        -DVTK_USE_SYSTEM_GLEW=ON
-        -DVTK_USE_SYSTEM_HDF5=ON
-        -DVTK_USE_SYSTEM_JPEG=ON
-        -DVTK_USE_SYSTEM_JSONCPP=ON
-        -DVTK_USE_SYSTEM_LIBXML2=ON
-        -DVTK_USE_SYSTEM_LZ4=ON
-        -DVTK_USE_SYSTEM_NETCDF=ON
-        -DVTK_USE_SYSTEM_OGG=ON
-        -DVTK_USE_SYSTEM_PNG=ON
-        -DVTK_USE_SYSTEM_THEORA=ON
-        -DVTK_USE_SYSTEM_TIFF=ON
-        -DVTK_USE_SYSTEM_ZLIB=ON
-        -DVTK_WRAP_PYTHON=ON
-      ]
-
-      mkdir "build-#{python}" do
-        system "cmake", *args, ".."
-        system "make"
-        system "make", "install"
-      end
-
-      inreplace "#{lib}/cmake/vtk-8.2/Modules/vtkhdf5.cmake",
-        "#{HOMEBREW_CELLAR}/hdf5/#{Formula["hdf5"].installed_version}/include",
-        Formula["hdf5"].opt_include.to_s
-      inreplace "#{lib}/cmake/vtk-8.2/Modules/vtkPython.cmake", lib, opt_lib
-      inreplace "#{lib}/cmake/vtk-8.2/Modules/vtkPython.cmake",
-        "#{HOMEBREW_CELLAR}/#{python}/#{Formula[python].installed_version}/Frameworks",
-        "#{Formula[python].opt_prefix}/Frameworks"
-      inreplace "#{lib}/cmake/vtk-8.2/VTKConfig.cmake", prefix, opt_prefix
+    mkdir "build" do
+      system "cmake", *args, ".."
+      system "make"
+      system "make", "install"
     end
+
+    inreplace Dir["#{lib}/cmake/**/vtkhdf5.cmake"].first,
+      Formula["hdf5"].prefix.realpath, Formula["hdf5"].opt_prefix
+    inreplace Dir["#{lib}/cmake/**/Modules/vtkPython.cmake"].first,
+      prefix.realpath, opt_prefix
+    inreplace Dir["#{lib}/cmake/**/VTKConfig.cmake"].first,
+      prefix.realpath, opt_prefix
   end
 
   test do
     (testpath/"CMakeLists.txt").write <<~EOS
       cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
       project(Distance2BetweenPoints LANGUAGES CXX)
-      find_package(VTK 8.2 REQUIRED COMPONENTS vtkCommonCore CONFIG)
+      find_package(VTK REQUIRED COMPONENTS vtkCommonCore CONFIG)
       include(${VTK_USE_FILE})
       add_executable(Distance2BetweenPoints Distance2BetweenPoints.cxx)
       target_link_libraries(Distance2BetweenPoints PRIVATE ${VTK_LIBRARIES})
@@ -191,8 +161,9 @@ class VtkAT82 < Formula
       }
     EOS
 
+    vtk_dir = Dir[opt_lib/"cmake/vtk-*"].first
     system "cmake", "-DCMAKE_BUILD_TYPE=Debug", "-DCMAKE_VERBOSE_MAKEFILE=ON",
-      "-DVTK_DIR=#{opt_lib}/cmake/vtk-8.2", "."
+      "-DVTK_DIR=#{vtk_dir}", "."
     system "make"
     system "./Distance2BetweenPoints"
 
@@ -203,7 +174,8 @@ class VtkAT82 < Formula
       assert vtk.vtkMath.Distance2BetweenPoints(p0, p1) == 3
     EOS
 
-    ENV["PYTHONPATH"] = opt_lib/"python2.7/site-packages"
-    system "python2.7", "Distance2BetweenPoints.py"
+    py_version = Language::Python.major_minor_version "python3"
+    ENV["PYTHONPATH"] = opt_lib/"python#{py_version}/site-packages"
+    system Formula["python"].opt_bin/"python3", "Distance2BetweenPoints.py"
   end
 end
