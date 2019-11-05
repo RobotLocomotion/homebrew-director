@@ -57,6 +57,12 @@ class VtkAT82 < Formula
   sha256 "e83394561e6425a0b51eaaa355a5309e603a325e62ee5c9425ae7b7e22ab0d79"
   revision 2
 
+  bottle do
+    root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "33793f4f8177e68459102ecff221c9c1cf932d29ecbaef53548a83ad907a1384" => :catalina
+    sha256 "2950c40d85b6508a8ecd7754bd96d1f35b07a9c6fb618ed1f2fffbb6ea66cdd2" => :mojave
+  end
+
   keg_only :versioned_formula
 
   depends_on "cmake" => [:build, :test]
