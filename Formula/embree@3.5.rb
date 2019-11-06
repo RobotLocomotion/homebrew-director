@@ -40,7 +40,6 @@ class EmbreeAT35 < Formula
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
     sha256 "2d45a8d1bbabe986a1c1f2f2095eabd4f77c863b26718e098906369c2f93f5b1" => :catalina
     sha256 "367b025d91c211be289a3bb6ea6426cac677db3165a23d3100673b63bed4397c" => :mojave
-    sha256 "559071b2a0f62a7f4ece9377c9bf5d9cf43f858cc2bf09407c8154998a22e5d6" => :high_sierra
   end
 
   keg_only :versioned_formula
