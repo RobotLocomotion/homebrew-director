@@ -52,9 +52,9 @@ pipeline {
     stages {
         stage('brew test-bot') {
             parallel {
-                stage('high sierra') {
+                stage('catalina') {
                     agent {
-                       label 'mac-high-sierra-unprovisioned'
+                       label 'mac-catalina-unprovisioned'
                     }
                     environment {
                        PATH = "/usr/local/bin:/usr/local/sbin:${env.PATH}"
