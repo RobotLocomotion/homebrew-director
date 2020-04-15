@@ -30,22 +30,19 @@
 class EmbreeAT35 < Formula
   desc "High-performance ray tracing kernels"
   homepage "https://embree.github.io/"
-  url "https://drake-homebrew.csail.mit.edu/mirror/embree-3.5.1.tar.gz"
-  sha256 "3e3eefcdefd305ca97f9fda227b73365f12c8086912e78b28e638652b9b84f6d"
-  head "https://github.com/embree/embree.git"
+  url "https://drake-homebrew.csail.mit.edu/mirror/embree-3.5.2.tar.gz"
+  sha256 "4bd7215d9e8fa2a776d3927c2781fcd5d1108db86d382b99855cb12a8005c0e4"
 
   bottle do
     cellar :any
-    rebuild 1
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "2d45a8d1bbabe986a1c1f2f2095eabd4f77c863b26718e098906369c2f93f5b1" => :catalina
-    sha256 "367b025d91c211be289a3bb6ea6426cac677db3165a23d3100673b63bed4397c" => :mojave
   end
 
   keg_only :versioned_formula
 
   depends_on "cmake" => :build
   depends_on "ispc" => :build
+  depends_on :macos => :mojave
   depends_on "tbb"
 
   def install
