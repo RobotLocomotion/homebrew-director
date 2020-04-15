@@ -55,12 +55,10 @@ class VtkAT82 < Formula
   homepage "https://www.vtk.org/"
   url "https://drake-homebrew.csail.mit.edu/mirror/vtk-8.2.0.tar.gz"
   sha256 "e83394561e6425a0b51eaaa355a5309e603a325e62ee5c9425ae7b7e22ab0d79"
-  revision 2
+  revision 3
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "33793f4f8177e68459102ecff221c9c1cf932d29ecbaef53548a83ad907a1384" => :catalina
-    sha256 "2950c40d85b6508a8ecd7754bd96d1f35b07a9c6fb618ed1f2fffbb6ea66cdd2" => :mojave
   end
 
   keg_only :versioned_formula
@@ -75,10 +73,12 @@ class VtkAT82 < Formula
   depends_on "libpng"
   depends_on "libtiff"
   depends_on "lz4"
+  depends_on :macos => :mojave
   depends_on "netcdf"
   depends_on "ospray@1.8"
-  depends_on "python"
+  depends_on "python@3.8"
   depends_on "qt"
+  depends_on "tbb"
   depends_on "theora"
 
   patch do
@@ -96,9 +96,15 @@ class VtkAT82 < Formula
     sha256 "fe59899fdeaccb64abfa1c526cb6e8ebd3928dab012de5022e116700211442f0"
   end
 
+  patch do
+    url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.2.0-python-3.8.patch"
+    sha256 "1143e09bbad1baa2fba5507076cdad7b464b8775ff07747a95df8b5c2d699364"
+  end
+
   def install
-    py_version = Language::Python.major_minor_version "python3"
-    py_prefix = Formula["python"].opt_frameworks/"Python.framework/Versions/#{py_version}"
+    py_executable = Formula["python@3.8"].opt_bin/"python3"
+    py_version = Language::Python.major_minor_version py_executable
+    py_prefix = Formula["python@3.8"].opt_frameworks/"Python.framework/Versions/#{py_version}"
     args = std_cmake_args + %W[
       -DBUILD_SHARED_LIBS=ON
       -DBUILD_TESTING=OFF
@@ -106,14 +112,15 @@ class VtkAT82 < Formula
       -DCMAKE_INSTALL_RPATH=#{opt_lib}
       -DModule_vtkRenderingOSPRay=ON
       -DOSPRAY_INSTALL_DIR=#{Formula["ospray@1.8"].opt_prefix}
-      -DPYTHON_EXECUTABLE=#{Formula["python"].opt_bin}/python3
-      -DPYTHON_INCLUDE_DIR=#{py_prefix}/include/python#{py_version}m
+      -DPYTHON_EXECUTABLE=#{py_executable}
+      -DPYTHON_INCLUDE_DIR=#{py_prefix}/include/python#{py_version}
       -DPYTHON_LIBRARY=#{py_prefix}/lib/libpython#{py_version}.dylib
       -DVTK_ENABLE_VTKPYTHON=OFF
       -DVTK_Group_Qt=ON
       -DVTK_INSTALL_PYTHON_MODULE_DIR=#{lib}/python#{py_version}/site-packages
       -DVTK_LEGACY_REMOVE=ON
       -DVTK_QT_VERSION=5
+      -DVTK_SMP_IMPLEMENTATION_TYPE=TBB
       -DVTK_USE_COCOA=ON
       -DVTK_USE_SYSTEM_EXPAT=ON
       -DVTK_USE_SYSTEM_FREETYPE=ON
@@ -180,8 +187,9 @@ class VtkAT82 < Formula
       assert vtk.vtkMath.Distance2BetweenPoints(p0, p1) == 3
     EOS
 
-    py_version = Language::Python.major_minor_version "python3"
+    py_executable = Formula["python@3.8"].opt_bin/"python3"
+    py_version = Language::Python.major_minor_version py_executable
     ENV["PYTHONPATH"] = opt_lib/"python#{py_version}/site-packages"
-    system Formula["python"].opt_bin/"python3", "Distance2BetweenPoints.py"
+    system py_executable, "Distance2BetweenPoints.py"
   end
 end
