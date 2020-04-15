@@ -30,16 +30,12 @@
 class OsprayAT18 < Formula
   desc "Ray-tracing-based rendering engine for high-fidelity visualization"
   homepage "https://www.ospray.org/"
-  url "https://drake-homebrew.csail.mit.edu/mirror/ospray-1.8.2.tar.gz"
-  sha256 "9501cc7736ca9510e5d630edc73b2e40d1732ef9ec0e141534de3bd3551feea2"
-  head "https://github.com/ospray/ospray.git"
+  url "https://drake-homebrew.csail.mit.edu/mirror/ospray-1.8.5.tar.gz"
+  sha256 "feb10c02abda99a0d9d2953cdf801b705354b268f36b69b5f3c4d30618082b4c"
 
   bottle do
     cellar :any
-    rebuild 1
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "2fe591aef0c46ea81b12961dec63fcbc5ea3f1a92c75feff3523e8e5a31daebc" => :catalina
-    sha256 "ab5a190aa6d8280e94e2dc338863041b1985e3014ba8868397a712680bce08da" => :mojave
   end
 
   keg_only :versioned_formula
@@ -47,6 +43,7 @@ class OsprayAT18 < Formula
   depends_on "cmake" => :build
   depends_on "ispc" => :build
   depends_on "embree@3.5"
+  depends_on :macos => :mojave
   depends_on "tbb"
 
   def install
