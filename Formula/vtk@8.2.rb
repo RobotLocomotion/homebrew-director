@@ -55,12 +55,10 @@ class VtkAT82 < Formula
   homepage "https://www.vtk.org/"
   url "https://drake-homebrew.csail.mit.edu/mirror/vtk-8.2.0.tar.gz"
   sha256 "e83394561e6425a0b51eaaa355a5309e603a325e62ee5c9425ae7b7e22ab0d79"
-  revision 3
+  revision 4
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "cb65060c0dd06319e9aefa43bdc735f00c7954e5dd2ec334c068834d4ee33179" => :catalina
-    sha256 "e542ab3922bdd649b7a152edd8abe2f17fa385f06ecae98c73a053bdd72378c8" => :mojave
   end
 
   keg_only :versioned_formula
@@ -74,14 +72,15 @@ class VtkAT82 < Formula
   depends_on "libogg"
   depends_on "libpng"
   depends_on "libtiff"
+  uses_from_macos "libxml2"
   depends_on "lz4"
   depends_on :macos => :mojave
   depends_on "netcdf"
   depends_on "ospray@1.8"
   depends_on "python@3.8"
   depends_on "qt"
-  depends_on "tbb"
   depends_on "theora"
+  uses_from_macos "zlib"
 
   patch do
     url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.2.0-io-movie-ogg.patch"
@@ -122,7 +121,6 @@ class VtkAT82 < Formula
       -DVTK_INSTALL_PYTHON_MODULE_DIR=#{lib}/python#{py_version}/site-packages
       -DVTK_LEGACY_REMOVE=ON
       -DVTK_QT_VERSION=5
-      -DVTK_SMP_IMPLEMENTATION_TYPE=TBB
       -DVTK_USE_COCOA=ON
       -DVTK_USE_SYSTEM_EXPAT=ON
       -DVTK_USE_SYSTEM_FREETYPE=ON
