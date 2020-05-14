@@ -57,6 +57,13 @@ class ClangFormatAT9 < Formula
   mirror "https://drake-homebrew.csail.mit.edu/mirror/llvmorg-9.0.1/llvm-9.0.1.src.tar.xz"
   sha256 "00a1ee1f389f81e9979f3a640a01c431b3021de0d42278f6508391a2f0b81c9a"
 
+  bottle do
+    cellar :any_skip_relocation
+    root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "6eb9b08d7af48cc8d4e6405a563bb549e1acf15007caa6c042194911e433a4a4" => :catalina
+    sha256 "9a51c1d5add9c6e8cb8544e99507158e6d757e22acd6a3fc70247700b73a996e" => :mojave
+  end
+
   depends_on "cmake" => :build
   depends_on "ninja" => :build
 
