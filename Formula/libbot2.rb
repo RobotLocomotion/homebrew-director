@@ -30,22 +30,20 @@
 class Libbot2 < Formula
   desc "Libraries, tools, and algorithms for robotics research"
   homepage "https://github.com/RobotLocomotion/libbot2/"
-  url "https://drake-homebrew.csail.mit.edu/mirror/libbot2-0.0.1.20191002.tar.gz"
-  sha256 "efe09672bdcc47e8fbd8320af5e04728debc512a4313caad061f8c3da5d664c1"
+  url "https://drake-homebrew.csail.mit.edu/mirror/libbot2-0.0.1.20200422.tar.gz"
+  sha256 "5e36430acbedde572621de37c71f44e621285281aa198c247aba47ad3e87094f"
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "0599311fddc818014c3b6effce17b80d6ef441e104a294bc981955d5f9a69b89" => :catalina
-    sha256 "ce22e96ca9f94cf526ca5edd36693c383a504f73c57fbd061147f59787a2a11f" => :mojave
   end
 
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
   depends_on "glib"
-  depends_on :java => "1.8+"
   depends_on "lcm"
   depends_on "numpy"
-  depends_on "python"
+  depends_on "openjdk"
+  depends_on "python@3.8"
   depends_on "scipy"
   uses_from_macos "zlib"
 
@@ -53,7 +51,7 @@ class Libbot2 < Formula
     args = std_cmake_args + %W[
       -DCMAKE_INSTALL_NAME_DIR=#{opt_lib}
       -DCMAKE_INSTALL_RPATH=#{opt_lib}
-      -DPYTHON_EXECUTABLE=#{Formula["python"].opt_bin}/python3
+      -DPYTHON_EXECUTABLE=#{Formula["python@3.8"].opt_bin}/python3
       -DWITH_BOT_VIS=OFF
     ]
 
