@@ -60,6 +60,8 @@ class SphinxDocAT18 < Formula
   bottle do
     cellar :any_skip_relocation
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "ba114c482f17ba7086dcbbff756eef92fbe4eab038a85cea7e93e8763ed93c18" => :catalina
+    sha256 "2917263ed829301f329fb4e3623cff64cda8a4370b0406a2f4bc826c92847eff" => :mojave
   end
 
   keg_only :versioned_formula
