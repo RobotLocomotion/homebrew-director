@@ -55,6 +55,7 @@ class VtkAT82 < Formula
   homepage "https://www.vtk.org/"
   url "https://drake-homebrew.csail.mit.edu/mirror/vtk-8.2.0.tar.gz"
   sha256 "e83394561e6425a0b51eaaa355a5309e603a325e62ee5c9425ae7b7e22ab0d79"
+  license "BSD-3-Clause"
   revision 5
 
   bottle do

@@ -56,6 +56,7 @@ class ClangFormatAT9 < Formula
   url "https://github.com/llvm/llvm-project/releases/download/llvmorg-9.0.1/llvm-9.0.1.src.tar.xz"
   mirror "https://drake-homebrew.csail.mit.edu/mirror/llvmorg-9.0.1/llvm-9.0.1.src.tar.xz"
   sha256 "00a1ee1f389f81e9979f3a640a01c431b3021de0d42278f6508391a2f0b81c9a"
+  license "Apache-2.0"
 
   bottle do
     cellar :any_skip_relocation

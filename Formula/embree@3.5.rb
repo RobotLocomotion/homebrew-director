@@ -32,6 +32,7 @@ class EmbreeAT35 < Formula
   homepage "https://embree.github.io/"
   url "https://drake-homebrew.csail.mit.edu/mirror/embree-3.5.2.tar.gz"
   sha256 "4bd7215d9e8fa2a776d3927c2781fcd5d1108db86d382b99855cb12a8005c0e4"
+  license "Apache-2.0"
 
   bottle do
     cellar :any

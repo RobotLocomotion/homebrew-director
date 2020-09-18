@@ -32,6 +32,7 @@ class Libbot2 < Formula
   homepage "https://github.com/RobotLocomotion/libbot2/"
   url "https://drake-homebrew.csail.mit.edu/mirror/libbot2-0.0.1.20200422.tar.gz"
   sha256 "5e36430acbedde572621de37c71f44e621285281aa198c247aba47ad3e87094f"
+  license "LGPL-3.0-or-later"
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"

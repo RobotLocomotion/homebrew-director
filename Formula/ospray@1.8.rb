@@ -32,6 +32,7 @@ class OsprayAT18 < Formula
   homepage "https://www.ospray.org/"
   url "https://drake-homebrew.csail.mit.edu/mirror/ospray-1.8.5.tar.gz"
   sha256 "feb10c02abda99a0d9d2953cdf801b705354b268f36b69b5f3c4d30618082b4c"
+  license "Apache-2.0"
 
   bottle do
     cellar :any
