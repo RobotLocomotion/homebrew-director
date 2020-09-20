@@ -27,37 +27,38 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-cask 'gurobi' do
-  version '9.0.2'
-  sha256 '1d58586f9a33ac7035f51f6a04707248218f70bddbec78cb83f11c986ac652cd'
+cask "gurobi" do
+  version "9.0.2"
+  sha256 "1d58586f9a33ac7035f51f6a04707248218f70bddbec78cb83f11c986ac652cd"
 
   url "https://packages.gurobi.com/#{version.major_minor}/gurobi#{version}_mac64.pkg"
-  appcast 'https://www.gurobi.com/resource/fixes/'
-  name 'Gurobi Optimizer'
-  homepage 'https://www.gurobi.com/products/gurobi-optimizer/'
+  appcast "https://www.gurobi.com/resource/fixes/"
+  name "Gurobi Optimizer"
+  desc "Mathematical programming solver for LP, QP, and MIP problems"
+  homepage "https://www.gurobi.com/products/gurobi-optimizer/"
 
-  conflicts_with cask: 'gurobi80'
+  conflicts_with cask: "gurobi80"
 
   pkg "gurobi#{version}_mac64.pkg"
 
   uninstall pkgutil: "com.gurobi.gurobiOptimizer#{version.no_dots}.gurobimac.pkg",
             delete:  [
-                       "/Library/gurobi#{version.no_dots}",
-                       '/Library/Java/Extensions/gurobi.jar',
-                       "/Library/Java/Extensions/libGurobiJni#{version.major_minor.no_dots}.jnilib",
-                       '/usr/local/bin/grb_ts',
-                       '/usr/local/bin/grbcluster',
-                       '/usr/local/bin/grbgetkey',
-                       '/usr/local/bin/grbprobe',
-                       '/usr/local/bin/grbtune',
-                       '/usr/local/bin/gurobi_cl',
-                       '/usr/local/bin/gurobi.sh',
-                       '/usr/local/lib/gurobi.py',
-                       "/usr/local/lib/libgurobi#{version.major_minor.no_dots}.dylib",
-                     ]
+              "/Library/gurobi#{version.no_dots}",
+              "/Library/Java/Extensions/gurobi.jar",
+              "/Library/Java/Extensions/libGurobiJni#{version.major_minor.no_dots}.jnilib",
+              "/usr/local/bin/grb_ts",
+              "/usr/local/bin/grbcluster",
+              "/usr/local/bin/grbgetkey",
+              "/usr/local/bin/grbprobe",
+              "/usr/local/bin/grbtune",
+              "/usr/local/bin/gurobi_cl",
+              "/usr/local/bin/gurobi.sh",
+              "/usr/local/lib/gurobi.py",
+              "/usr/local/lib/libgurobi#{version.major_minor.no_dots}.dylib",
+            ]
 
   caveats do
     files_in_usr_local
-    license 'https://www.gurobi.com/pdfs/eula/eula-gurobi.pdf'
+    license "https://www.gurobi.com/pdfs/eula/eula-gurobi.pdf"
   end
 end
