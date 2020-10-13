@@ -56,7 +56,7 @@ class VtkAT82 < Formula
   url "https://drake-homebrew.csail.mit.edu/mirror/vtk-8.2.0.tar.gz"
   sha256 "e83394561e6425a0b51eaaa355a5309e603a325e62ee5c9425ae7b7e22ab0d79"
   license "BSD-3-Clause"
-  revision 6
+  revision 7
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
@@ -100,6 +100,11 @@ class VtkAT82 < Formula
   patch do
     url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.2.0-python-3.8.patch"
     sha256 "1143e09bbad1baa2fba5507076cdad7b464b8775ff07747a95df8b5c2d699364"
+  end
+
+  patch do
+    url "https://drake-homebrew.csail.mit.edu/patches/vtk-8.2.0-rendering-qt.patch"
+    sha256 "434aa6af90a13e317417d993eb9a271cc00974c13a138c0c375da16b716f4fd3"
   end
 
   def install
