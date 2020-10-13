@@ -65,7 +65,6 @@ class VtkAT82 < Formula
   keg_only :versioned_formula
 
   depends_on "cmake" => [:build, :test]
-  depends_on "freetype"
   depends_on "glew"
   depends_on "hdf5"
   depends_on "jpeg"
@@ -124,7 +123,6 @@ class VtkAT82 < Formula
       -DVTK_QT_VERSION=5
       -DVTK_USE_COCOA=ON
       -DVTK_USE_SYSTEM_EXPAT=ON
-      -DVTK_USE_SYSTEM_FREETYPE=ON
       -DVTK_USE_SYSTEM_GLEW=ON
       -DVTK_USE_SYSTEM_HDF5=ON
       -DVTK_USE_SYSTEM_JPEG=ON
