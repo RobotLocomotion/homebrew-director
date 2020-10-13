@@ -56,12 +56,10 @@ class VtkAT82 < Formula
   url "https://drake-homebrew.csail.mit.edu/mirror/vtk-8.2.0.tar.gz"
   sha256 "e83394561e6425a0b51eaaa355a5309e603a325e62ee5c9425ae7b7e22ab0d79"
   license "BSD-3-Clause"
-  revision 5
+  revision 6
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "163e8232ecb3faa1995f6deba10ba0773bdd4e7e8ded6c6536191336eaf1d030" => :catalina
-    sha256 "2813c5281df8b78b900ecb897147052666b0e653e0f26e962d2cbdbce826a483" => :mojave
   end
 
   keg_only :versioned_formula
