@@ -61,6 +61,7 @@ class SphinxDocAT18 < Formula
   bottle do
     cellar :any_skip_relocation
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "fc6abe551ce0a0f96ec0aff05b4a060a7cf796a39d6985e8e6f34272c4457713" => :big_sur
     sha256 "ba114c482f17ba7086dcbbff756eef92fbe4eab038a85cea7e93e8763ed93c18" => :catalina
     sha256 "2917263ed829301f329fb4e3623cff64cda8a4370b0406a2f4bc826c92847eff" => :mojave
   end
@@ -68,21 +69,6 @@ class SphinxDocAT18 < Formula
   keg_only :versioned_formula
 
   depends_on "python@3.8"
-
-  patch do
-    url "https://drake-homebrew.csail.mit.edu/patches/sphinx-doc-1.8.5-docutils-0.15-0.16.patch"
-    sha256 "554ae2ac7c426d18ee66d7c8468f46422c3a122c0d7ed0d9e3ad92fcc775ffdc"
-  end
-
-  patch do
-    url "https://drake-homebrew.csail.mit.edu/patches/sphinx-doc-1.8.5-no-external-image-stylesheet.patch"
-    sha256 "ab0ff2d430eb3a479e95565c3d0187020a2d2eef1dcd67de2a182d80412667e4"
-  end
-
-  patch do
-    url "https://drake-homebrew.csail.mit.edu/patches/sphinx-doc-1.8.5-no-spaces-in-hyphenated-words.patch"
-    sha256 "835ba98956c788d57d43fbc027c6dcae099df422ef8ee4c34d500b2a2a84559d"
-  end
 
   resource "alabaster" do
     url "https://files.pythonhosted.org/packages/cc/b4/ed8dcb0d67d5cfb7f83c4d5463a7614cb1d078ad7ae890c9143edebbf072/alabaster-0.7.12.tar.gz"
@@ -198,6 +184,21 @@ class SphinxDocAT18 < Formula
     sha256 "3018294ebefce6572a474f0604c2021e33b3fd8006ecd11d62107a5d2a963527"
   end
 
+  patch do
+    url "https://drake-homebrew.csail.mit.edu/patches/sphinx-doc-1.8.5-docutils-0.15-0.16.patch"
+    sha256 "554ae2ac7c426d18ee66d7c8468f46422c3a122c0d7ed0d9e3ad92fcc775ffdc"
+  end
+
+  patch do
+    url "https://drake-homebrew.csail.mit.edu/patches/sphinx-doc-1.8.5-no-external-image-stylesheet.patch"
+    sha256 "ab0ff2d430eb3a479e95565c3d0187020a2d2eef1dcd67de2a182d80412667e4"
+  end
+
+  patch do
+    url "https://drake-homebrew.csail.mit.edu/patches/sphinx-doc-1.8.5-no-spaces-in-hyphenated-words.patch"
+    sha256 "835ba98956c788d57d43fbc027c6dcae099df422ef8ee4c34d500b2a2a84559d"
+  end
+
   def install
     major_minor = Language::Python.major_minor_version "python3"
     ENV.prepend_create_path "PYTHONPATH", libexec/"lib/python#{major_minor}/site-packages"
@@ -209,7 +210,7 @@ class SphinxDocAT18 < Formula
     system "python3", *Language::Python.setup_install_args(libexec)
     ENV.append_path "PYTHONPATH", "$PYTHONPATH"
     %w[sphinx-apidoc sphinx-build sphinx-autogen sphinx-quickstart].each do |p|
-      (bin/p).write_env_script(libexec/"bin/#{p}", :PYTHONPATH => ENV["PYTHONPATH"])
+      (bin/p).write_env_script(libexec/"bin/#{p}", PYTHONPATH: ENV["PYTHONPATH"])
     end
   end
 

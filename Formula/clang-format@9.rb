@@ -61,13 +61,13 @@ class ClangFormatAT9 < Formula
   bottle do
     cellar :any_skip_relocation
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "f2d03a8e12eb27d9306dfc6ac7420c96f8070bb147a9d2a0dbe58c4b1eafbb47" => :big_sur
     sha256 "6eb9b08d7af48cc8d4e6405a563bb549e1acf15007caa6c042194911e433a4a4" => :catalina
     sha256 "9a51c1d5add9c6e8cb8544e99507158e6d757e22acd6a3fc70247700b73a996e" => :mojave
   end
 
   depends_on "cmake" => :build
   depends_on "ninja" => :build
-
   uses_from_macos "libxml2" => :build
   uses_from_macos "ncurses"
   uses_from_macos "zlib"

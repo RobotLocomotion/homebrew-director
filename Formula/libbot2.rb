@@ -33,11 +33,13 @@ class Libbot2 < Formula
   url "https://drake-homebrew.csail.mit.edu/mirror/libbot2-0.0.1.20200422.tar.gz"
   sha256 "5e36430acbedde572621de37c71f44e621285281aa198c247aba47ad3e87094f"
   license "LGPL-3.0-or-later"
+  revision 1
 
   bottle do
+    cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "367d433219d6354b8001ed1e439da22d90883b03761a8bd75dae574c3f5457bb" => :catalina
-    sha256 "699b915683cd6cc9cd582fe404847795f44db29f80e2ff50e696c83357009ec4" => :mojave
+    sha256 "3f6f1d90761b3779b55d8d6297cda2f67babaf5ea540f18575f902bed29b41a6" => :big_sur
+    sha256 "08b4fc4f40cb1d0b8d52134a6f4d6691807443e0d3ab6d476906a4fb970e3ddb" => :catalina
   end
 
   depends_on "cmake" => :build
@@ -46,7 +48,7 @@ class Libbot2 < Formula
   depends_on "lcm"
   depends_on "numpy"
   depends_on "openjdk"
-  depends_on "python@3.8"
+  depends_on "python@3.9"
   depends_on "scipy"
   uses_from_macos "zlib"
 
@@ -54,7 +56,7 @@ class Libbot2 < Formula
     args = std_cmake_args + %W[
       -DCMAKE_INSTALL_NAME_DIR=#{opt_lib}
       -DCMAKE_INSTALL_RPATH=#{opt_lib}
-      -DPYTHON_EXECUTABLE=#{Formula["python@3.8"].opt_bin}/python3
+      -DPYTHON_EXECUTABLE=#{Formula["python@3.9"].opt_bin}/python3
       -DWITH_BOT_VIS=OFF
     ]
 

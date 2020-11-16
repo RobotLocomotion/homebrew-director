@@ -60,12 +60,13 @@ class DoxygenAT1815 < Formula
   bottle do
     cellar :any_skip_relocation
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "de8816fd5544c109a3f2608956dfa31a8bb337097e12b7cc70b5b3234c74624b" => :big_sur
     sha256 "b8f072880e6a9d5d01f8abbb25162b4cddb679a8db023111bcd5b3256259d49a" => :catalina
     sha256 "10eb066c504594c3d1767d75a56615b71d90d8730bbac68ab7d5168dfa912e6e" => :mojave
   end
 
-  uses_from_macos "bison" => :build
   depends_on "cmake" => :build
+  uses_from_macos "bison" => :build
   uses_from_macos "flex" => :build
 
   patch do

@@ -5,7 +5,12 @@ class IpoptAT311 < Formula
   sha256 "d586ffdbfa03bc1002b11b2e6d044d5882a94cb22b74d85a0d11507cbab01719"
   license "EPL-1.0"
 
-  bottle :disable
+  bottle do
+    cellar :any
+    root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 "9a9f678bd5989b9d30f1d0ecf4d3dd7a7f4d1f59f604e3a025c9a77b4360d391" => :big_sur
+    sha256 "e0b69cd0e6feab2399d9a2e7549dbeb733e7c7e81f562b2b007bd8e0cfbdba71" => :catalina
+  end
 
   keg_only :versioned_formula
 
