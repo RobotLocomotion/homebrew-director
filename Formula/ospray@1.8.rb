@@ -39,7 +39,6 @@ class OsprayAT18 < Formula
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
     sha256 "17cdf546d98ddb4d2e21fb1a9eaa49ccf843c6cc953eff21caee3e2ffa9acde8" => :big_sur
     sha256 "ccceb16b460fcf80f50d5105c71e98bc9014d80e4335f8265ad3122d922a36a6" => :catalina
-    sha256 "7a8ff5a2339d8c99f3d586a48babbb9573a4c711f73cb100c17439e352d31f10" => :mojave
   end
 
   keg_only :versioned_formula

@@ -63,7 +63,6 @@ class SphinxDocAT18 < Formula
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
     sha256 "fc6abe551ce0a0f96ec0aff05b4a060a7cf796a39d6985e8e6f34272c4457713" => :big_sur
     sha256 "ba114c482f17ba7086dcbbff756eef92fbe4eab038a85cea7e93e8763ed93c18" => :catalina
-    sha256 "2917263ed829301f329fb4e3623cff64cda8a4370b0406a2f4bc826c92847eff" => :mojave
   end
 
   keg_only :versioned_formula
