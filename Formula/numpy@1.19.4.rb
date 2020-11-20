@@ -60,7 +60,7 @@ class NumpyAT1194 < Formula
   bottle do
     cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "959f3e8ba539921ff075bcf07a5fca1b8482c6cd57ef32ab6b94489561f84428" => :big_sur
+    sha256 "9471c6377d87291060b95256eedfa92918694ab5bd420f17a02cc603d8f65821" => :big_sur
     sha256 "c7bcc51c36f2bc0860acbf9329858f7000256ecaab05774a10d5982b8a8f3dea" => :catalina
   end
 
