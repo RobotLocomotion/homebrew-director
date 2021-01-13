@@ -66,6 +66,8 @@ class VtkAT82 < Formula
 
   keg_only :versioned_formula
 
+  deprecate! date: "2021-01-01", because: :versioned_formula
+
   depends_on "cmake" => [:build, :test]
   depends_on arch: :x86_64
   depends_on "glew"
