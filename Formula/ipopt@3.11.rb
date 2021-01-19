@@ -14,6 +14,8 @@ class IpoptAT311 < Formula
 
   keg_only :versioned_formula
 
+  deprecate! date: "2021-01-01", because: :versioned_formula
+
   depends_on "pkg-config" => [:build, :test]
   depends_on "gcc"
   depends_on "openblas"
