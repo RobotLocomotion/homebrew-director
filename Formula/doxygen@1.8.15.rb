@@ -64,6 +64,8 @@ class DoxygenAT1815 < Formula
     sha256 "b8f072880e6a9d5d01f8abbb25162b4cddb679a8db023111bcd5b3256259d49a" => :catalina
   end
 
+  deprecate! date: "2021-01-01", because: :versioned_formula
+
   depends_on "cmake" => :build
   uses_from_macos "bison" => :build
   uses_from_macos "flex" => :build
