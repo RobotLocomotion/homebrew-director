@@ -67,6 +67,8 @@ class SphinxDocAT18 < Formula
 
   keg_only :versioned_formula
 
+  deprecate! date: "2021-01-01", because: :versioned_formula
+
   depends_on "python@3.8"
 
   resource "alabaster" do
