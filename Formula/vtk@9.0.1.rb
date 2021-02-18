@@ -56,11 +56,12 @@ class VtkAT901 < Formula
   url "https://www.vtk.org/files/release/9.0/VTK-9.0.1.tar.gz"
   sha256 "1b39a5e191c282861e7af4101eaa8585969a2de05f5646c9199a161213a622c7"
   license "BSD-3-Clause"
+  revision 1
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 big_sur:  "b12a337fa6e7f453676a5c8f52dca21f9b29a14f42ed14532e1b2bbd228e2c53"
-    sha256 catalina: "3819279042ace146b1e0e14a6de42b691f693fe89aff7d3b4089b800b5f8baba"
+    sha256 big_sur:  "6999bf9f43100fcb378bf50e0a4263eee01efc8d7d472dc4d5820d41b60a6045"
+    sha256 catalina: "0f6419f844f3114d6a9582dec097e8e899afe1b304f7a69d4e81b56e39e964bd"
   end
 
   keg_only :versioned_formula
@@ -82,7 +83,8 @@ class VtkAT901 < Formula
   depends_on "lz4"
   depends_on "netcdf"
   depends_on "pugixml"
-  depends_on "python@3.8"
+  depends_on "pyqt"
+  depends_on "python@3.9"
   depends_on "qt"
   depends_on "sqlite"
   depends_on "theora"
@@ -100,7 +102,7 @@ class VtkAT901 < Formula
       -DBUILD_TESTING:BOOL=OFF
       -DCMAKE_INSTALL_NAME_DIR:STRING=#{lib}
       -DCMAKE_INSTALL_RPATH:STRING=#{lib}
-      -DPython3_EXECUTABLE:FILEPATH=#{Formula["python@3.8"].opt_bin}/python3
+      -DPython3_EXECUTABLE:FILEPATH=#{Formula["python@3.9"].opt_bin}/python3
       -DVTK_GROUP_ENABLE_Qt:STRING=YES
       -DVTK_LEGACY_REMOVE:BOOL=ON
       -DVTK_MODULE_ENABLE_VTK_InfovisBoost:STRING=YES
