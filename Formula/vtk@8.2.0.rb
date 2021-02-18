@@ -56,11 +56,12 @@ class VtkAT820 < Formula
   url "https://drake-homebrew.csail.mit.edu/mirror/vtk-8.2.0.tar.gz"
   sha256 "e83394561e6425a0b51eaaa355a5309e603a325e62ee5c9425ae7b7e22ab0d79"
   license "BSD-3-Clause"
+  revision 1
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 big_sur:  "d7fe9a3d866f49863436c262627a304531807ae7ce77b8b066c350bb2cbccb65"
-    sha256 catalina: "03af08a908b6d461a616b8619516c7eff2b22d675ab2efbfc6755ba3cc2d6d22"
+    sha256 big_sur:  "5375f24e9db5897637493dcf43e812c263f6276d685b9ad315be10172ac3d34f"
+    sha256 catalina: "c607f6a656c4bed9c2f0a16b495dd4c5036620363b621d9b21c23ed2498f2734"
   end
 
   keg_only :versioned_formula
@@ -81,7 +82,7 @@ class VtkAT820 < Formula
   depends_on "libtiff"
   depends_on "lz4"
   depends_on "netcdf"
-  depends_on "python@3.8"
+  depends_on "python@3.9"
   depends_on "qt"
   depends_on "sqlite"
   depends_on "theora"
@@ -126,7 +127,7 @@ class VtkAT820 < Formula
       -DModule_vtkInfovisBoost:BOOL=ON
       -DModule_vtkInfovisBoostGraphAlgorithms:BOOL=ON
       -DModule_vtkRenderingFreeTypeFontConfig:BOOL=ON
-      -DPYTHON_EXECUTABLE:FILEPATH=#{Formula["python@3.8"].opt_bin}/python3
+      -DPYTHON_EXECUTABLE:FILEPATH=#{Formula["python@3.9"].opt_bin}/python3
       -DVTK_Group_Qt:BOOL=ON
       -DVTK_LEGACY_REMOVE:BOOL=ON
       -DVTK_PYTHON_VERSION:STRING=3
