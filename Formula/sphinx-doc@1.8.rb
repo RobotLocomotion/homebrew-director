@@ -57,18 +57,19 @@ class SphinxDocAT18 < Formula
   mirror "https://drake-homebrew.csail.mit.edu/mirror/Sphinx-1.8.5.tar.gz"
   sha256 "c7658aab75c920288a8cf6f09f244c6cfdae30d82d803ac1634d9f223a80ca08"
   license "BSD-2-Clause"
+  revision 1
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 cellar: :any_skip_relocation, big_sur:  "fc6abe551ce0a0f96ec0aff05b4a060a7cf796a39d6985e8e6f34272c4457713"
-    sha256 cellar: :any_skip_relocation, catalina: "ba114c482f17ba7086dcbbff756eef92fbe4eab038a85cea7e93e8763ed93c18"
+    sha256 cellar: :any_skip_relocation, big_sur:  "1402371186e1f3aabdb46f5d7bd08c3a8bfe2c9adcbaaa6307d9b506b96020ad"
+    sha256 cellar: :any_skip_relocation, catalina: "4b28e6271c03ab663f1faa1c72aef67c90e9306239f130ba9d82ff74bd3b2ef3"
   end
 
   keg_only :versioned_formula
 
   deprecate! date: "2021-01-01", because: :versioned_formula
 
-  depends_on "python@3.8"
+  depends_on "python@3.9"
 
   resource "alabaster" do
     url "https://files.pythonhosted.org/packages/cc/b4/ed8dcb0d67d5cfb7f83c4d5463a7614cb1d078ad7ae890c9143edebbf072/alabaster-0.7.12.tar.gz"
