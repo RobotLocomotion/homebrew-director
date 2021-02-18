@@ -42,7 +42,7 @@ class OsprayAT18 < Formula
 
   keg_only :versioned_formula
 
-  deprecate! date: "2021-01-01", because: :versioned_formula
+  disable! date: "2021-04-01", because: :versioned_formula
 
   depends_on "cmake" => :build
   depends_on "ispc" => :build
