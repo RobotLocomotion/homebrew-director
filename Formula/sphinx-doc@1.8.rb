@@ -59,10 +59,9 @@ class SphinxDocAT18 < Formula
   license "BSD-2-Clause"
 
   bottle do
-    cellar :any_skip_relocation
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "fc6abe551ce0a0f96ec0aff05b4a060a7cf796a39d6985e8e6f34272c4457713" => :big_sur
-    sha256 "ba114c482f17ba7086dcbbff756eef92fbe4eab038a85cea7e93e8763ed93c18" => :catalina
+    sha256 cellar: :any_skip_relocation, big_sur:  "fc6abe551ce0a0f96ec0aff05b4a060a7cf796a39d6985e8e6f34272c4457713"
+    sha256 cellar: :any_skip_relocation, catalina: "ba114c482f17ba7086dcbbff756eef92fbe4eab038a85cea7e93e8763ed93c18"
   end
 
   keg_only :versioned_formula

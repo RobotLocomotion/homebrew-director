@@ -36,10 +36,9 @@ class Libbot2 < Formula
   revision 1
 
   bottle do
-    cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "3f6f1d90761b3779b55d8d6297cda2f67babaf5ea540f18575f902bed29b41a6" => :big_sur
-    sha256 "08b4fc4f40cb1d0b8d52134a6f4d6691807443e0d3ab6d476906a4fb970e3ddb" => :catalina
+    sha256 cellar: :any, big_sur:  "3f6f1d90761b3779b55d8d6297cda2f67babaf5ea540f18575f902bed29b41a6"
+    sha256 cellar: :any, catalina: "08b4fc4f40cb1d0b8d52134a6f4d6691807443e0d3ab6d476906a4fb970e3ddb"
   end
 
   depends_on "cmake" => :build

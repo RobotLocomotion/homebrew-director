@@ -59,10 +59,9 @@ class ClangFormatAT9 < Formula
   license "Apache-2.0"
 
   bottle do
-    cellar :any_skip_relocation
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "f2d03a8e12eb27d9306dfc6ac7420c96f8070bb147a9d2a0dbe58c4b1eafbb47" => :big_sur
-    sha256 "6eb9b08d7af48cc8d4e6405a563bb549e1acf15007caa6c042194911e433a4a4" => :catalina
+    sha256 cellar: :any_skip_relocation, big_sur:  "f2d03a8e12eb27d9306dfc6ac7420c96f8070bb147a9d2a0dbe58c4b1eafbb47"
+    sha256 cellar: :any_skip_relocation, catalina: "6eb9b08d7af48cc8d4e6405a563bb549e1acf15007caa6c042194911e433a4a4"
   end
 
   depends_on "cmake" => :build

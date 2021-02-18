@@ -58,10 +58,9 @@ class ScipyAT154 < Formula
   license "BSD-3-Clause"
 
   bottle do
-    cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "959f3e8ba539921ff075bcf07a5fca1b8482c6cd57ef32ab6b94489561f84428" => :big_sur
-    sha256 "e868bc9b4de29a00bb03d7f81e61a2bb74861149a07db51847b810c36cc17c97" => :catalina
+    sha256 cellar: :any, big_sur:  "959f3e8ba539921ff075bcf07a5fca1b8482c6cd57ef32ab6b94489561f84428"
+    sha256 cellar: :any, catalina: "e868bc9b4de29a00bb03d7f81e61a2bb74861149a07db51847b810c36cc17c97"
   end
 
   depends_on "pybind11" => :build

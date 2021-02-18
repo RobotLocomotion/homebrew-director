@@ -58,10 +58,9 @@ class DoxygenAT1815 < Formula
   license "GPL-2.0-only"
 
   bottle do
-    cellar :any_skip_relocation
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "de8816fd5544c109a3f2608956dfa31a8bb337097e12b7cc70b5b3234c74624b" => :big_sur
-    sha256 "b8f072880e6a9d5d01f8abbb25162b4cddb679a8db023111bcd5b3256259d49a" => :catalina
+    sha256 cellar: :any_skip_relocation, big_sur:  "de8816fd5544c109a3f2608956dfa31a8bb337097e12b7cc70b5b3234c74624b"
+    sha256 cellar: :any_skip_relocation, catalina: "b8f072880e6a9d5d01f8abbb25162b4cddb679a8db023111bcd5b3256259d49a"
   end
 
   deprecate! date: "2021-01-01", because: :versioned_formula

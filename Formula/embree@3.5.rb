@@ -35,10 +35,9 @@ class EmbreeAT35 < Formula
   license "Apache-2.0"
 
   bottle do
-    cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "a64c51ea2a5a82cc9f88734101c1de97026551a73d9fe944d2626b0030de5e2b" => :big_sur
-    sha256 "1631e83024a9d5f4194aebdad4fa6d9b7d764b88b4c99e9cb2f31efc8df7b779" => :catalina
+    sha256 cellar: :any, big_sur:  "a64c51ea2a5a82cc9f88734101c1de97026551a73d9fe944d2626b0030de5e2b"
+    sha256 cellar: :any, catalina: "1631e83024a9d5f4194aebdad4fa6d9b7d764b88b4c99e9cb2f31efc8df7b779"
   end
 
   keg_only :versioned_formula

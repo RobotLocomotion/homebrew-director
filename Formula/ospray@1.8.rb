@@ -35,10 +35,9 @@ class OsprayAT18 < Formula
   license "Apache-2.0"
 
   bottle do
-    cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "17cdf546d98ddb4d2e21fb1a9eaa49ccf843c6cc953eff21caee3e2ffa9acde8" => :big_sur
-    sha256 "ccceb16b460fcf80f50d5105c71e98bc9014d80e4335f8265ad3122d922a36a6" => :catalina
+    sha256 cellar: :any, big_sur:  "17cdf546d98ddb4d2e21fb1a9eaa49ccf843c6cc953eff21caee3e2ffa9acde8"
+    sha256 cellar: :any, catalina: "ccceb16b460fcf80f50d5105c71e98bc9014d80e4335f8265ad3122d922a36a6"
   end
 
   keg_only :versioned_formula

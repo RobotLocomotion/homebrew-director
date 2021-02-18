@@ -58,10 +58,9 @@ class NumpyAT1194 < Formula
   license "BSD-3-Clause"
 
   bottle do
-    cellar :any
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 "9471c6377d87291060b95256eedfa92918694ab5bd420f17a02cc603d8f65821" => :big_sur
-    sha256 "c7bcc51c36f2bc0860acbf9329858f7000256ecaab05774a10d5982b8a8f3dea" => :catalina
+    sha256 cellar: :any, big_sur:  "9471c6377d87291060b95256eedfa92918694ab5bd420f17a02cc603d8f65821"
+    sha256 cellar: :any, catalina: "c7bcc51c36f2bc0860acbf9329858f7000256ecaab05774a10d5982b8a8f3dea"
   end
 
   depends_on "gcc" => :build
