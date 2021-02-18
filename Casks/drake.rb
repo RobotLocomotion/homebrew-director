@@ -32,7 +32,7 @@ cask "drake" do
   sha256 "e6dbf3f223719188941e043bf29b2e93169b6709a6320ea94637a3519c728261"
 
   url "https://github.com/RobotLocomotion/drake/releases/download/v#{version}/drake-20201215-mac.tar.gz",
-    verified: "https://github.com/RobotLocomotion/drake/"
+      verified: "https://github.com/RobotLocomotion/drake/"
   appcast "https://github.com/RobotLocomotion/drake/releases.atom"
   name "Drake"
   desc "Model-based design and verification for robotics"
