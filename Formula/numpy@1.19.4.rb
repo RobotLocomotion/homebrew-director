@@ -63,6 +63,8 @@ class NumpyAT1194 < Formula
     sha256 cellar: :any, catalina: "c7bcc51c36f2bc0860acbf9329858f7000256ecaab05774a10d5982b8a8f3dea"
   end
 
+  deprecate! date: "2021-03-01", because: :versioned_formula
+
   depends_on "gcc" => :build
   depends_on "openblas"
   depends_on "python@3.8"

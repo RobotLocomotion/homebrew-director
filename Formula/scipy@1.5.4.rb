@@ -63,6 +63,8 @@ class ScipyAT154 < Formula
     sha256 cellar: :any, catalina: "e868bc9b4de29a00bb03d7f81e61a2bb74861149a07db51847b810c36cc17c97"
   end
 
+  deprecate! date: "2021-03-01", because: :versioned_formula
+
   depends_on "pybind11" => :build
   depends_on "gcc"
   depends_on "numpy@1.19.4"
