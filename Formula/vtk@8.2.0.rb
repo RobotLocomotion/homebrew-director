@@ -56,12 +56,10 @@ class VtkAT820 < Formula
   url "https://drake-homebrew.csail.mit.edu/mirror/vtk-8.2.0.tar.gz"
   sha256 "e83394561e6425a0b51eaaa355a5309e603a325e62ee5c9425ae7b7e22ab0d79"
   license "BSD-3-Clause"
-  revision 1
+  revision 2
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 big_sur:  "5375f24e9db5897637493dcf43e812c263f6276d685b9ad315be10172ac3d34f"
-    sha256 catalina: "c607f6a656c4bed9c2f0a16b495dd4c5036620363b621d9b21c23ed2498f2734"
   end
 
   keg_only :versioned_formula
@@ -83,7 +81,7 @@ class VtkAT820 < Formula
   depends_on "lz4"
   depends_on "netcdf"
   depends_on "python@3.9"
-  depends_on "qt"
+  depends_on "qt@5"
   depends_on "sqlite"
   depends_on "theora"
   depends_on "xz"
