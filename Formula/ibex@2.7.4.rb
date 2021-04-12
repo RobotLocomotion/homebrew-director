@@ -6,6 +6,11 @@ class IbexAT274 < Formula
   sha256 "629c472a67bab7188e00c4e085d28d8ed568e316de3c6df84a6bd0037f602624"
   revision 10
 
+  bottle do
+    root_url "https://drake-homebrew.csail.mit.edu/bottles"
+    sha256 cellar: :any, big_sur: "d837cfd8beeba16a1830c81b1927379bb1e7979f3873c8795ced443f9455bae3"
+  end
+
   keg_only :versioned_formula
 
   depends_on "pkg-config" => [:build, :test]
