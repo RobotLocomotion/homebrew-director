@@ -9,6 +9,7 @@ class IbexAT274 < Formula
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
     sha256 cellar: :any, big_sur: "d837cfd8beeba16a1830c81b1927379bb1e7979f3873c8795ced443f9455bae3"
+    sha256 cellar: :any, catalina: "8b2ce0b5c70b426b09039c352df61b3ab73e1676d30cbee4ba0fefaaba40de7d"
   end
 
   keg_only :versioned_formula
