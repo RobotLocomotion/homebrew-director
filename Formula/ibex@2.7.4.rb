@@ -53,15 +53,15 @@
 class IbexAT274 < Formula
   desc "C++ library for constraint processing over real numbers"
   homepage "https://github.com/ibex-team/ibex-lib"
-  url "https://github.com/dreal-deps/ibex-lib/archive/ibex-2.7.4_10.tar.gz"
+  url "https://github.com/dreal-deps/ibex-lib/archive/ibex-2.7.4_13.tar.gz"
   version "2.7.4"
-  sha256 "629c472a67bab7188e00c4e085d28d8ed568e316de3c6df84a6bd0037f602624"
-  revision 10
+  sha256 "d5524eb7e8f1edf6fe7867bea617bf450ad05e2c2eb5e8048a8532619e0ec0e1"
+  revision 13
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 cellar: :any, big_sur: "d837cfd8beeba16a1830c81b1927379bb1e7979f3873c8795ced443f9455bae3"
-    sha256 cellar: :any, catalina: "8b2ce0b5c70b426b09039c352df61b3ab73e1676d30cbee4ba0fefaaba40de7d"
+    sha256 cellar: :any, big_sur: "4b874fed3174c68a99ca4b822b1802c48094dc1d47f95e3eeba9206d35993e82"
+    sha256 cellar: :any, catalina: "4a1c80f394a5a8078f34d0bca0ba137f8bd2935a9954b875a8c3fb8007b197b0"
   end
 
   keg_only :versioned_formula
