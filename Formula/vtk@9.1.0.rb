@@ -73,19 +73,24 @@ class VtkAT910 < Formula
   depends_on "double-conversion"
   depends_on "eigen"
   depends_on "fontconfig"
+  depends_on "freetype"
+  depends_on "gl2ps"
   depends_on "glew"
   depends_on "hdf5"
   depends_on "jpeg"
+  depends_on "jsoncpp"
   depends_on "libogg"
   depends_on "libpng"
   depends_on "libtiff"
   depends_on "lz4"
   depends_on "netcdf"
+  depends_on "pugixml"
   depends_on "pyqt@5"
   depends_on "python@3.9"
   depends_on "qt@5"
   depends_on "sqlite"
   depends_on "theora"
+  depends_on "utf8cpp"
   depends_on "xz"
   uses_from_macos "expat"
   uses_from_macos "libxml2"
@@ -109,19 +114,19 @@ class VtkAT910 < Formula
       -DVTK_MODULE_USE_EXTERNAL_VTK_doubleconversion:BOOL=ON
       -DVTK_MODULE_USE_EXTERNAL_VTK_eigen:BOOL=ON
       -DVTK_MODULE_USE_EXTERNAL_VTK_expat:BOOL=ON
-      -DVTK_MODULE_USE_EXTERNAL_VTK_freetype:BOOL=OFF
-      -DVTK_MODULE_USE_EXTERNAL_VTK_gl2ps:BOOL=OFF
+      -DVTK_MODULE_USE_EXTERNAL_VTK_freetype:BOOL=ON
+      -DVTK_MODULE_USE_EXTERNAL_VTK_gl2ps:BOOL=ON
       -DVTK_MODULE_USE_EXTERNAL_VTK_glew:BOOL=ON
       -DVTK_MODULE_USE_EXTERNAL_VTK_hdf5:BOOL=ON
       -DVTK_MODULE_USE_EXTERNAL_VTK_jpeg:BOOL=ON
-      -DVTK_MODULE_USE_EXTERNAL_VTK_jsoncpp:BOOL=OFF
+      -DVTK_MODULE_USE_EXTERNAL_VTK_jsoncpp:BOOL=ON
       -DVTK_MODULE_USE_EXTERNAL_VTK_libxml2:BOOL=ON
       -DVTK_MODULE_USE_EXTERNAL_VTK_lz4:BOOL=ON
       -DVTK_MODULE_USE_EXTERNAL_VTK_lzma:BOOL=ON
       -DVTK_MODULE_USE_EXTERNAL_VTK_netcdf:BOOL=ON
       -DVTK_MODULE_USE_EXTERNAL_VTK_ogg:BOOL=ON
       -DVTK_MODULE_USE_EXTERNAL_VTK_png:BOOL=ON
-      -DVTK_MODULE_USE_EXTERNAL_VTK_pugixml:BOOL=OFF
+      -DVTK_MODULE_USE_EXTERNAL_VTK_pugixml:BOOL=ON
       -DVTK_MODULE_USE_EXTERNAL_VTK_sqlite:BOOL=ON
       -DVTK_MODULE_USE_EXTERNAL_VTK_theora:BOOL=ON
       -DVTK_MODULE_USE_EXTERNAL_VTK_tiff:BOOL=ON
