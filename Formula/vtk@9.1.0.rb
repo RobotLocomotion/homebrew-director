@@ -58,11 +58,11 @@ class VtkAT910 < Formula
   license "BSD-3-Clause"
   revision 1
 
-  bottle do
-    root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 big_sur: "ac4f1a65338c3298e1cdb236626c61ca9b0eb634e8c0eafcb25794391017a133"
-    sha256 monterey: "770312e0a2e5c94d0d8c14f39700688cd3919701338ec787ce2265a4320f04b0"
-  end
+  # bottle do
+  #   root_url "https://drake-homebrew.csail.mit.edu/bottles"
+  #   sha256 big_sur: "ac4f1a65338c3298e1cdb236626c61ca9b0eb634e8c0eafcb25794391017a133"
+  #   sha256 monterey: "770312e0a2e5c94d0d8c14f39700688cd3919701338ec787ce2265a4320f04b0"
+  # end
 
   keg_only :versioned_formula
 
@@ -105,10 +105,12 @@ class VtkAT910 < Formula
     #    VTK_MODULE_USE_EXTERNAL_VTK_utf8:BOOL=ON
     args = std_cmake_args + %W[
       -DBUILD_SHARED_LIBS:BOOL=ON
-      -DBUILD_TESTING:BOOL=OFF
       -DCMAKE_INSTALL_NAME_DIR:STRING=#{lib}
       -DCMAKE_INSTALL_RPATH:STRING=#{lib}
       -DVTK_USE_COCOA:BOOL=ON
+      -DBUILD_TESTING:BOOL=OFF
+      -DVTK_ENABLE_WRAPPING:BOOL=OFF
+      -DVTK_WRAP_PYTHON:BOOL=OFF
       -DVTK_BUILD_ALL_MODULES:BOOL=OFF
       -DVTK_GROUP_ENABLE_Imaging:STRING=YES
       -DVTK_GROUP_ENABLE_MPI:STRING=DONT_WANT
@@ -377,7 +379,7 @@ class VtkAT910 < Formula
     (testpath/"CMakeLists.txt").write <<~EOS
       cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
       project(Distance2BetweenPoints LANGUAGES CXX)
-      find_package(VTK REQUIRED COMPONENTS vtkCommonCore CONFIG)
+      find_package(VTK REQUIRED COMPONENTS CommonCore CONFIG)
       add_executable(Distance2BetweenPoints Distance2BetweenPoints.cxx)
       target_link_libraries(Distance2BetweenPoints PRIVATE ${VTK_LIBRARIES})
     EOS
@@ -398,14 +400,5 @@ class VtkAT910 < Formula
       "-DVTK_DIR=#{vtk_dir}", "."
     system "make"
     system "./Distance2BetweenPoints"
-
-    (testpath/"Distance2BetweenPoints.py").write <<~EOS
-      import vtk
-      p0 = (0, 0, 0)
-      p1 = (1, 1, 1)
-      assert vtk.vtkMath.Distance2BetweenPoints(p0, p1) == 3
-    EOS
-
-    system bin/"vtkpython", "Distance2BetweenPoints.py"
   end
 end
