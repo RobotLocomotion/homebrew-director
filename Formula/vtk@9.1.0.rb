@@ -60,7 +60,7 @@ class VtkAT910 < Formula
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-  #   sha256 big_sur: "c5b6599680af31720e26fdffae0ce5ceeef91e8bd500709d70104ae9955d3f35"
+    sha256 big_sur: "78efc7c082f5d59b7de8813ce6761b3d0bd69becc9be296cfce1eaa486542322"
     sha256 monterey: "5258b819d59d560c7764235d96128a0b1fd2e6790cbb67222c4b5bb466e0346f"
     sha256 arm64_monterey: "d69bc20cebc71dde71e084812d8700cf2e2516d00577e3210b670cd8cb633285"
   end
