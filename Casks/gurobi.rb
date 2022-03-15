@@ -28,10 +28,10 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 cask "gurobi" do
-  version "9.0.2"
-  sha256 "1d58586f9a33ac7035f51f6a04707248218f70bddbec78cb83f11c986ac652cd"
+  version "9.5.1"
+  sha256 "4bae529f5982f1b731edadbbe78b83c119c3fbff7d61d09f1c36b1f4cb0460be"
 
-  url "https://packages.gurobi.com/#{version.major_minor}/gurobi#{version}_mac64.pkg"
+  url "https://packages.gurobi.com/#{version.major_minor}/gurobi#{version}_macos_universal2.pkg"
   appcast "https://www.gurobi.com/resource/fixes/"
   name "Gurobi Optimizer"
   desc "Mathematical programming solver for LP, QP, and MIP problems"
@@ -39,7 +39,7 @@ cask "gurobi" do
 
   conflicts_with cask: "gurobi80"
 
-  pkg "gurobi#{version}_mac64.pkg"
+  pkg "gurobi#{version}_macos_universal2.pkg"
 
   uninstall pkgutil: "com.gurobi.gurobiOptimizer#{version.no_dots}.gurobimac.pkg",
             delete:  [
