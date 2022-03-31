@@ -58,12 +58,12 @@ class VtkAT820 < Formula
   license "BSD-3-Clause"
   revision 6
 
-  # bottle do
-  #   root_url "https://drake-homebrew.csail.mit.edu/bottles"
+  bottle do
+    root_url "https://drake-homebrew.csail.mit.edu/bottles"
   #   sha256 big_sur: "e160c748e6d8cadee312f2a57fd3062c4f081740ca66f0c00b267c0e36a7d00b"
   #   sha256 monterey: "e7bfb1909218fa62af6483a6b964b1fabe56220043b0f537383dbb66c6287a20"
-  #   sha256 arm64_monterey: "bb6251442645b6ad78c1e19cbdafbdb8c641e4cce2386ebd03cc68e95c494660"
-  # end
+    sha256 arm64_monterey: "45687ce969bd8907fe649d7735365b7f98f46163975c2c288b73b7a980341ef7"
+  end
 
   keg_only :versioned_formula
 
