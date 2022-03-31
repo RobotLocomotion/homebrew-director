@@ -56,13 +56,13 @@ class VtkAT910 < Formula
   url "https://www.vtk.org/files/release/9.1/VTK-9.1.0.tar.gz"
   sha256 "8fed42f4f8f1eb8083107b68eaa9ad71da07110161a3116ad807f43e5ca5ce96"
   license "BSD-3-Clause"
-  revision 3
+  revision 4
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
-    sha256 big_sur: "78efc7c082f5d59b7de8813ce6761b3d0bd69becc9be296cfce1eaa486542322"
-    sha256 monterey: "5258b819d59d560c7764235d96128a0b1fd2e6790cbb67222c4b5bb466e0346f"
-    sha256 arm64_monterey: "d69bc20cebc71dde71e084812d8700cf2e2516d00577e3210b670cd8cb633285"
+    sha256 big_sur: "956b48fef0519400fbd973a1c3ed3b110614af99ede18d52b9e6c43c50cb8677"
+    sha256 monterey: "4c4f04c7269ba002675c145bbd49c1d02f5ae264a2ad18f24fdd6dcd02bdfadb"
+    sha256 arm64_monterey: "faf105956f0376ebc8c777c34ebdfe9e9c4c92a92faec7ce8e64888d94a40247"
   end
 
   keg_only :versioned_formula
