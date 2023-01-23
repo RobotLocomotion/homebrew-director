@@ -28,8 +28,8 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 cask "gurobi" do
-  version "9.5.1"
-  sha256 "4bae529f5982f1b731edadbbe78b83c119c3fbff7d61d09f1c36b1f4cb0460be"
+  version "9.5.2"
+  sha256 "e183ca8bcf3950d16e282dc7ffadfbada29240e7be60331865279b580fad08f6"
 
   url "https://packages.gurobi.com/#{version.major_minor}/gurobi#{version}_macos_universal2.pkg"
   appcast "https://www.gurobi.com/resource/fixes/"
