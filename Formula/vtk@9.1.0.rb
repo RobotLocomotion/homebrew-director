@@ -56,7 +56,7 @@ class VtkAT910 < Formula
   url "https://www.vtk.org/files/release/9.1/VTK-9.1.0.tar.gz"
   sha256 "8fed42f4f8f1eb8083107b68eaa9ad71da07110161a3116ad807f43e5ca5ce96"
   license "BSD-3-Clause"
-  revision 5
+  revision 6
 
   bottle do
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
