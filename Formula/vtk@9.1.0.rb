@@ -62,7 +62,7 @@ class VtkAT910 < Formula
     root_url "https://drake-homebrew.csail.mit.edu/bottles"
     sha256 cellar: :any, monterey: "adf894a076f346ee7eb586b99b5039d7e1420479f153acf204891502f7a5a048"
     sha256 cellar: :any, arm64_monterey: "f6b716a6a5d53e969855fc07ab9849cae76050f608506a4f840d963d8a530dd1"
-    sha256 cellar: :any, arm64_ventura: "43780943a6d2c97b10837a95a6c5723c249e1bcc71e25b8436bff5baf6953481"
+    sha256 cellar: :any, arm64_ventura: "5acfe559a17ce1258a87014b70aed459b3f9b354f57f3aa02888eb17e677aee8"
   end
 
   keg_only :versioned_formula
