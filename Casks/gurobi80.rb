@@ -36,7 +36,14 @@ cask "gurobi80" do
   desc "Mathematical programming solver for LP, QP, and MIP problems"
   homepage "https://www.gurobi.com/products/gurobi-optimizer"
 
-  conflicts_with cask: "gurobi"
+  # NOTE: conflict with all possible versions of this cask from drake (see note
+  # below about uninstall files).
+  conflicts_with cask: [
+    "gurobi",
+    # "gurobi80",  # This cask.
+    "gurobi@9.5.2",
+    "gurobi@10.0.2",
+  ]
 
   pkg "gurobi#{version}_mac64.pkg"
 
@@ -44,8 +51,10 @@ cask "gurobi80" do
             delete:  [
               "/Applications/Gurobi #{version}.app",
               "/Library/gurobi#{version.no_dots}",
-              "/Library/Java/Extensions/gurobi.jar",
               "/Library/Java/Extensions/libGurobiJni#{version.major_minor.no_dots}.jnilib",
+              # NOTE: these are symlinks and may point to a different gurobi,
+              # make sure you `conflicts_with` correctly above.
+              "/Library/Java/Extensions/gurobi.jar",
               "/usr/local/bin/grb_ts",
               "/usr/local/bin/grbcluster",
               "/usr/local/bin/grbgetkey",

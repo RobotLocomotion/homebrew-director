@@ -1,5 +1,5 @@
-# Copyright (c) 2019, Massachusetts Institute of Technology.
-# Copyright (c) 2019, Toyota Research Institute.
+# Copyright (c) 2023, Massachusetts Institute of Technology.
+# Copyright (c) 2023, Toyota Research Institute.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -27,27 +27,25 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-cask "gurobi" do
+cask "gurobi@9.5.2" do
   version "9.5.2"
-  sha256 "e183ca8bcf3950d16e282dc7ffadfbada29240e7be60331865279b580fad08f6"
 
-  url "https://packages.gurobi.com/#{version.major_minor}/gurobi#{version}_macos_universal2.pkg"
-  appcast "https://www.gurobi.com/resource/fixes/"
   name "Gurobi Optimizer"
   desc "Mathematical programming solver for LP, QP, and MIP problems"
   homepage "https://www.gurobi.com/products/gurobi-optimizer/"
 
+  pkg "gurobi#{version}_macos_universal2.pkg"
+  url "https://packages.gurobi.com/#{version.major_minor}/gurobi#{version}_macos_universal2.pkg"
+  sha256 "e183ca8bcf3950d16e282dc7ffadfbada29240e7be60331865279b580fad08f6"
+
   # NOTE: conflict with all possible versions of this cask from drake (see note
   # below about uninstall files).
   conflicts_with cask: [
-    # "gurobi",  # This cask.
+    "gurobi",
     "gurobi80",
-    "gurobi@9.5.2",
+    # "gurobi@9.5.2",  # This cask.
     "gurobi@10.0.2",
   ]
-  conflicts_with cask: "gurobi80"
-
-  pkg "gurobi#{version}_macos_universal2.pkg"
 
   uninstall pkgutil: "com.gurobi.gurobiOptimizer#{version.no_dots}.gurobimac.pkg",
             delete:  [
