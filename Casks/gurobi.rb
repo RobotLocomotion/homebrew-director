@@ -32,7 +32,6 @@ cask "gurobi" do
   sha256 "e183ca8bcf3950d16e282dc7ffadfbada29240e7be60331865279b580fad08f6"
 
   url "https://packages.gurobi.com/#{version.major_minor}/gurobi#{version}_macos_universal2.pkg"
-  appcast "https://www.gurobi.com/resource/fixes/"
   name "Gurobi Optimizer"
   desc "Mathematical programming solver for LP, QP, and MIP problems"
   homepage "https://www.gurobi.com/products/gurobi-optimizer/"
@@ -45,7 +44,6 @@ cask "gurobi" do
     "gurobi@9.5.2",
     "gurobi@10.0.2",
   ]
-  conflicts_with cask: "gurobi80"
 
   pkg "gurobi#{version}_macos_universal2.pkg"
 
