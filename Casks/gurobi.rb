@@ -43,6 +43,7 @@ cask "gurobi" do
     "gurobi80",
     "gurobi@9.5.2",
     "gurobi@10.0.2",
+    "gurobi1002",
   ]
 
   pkg "gurobi#{version}_macos_universal2.pkg"

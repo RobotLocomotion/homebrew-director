@@ -1,5 +1,5 @@
-# Copyright (c) 2019, Massachusetts Institute of Technology.
-# Copyright (c) 2019, Toyota Research Institute.
+# Copyright (c) 2023, Massachusetts Institute of Technology.
+# Copyright (c) 2023, Toyota Research Institute.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -27,30 +27,29 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-cask "gurobi80" do
-  version "8.0.1"
-  sha256 "111d5a41c8a67217f6428cda36b6243901c4694698769ed691790cfc4481a9f8"
+cask "gurobi1002" do
+  version "10.0.2"
 
-  url "https://packages.gurobi.com/#{version.major_minor}/gurobi#{version}_mac64.pkg"
   name "Gurobi Optimizer"
   desc "Mathematical programming solver for LP, QP, and MIP problems"
-  homepage "https://www.gurobi.com/products/gurobi-optimizer"
+  homepage "https://www.gurobi.com/products/gurobi-optimizer/"
+
+  pkg "gurobi#{version}_macos_universal2.pkg"
+  url "https://packages.gurobi.com/#{version.major_minor}/gurobi#{version}_macos_universal2.pkg"
+  sha256 "955bb1cfa9a72b09c23af6413a10e95f8e05a189539619495f123ff0f3c258c8"
 
   # NOTE: conflict with all possible versions of this cask from drake (see note
   # below about uninstall files).
   conflicts_with cask: [
     "gurobi",
-    # "gurobi80",  # This cask.
+    "gurobi80",
     "gurobi@9.5.2",
     "gurobi@10.0.2",
-    "gurobi1002",
+    "gurobi1002",  # This cask.
   ]
-
-  pkg "gurobi#{version}_mac64.pkg"
 
   uninstall pkgutil: "com.gurobi.gurobiOptimizer#{version.no_dots}.gurobimac.pkg",
             delete:  [
-              "/Applications/Gurobi #{version}.app",
               "/Library/gurobi#{version.no_dots}",
               "/Library/Java/Extensions/libGurobiJni#{version.major_minor.no_dots}.jnilib",
               # NOTE: these are symlinks and may point to a different gurobi,
@@ -62,13 +61,9 @@ cask "gurobi80" do
               "/usr/local/bin/grbprobe",
               "/usr/local/bin/grbtune",
               "/usr/local/bin/gurobi_cl",
-              "/usr/local/bin/gurobi.env",
               "/usr/local/bin/gurobi.sh",
               "/usr/local/lib/gurobi.py",
               "/usr/local/lib/libgurobi#{version.major_minor.no_dots}.dylib",
-              "/usr/local/lib/libgurobi#{version.major_minor.no_dots}.so",
-              "/Library/Python/2.7/site-packages/gurobipy",
-              "/Library/Python/2.7/site-packages/gurobipy-#{version}-py2.7.egg-info",
             ]
 
   caveats do

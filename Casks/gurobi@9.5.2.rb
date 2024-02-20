@@ -45,6 +45,7 @@ cask "gurobi@9.5.2" do
     "gurobi80",
     # "gurobi@9.5.2",  # This cask.
     "gurobi@10.0.2",
+    "gurobi1002",
   ]
 
   uninstall pkgutil: "com.gurobi.gurobiOptimizer#{version.no_dots}.gurobimac.pkg",
